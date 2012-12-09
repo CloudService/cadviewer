@@ -1,5 +1,6 @@
 {
 	"build" : "development",
+	"poll_interval":5000,
 	"development": {
 		"server": "http://localhost:3000"
 	},

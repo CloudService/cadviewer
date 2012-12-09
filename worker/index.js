@@ -44,16 +44,19 @@ var server = nconf.get(build).server;
 logger.info('build=' + build + " (development/production) [Run 'build=development node server.js' for local server.]");
 
 
-/**/
+/**********************************************************************/
+// Polling the tasks.
+/**********************************************************************/
 
 var isTaskExecuting = false;
+var poll_interval = nconf.get("poll_interval");
 
 // Use the timer to make sure this process doesn't exist
-setTimeout(function(){getTaskFromServer();}, 1000);
+setTimeout(function(){getTaskFromServer();}, 100);
 
 var getTaskFromServer = function(){
    if(isTaskExecuting){
-	   setTimeout(getTaskFromServer, 4000);
+	   setTimeout(getTaskFromServer, poll_interval * 3);
 	   return;
    }
    
@@ -88,10 +91,8 @@ var getTaskFromServer = function(){
 	   }	
 	   });
    
-   setTimeout(getTaskFromServer, 4000);
+   setTimeout(getTaskFromServer, poll_interval);
 };
-
-
 
 /**********************************************************************/
 // Execute one task
@@ -249,7 +250,7 @@ var sendMailNotification = function(t, cb ){
 };
 
 var cleanupTempFiles = function(t, cb){
-	logger.debug("Cleanup task files");
+	logger.debug("Cleaning up task files");
 	
 	try{
 		fs.unlink(t.localSrcFileName);
