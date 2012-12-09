@@ -8,8 +8,6 @@ var rest = require('restler');
 var nconf = require('nconf');
 var Step = require("Step");
 
-
-
 /**********************************************************************/
 // Load configuration
 /**********************************************************************/
@@ -41,7 +39,7 @@ var mailManager = require("./lib/mailManager.js")({config: nconf, logger: logger
 var build = nconf.get('build');
 var server = nconf.get(build).server;
 
-logger.info('build=' + build + " (development/production) [Run 'build=development node server.js' for local server.]");
+logger.info('build=' + build + " (development/production) [Run 'node index.js --build=development' for local server.]");
 
 
 /**********************************************************************/
@@ -111,6 +109,8 @@ var executeTask = function(t){
 	
 	Step(
 		function() {
+			logger.debug("=======Task Begin==========");
+			logger.debug("The task is: ");
 			logger.debug(t);
 			downloadFile(t, this);
 		},
@@ -133,11 +133,13 @@ var executeTask = function(t){
 		},
 		function(err, t) {
 			cleanupTempFiles(t, this);
+			
+			//this(err);
 		},
 		function (err) {			
 			isTaskExecuting = false;
 			
-			console.log("Complete");
+			logger.debug("=======Task Complete==========");
 		}
 	);
 };
@@ -153,10 +155,12 @@ var downloadFile = function(t, cb){
 	t.localSrcFileName =localSrcFileName;
 	
 	try{
-		request.get({url:url, headers:headers}).pipe(fs.createWriteStream(localSrcFileName));
-	
-		logger.debug("[Success]: File [" + t.srcFileName + "] is download as ["+localSrcFileName+"].");
-		cb(null, t);
+		var writeStream = fs.createWriteStream(localSrcFileName);
+		request.get({url:url, headers:headers}).pipe(writeStream);
+		writeStream.on('close', function () {
+			logger.debug("[Success]: File [" + t.srcFileName + "] is download as ["+localSrcFileName+"].");
+			cb(null, t);
+	  	});
 	}
 	catch(err){
 		logger.debug("[Fail]: Failed to download [" + localSrcFileName + "].");
@@ -259,7 +263,7 @@ var cleanupTempFiles = function(t, cb){
 		logger.debug(t.localSrcFileName + ' is deleted');
 		logger.debug(t.localDestFileName + ' is deleted');
 		logger.debug("[Success]: Cleanup is completed.");
-		cb(null,t );
+		cb(null,t);
 	}
 	catch(err){
 		logger.debug("[Fail]: Failed to clean up task files");
