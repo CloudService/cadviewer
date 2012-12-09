@@ -2,7 +2,7 @@
   "name": "worker",
   "version": "0.0.1",
   "description": "The worker for the translation.",
-  "main": "server.js",
+  "main": "index.js",
   "dependencies": {
       "log4js":"",
       "socket.io-client":"",
