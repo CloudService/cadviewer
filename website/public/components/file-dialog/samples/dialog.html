@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dialog Demo</title>
+		<!-- This is the demo for the dialog, see the document here. http://jqueryui.com/demos/dialog/#option-width -->
+		<!-- The ui library is downloaded here http://jqueryui.com/download-->
+     	<link type="text/css" href="../../thirdparty/jquery-ui-1.8.24/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+     	<link type="text/css" href="../styles/file-dialog.css" rel="stylesheet" />
+     	
+		<script type="text/javascript" src="../../thirdparty/jquery-ui-1.8.24/js/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="../../thirdparty/jquery-ui-1.8.24/js/jquery-ui-1.8.24.custom.min.js"></script>
+		
+		<script type="text/javascript" src="../../thirdparty/closure-templates/soyutils.js"></script>
+		<script type="text/javascript" src="../ui/file-dialog-ui.js"></script>
+		
+		<script type="text/javascript" src="../scripts/file-dialog.js"></script>
+  </head>
+  <body>
+
+
+	<button>Start file dialog</button>
+
+	<script>
+	$(document).ready(function() {
+		$( "button").button();
+		$("button").click(function() { 
+		
+			var dia = new component.ui.fileDialog.dialog()
+			dia.init("box", "root"); 
+			
+			var folder = new component.ui.fileDialog.fileObject();
+			folder.id="1";
+			folder.name = "Folder 1";
+			folder.isFolder = true;
+			folder.size = "-";
+			folder.moddate="2012-10-4 10:59";
+			
+			var file = new component.ui.fileDialog.fileObject();
+			file.id="2";
+			file.name = "File 1";
+			file.isFolder = false;
+			file.size = "30k";
+			file.moddate="2012-10-4 10:59";
+			
+			var files = [folder, file];
+			
+			dia.appendFiles("root", files);
+			});
+		});
+	</script>
+
+
+  	</body>
+<html>

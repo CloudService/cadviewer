@@ -1,0 +1,81 @@
+
+#translation-main{
+	width: 800px;
+	margin-left:auto;
+	margin-right:auto;
+	
+	}
+.section{
+	margin-top:20px;
+	margin-bottom: 20px;
+}
+#storage-provider-list{
+	height:50px;
+	margin-top:20px;
+	margin-bottom: 20px;
+	padding: 0;
+}
+#storage-provider-list li{
+	float: left;
+	display: inline;
+	width: 130px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.provider-icon{
+	width: 100%;
+	height:100%;
+}
+
+.provider-icon:hover{
+	cursor:pointer;
+}
+
+#format-list{
+	height:20px;
+	margin-top:10px;
+	margin-bottom: 10px;
+	padding: 0;
+}
+#format-list li{
+	float: left;
+	display: inline;
+	width: 120px;
+	margin-top:10px;
+	margin-bottom: 10px;
+}
+
+fieldset {
+	margin-top:10px;
+	margin-bottom: 10px;
+	
+}
+
+.file-label{
+	width:120px;
+	float: left;
+}
+
+.dest-file-row{
+	clear:both;
+}
+
+.file{
+	width: 500px;
+}
+
+ul { 
+	margin: 0;
+	padding: 0;
+	list-style:none; 
+}
+
+#email{
+	width:500px;
+}
+
+#start-button{
+	height: 80px; 
+	width: 800px;
+}

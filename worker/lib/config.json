@@ -1,0 +1,10 @@
+{
+	"build" : "development",
+	"development": {
+		"server": "http://localhost:3000"
+	},
+	"production": {
+		"server": "http://sw.ap01.aws.af.cm"
+	}
+
+}

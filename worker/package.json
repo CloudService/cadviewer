@@ -1,0 +1,24 @@
+{
+  "name": "worker",
+  "version": "0.0.1",
+  "description": "The worker for the translation.",
+  "main": "server.js",
+  "dependencies": {
+      "log4js":"",
+      "socket.io-client":"",
+      "request":"",
+      "restler": "",
+      "nconf":"",
+      "sendmail":""
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "worker",
+    "translation"
+  ],
+  "author": "Jeffrey Sun",
+  "license": "MIT"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "actionmessage",
+  "version": "0.0.2",
+  "description": "The Javascript implementation of the Action Message protocol.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/unittest.js"
+  },
+  "repository": "",
+  "keywords": [
+    "actionmessage"
+  ],
+  "author": {
+    "name": "Jeffrey Sun"
+  },
+  "license": "MIT",
+  "readme": "This is the JS implementation for the Action Message protocol.\nThe handler must be registered ahead before it is available.\n\nThis module can be used under both the server and browser environments. \n\nBrowser environment\n<script src=\"actionMessage/index.js\"></script>\n<script>\n  var messageSolver = actionMessage.getMessageSolver();\n</script>\n\n\nServer environment (Node.js)\nvar actionMessage = require('actionmessage'),\nvar messageSolver = actionMessage.getMessageSolver();",
+  "_id": "actionmessage@0.0.2",
+  "_from": "actionmessage"
+}

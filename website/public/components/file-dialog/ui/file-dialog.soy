@@ -1,0 +1,64 @@
+
+/**
+* Compile this file with command line: java -jar SoyToJsSrcCompiler.jar  --outputPathFormat file-dialog-ui.js   file-dialog.soy
+*/
+
+{namespace component.ui.fileDialog.template}
+
+/**
+ * dialog
+ */
+{template .filedialog}
+<div id="file-dialog">
+	<div id="file-navigator">File navigator</div>
+	<div id="file-header" class="file-header"> </div>
+	<ul id = "file-list">
+		
+	</ul>
+</div>
+{/template}
+
+/**
+ * Navigator
+ @param folderPath The folder {name, id} array shown on the navigator.
+ */
+{template .navigator}
+	{foreach $folder in $folderPath}
+    	<div id="{$folder.id}" class="file-navigator-item"> {$folder.name}</div>
+    	{if not isLast($folder)}
+      		<div class="file-navigator-separator"> | </div>  // separator 
+    	{/if}
+  {/foreach}
+{/template}
+
+/**
+ * Header
+ */
+{template .fileheader}
+		<div class="file-header-name-column" >
+			<div data-area-name="name"> Name</div> 
+		</div> 
+		<div class="file-header-size-column"  data-area-name="size"> Size</div> 
+		<div class="file-header-modification-date-column" data-area-name="midification-date"> Modification Date </div>
+{/template}
+
+/**
+ * Row
+ * @param id
+ * @param thumbnail
+ * @param name The name of the file or folder.
+ * @param size
+ * @param moddate The modification date, like 2012-10-1 10:45
+ */
+{template .filerow}
+  	<li class="file-row" id="{$id}"> 
+		<div class="file-name-column" >
+			<div class=" file-icon-thumbnail-spaceholder" data-area-name="thumbnail">
+				<div class=" {$thumbnail}"></div>
+			</div> 
+			<div class="file-name" data-area-name="name"> {$name}</div> 
+		</div> 
+		<div class="file-size-column"  data-area-name="size"> {$size} </div> 
+		<div class="file-modificaion-date-column" data-area-name="midification-date">{$moddate} </div>
+	</li>
+{/template}

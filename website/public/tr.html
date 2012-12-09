@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Data translation for 3D CAD files by FeatureTech</title>
+
+    <link rel="stylesheet" href="stylesheets/tr.css">
+    
+    <link type="text/css" href="components/thirdparty/jquery-ui-1.8.24/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+    <link type="text/css" href="components/file-dialog/styles/file-dialog.css" rel="stylesheet" />
+  </head>
+  <body>
+  
+  <div id="translation-main">
+  <form>
+ 		<div class="section"><fieldset>
+  			<legend>Step 1: Select the source file you want to translate</legend>
+  			<ul>
+  				<li>
+  					<ul id="storage-provider-list">
+  						<li> <div> <img id = "box" class="provider-icon" src="images/box.png"/></div></li>
+  						<li> <div> <img id = "dropbox" class="provider-icon" src="images/dropbox.png"/></div></li>
+  						<li> <div> <img id = "baidu" class="provider-icon" src="images/baidu.png"/></div></li>
+  						<li> <div> <img id = "a360" class="provider-icon" src="images/a360.png"/></div></li>
+  						<li> <div> <img id = "qq" class="provider-icon" src="images/qq.png"/></div></li>
+  					</ul>
+  				</li>
+  				<li><div class="file-label">Source file: </div><input class="file" id="srcFile" type="text" disabled></li>
+  			</ul>
+ 		</fieldset></div>
+ 
+  		<div class="section"><fieldset>
+  			<legend>Step 2: Select the destination file format</legend>
+  			<ul>
+  				<li> <ul id="format-list">
+  						<li> <div>  <input type="radio" name="format" value="dwg" checked="true">dwg</div></li>
+  						<li> <div>  <input type="radio" name="format" value="dwf">dwf</div></li>
+  						<li> <div>  <input type="radio" name="format" value="stl">stl </div></li>
+  						<li> <div>  <input type="radio" name="format" value="sat">sat </div></li>
+  						<li> <div>  <input type="radio" name="format" value="png">png </div></li>
+  						<li> <div>  <input type="radio" name="format" value="gif">gif </div></li>
+  					</ul></li>
+  				<li class="dest-file-row"> <div class="file-label">Destination file: </div><input class="file" id="destFile" type="text" disabled></li>
+  			</ul>
+  		</fieldset></div>
+  		
+  		<div class="section"> 
+  		<fieldset>
+  			<legend>Step 3: Input the email to get the complete notification</legend>
+  			<ul>
+  				<li>Email notification: <input id="email" type="text"> </input></li>
+  			</ul>
+  		</fieldset>
+  		</div>
+  		<div class="section"> <div id="start-button"> Start translation</div></div>
+ 	</form>
+ 	</div>
+ 	
+  	<script src="components/thirdparty/jquery/jquery-1.8.2.js"></script>
+  	<script src="javascripts/tr.js"></script>
+  	
+  	<script type="text/javascript" src="components/thirdparty/jquery-ui-1.8.24/js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="components/thirdparty/jquery-ui-1.8.24/js/jquery-ui-1.8.24.custom.min.js"></script>
+		
+	<script type="text/javascript" src="components/thirdparty/closure-templates/soyutils.js"></script>
+	<script type="text/javascript" src="components/file-dialog/ui/file-dialog-ui.js"></script>
+		
+	<script type="text/javascript" src="components/file-dialog/scripts/file-dialog.js"></script>
+		
+  	<script type="text/javascript" src="javascripts/file-dialog-tr.js"></script>
+  	<script type="text/javascript" src="javascripts/actionmessage/index.js"></script>
+
+  	</body>
+<html>
+  

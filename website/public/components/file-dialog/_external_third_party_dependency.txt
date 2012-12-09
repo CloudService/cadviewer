@@ -1,0 +1,22 @@
+
+[
+    {
+        "Name": "styles/btn_icon.gif"
+        , "Source": "http://pan.baidu.com/res/static/images/btn_icon.gif?@=-1"
+    }
+    , {
+        "Name": "styles/sprite_list_icon.gif"
+        , "Source": "http://pan.baidu.com/res/static/images/sprite_list_icon.gif?@=-1"
+    }
+    , {
+        "Name": "jquery"
+    }
+    , {
+        "Name": "jquery-ui-*"
+        , "Source": "http://jqueryui.com/download"
+    }
+    , {
+        "Name": "google closure templates"
+        , "Source": "http://code.google.com/p/closure-templates/downloads/list"
+    }
+]

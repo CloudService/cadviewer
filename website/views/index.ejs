@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Data translation for 3D CAD files</title>
+    
+    <link rel="stylesheet" href="stylesheets/main.css">
+
+  </head>
+  <body>
+  <div id="serverStatus"> Server status (Alpha): Online translation workers ==> <%=workerNum%> | Translation queue ==> <%=taskNum%></div>
+  <iframe src="tr.html" frameborder="0px" width="100%" height="800px"> </iframe>
+	<script type="text/javascript" >
+		
+		function getAction(){ 
+ 			// The schema of the amessage is like 
+ 			// {&quot;handler&quot;:&quot;translator&quot;,&quot;action&quot;:&quot;openFileDialog&quot;,&quot;data&quot;:{&quot;id&quot;:&quot;hello&quot;}}
+ 			// We need to ass the quotes limiter and replace &quot; with double quotes.
+ 			var astringHTML = "<%=amessage%>";
+ 			var astring=astringHTML.split('&quot;').join('"'); 
+ 			return astring;
+		}
+		
+		function getDestFormats(){
+			var destFormatsHTML = "<%=destFormats%>";
+ 			var destFormatsString=destFormatsHTML.split('&quot;').join('"'); 
+ 			var destFomrats = JSON.parse(destFormatsString);
+ 			return destFomrats;
+		}
+		
+	</script>
+  </body>
+<html>
+  

@@ -1,0 +1,26 @@
+{
+  "name": "website",
+  "version": "0.0.1",
+  "description": "3d translator service",
+  "main": "server.js",
+  "dependencies": {
+  	  "log4js":"",
+      "express": "3.0.0rc4",
+      "ejs":"*",
+      "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
+      "request":"",
+      "socket.io":"" 
+  }, 
+	"devDependencies": {
+    "jade": ">=0.12.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "3d;translator"
+  ],
+  "author": "Jeffrey Sun",
+  "license": "MIT"
+}
