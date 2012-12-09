@@ -9,7 +9,8 @@
       "request":"",
       "restler": "",
       "nconf":"",
-      "sendmail":""
+      "sendmail":"",
+      "step":""
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
