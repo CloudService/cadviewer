@@ -28,7 +28,7 @@
 		$("button").click(function() { 
 		
 			var dia = new component.ui.fileDialog.dialog()
-			dia.init("box", "root"); 
+			dia.init("boxtest", "root"); 
 			
 			var folder = new component.ui.fileDialog.fileObject();
 			folder.id="1";
@@ -47,6 +47,8 @@
 			var files = [folder, file];
 			
 			dia.appendFiles("root", files);
+			
+			
 			});
 		});
 	</script>

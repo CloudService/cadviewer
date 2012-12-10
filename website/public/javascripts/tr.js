@@ -44,27 +44,19 @@ $(document).ready(function(){
 	var astring = parent.getAction();
 	if(astring && astring != "")
 		messageSolver.evaluate(astring);
+	   $("#fancybox-new").click(function(event){
 	
+		var files = [];
+		openDialog(files, _onOK);
+
+     //parent.location.href='/auth/box';
+   });   
+  
    $("#box").click(function(event){
 	
      parent.location.href='/auth/box';
    });
-   
-	var showWipMessage = function(){
-		alert("The box storage provider is supported. The support for your selection is working in progress. ^_^");
-	}
-    $("#dropbox").click(function(event){
-     showWipMessage();
-   });
-   $("#baidu").click(function(event){
-     showWipMessage();
-   });
-   $("#a360").click(function(event){
-     showWipMessage();
-   });
-   $("#qq").click(function(event){
-     showWipMessage();
-   });
+
    
    $('input:radio[name=format]').change(function(){
   			var task = service.trans.translator.task;

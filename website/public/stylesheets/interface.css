@@ -1,0 +1,3955 @@
+/*                                    */
+/*     Core Interface Style Sheet     */
+/*                                    */
+
+/* <----- Page -----> */
+
+html
+{
+    width: 100%;
+    height: 100%;
+	
+	margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	
+	border: none;
+	overflow:hidden;	
+
+    }
+
+body
+{
+    width: 100%;
+    height: 100%;
+	
+	margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	
+	border: none;
+	
+	background: #e6eef2;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e6eef2), color-stop(20%,#e6eef2), color-stop(50%,#dae1e5), color-stop(100%,#b7c5cc)); /* Chrome */
+	background: -webkit-linear-gradient(top, #e6eef2 0%, #e6eef2 20%, #dae1e5 50%,#b7c5cc 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #e6eef2 , #b7c5cc); /* Opera */
+	background: -moz-linear-gradient(top,  #e6eef2,  #b7c5cc); /* Firefox */
+	overflow:hidden;
+
+}
+
+.viewport
+{
+	z-index:100;
+		
+    width: 100%;
+    height: 100%;
+    
+    padding:0px;
+    margin:0px;
+
+    text-align:center;
+    
+    vertical-align:top;
+    margin-top:0px;
+    
+    background: #f3f7fb;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f7fb), color-stop(25%,#dadfe5), color-stop(75%,#b8c1cc)); /* Chrome */
+	background: -webkit-linear-gradient(top, #f3f7fb 0%,#dadfe5 25%,#b8c1cc 75%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #f3f7fb, #b8c1cc); /* Opera */
+	background: -moz-linear-gradient(top,  #f3f7fb,  #b8c1cc); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f7fb', endColorstr='#b8c1cc'); /* IE */
+}
+
+
+
+
+
+/* <----- Global -----> */
+
+
+table
+{
+    width: 100%;
+    height: 100%;
+    }
+
+
+
+
+
+/* <----- Scroll Bars -----> */ 
+
+
+::-webkit-scrollbar 
+{   
+    margin-top:2px;
+    margin-bottom:2px;
+
+    height: 14px;
+    width: 14px;
+    
+    background: #b8c5cc;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b8c5cc), color-stop(50%,#b8c5cc), color-stop(100%,#b8c5cc)); /* Chrome */
+	background: -webkit-linear-gradient(top, #b8c5cc 0%,#b8c5cc 50%,#b8c5cc 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #b8c5cc 0%,#b8c5cc 50%,#b8c5cc 100%); /* Opera */	
+	background: -moz-linear-gradient(top,  #b8c5cc,  #b8c5cc); /* Firefox */	
+	
+	border: 1px solid rgba(163,182,192,0.75);
+    
+    border-radius:1em;
+    background:-webkit-linear-gradient(top, #b8c5cc 0%,#d5e6ee 50%,#b8c5cc 100%);/* Chrome10+ */
+}
+    
+::-webkit-scrollbar-thumb 
+{
+    width:8px;
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(50%,#dae1e5), color-stop(100%,#FFFFFF)); /* Chrome */
+	background: -webkit-linear-gradient(top, #FFFFFF 0%,#dae1e5 50%,#FFFFFF 100%); /* Chrome10+ */
+    background: -o-linear-gradient(top, rgba(23,53,92,0.85), rgba(26,79,138,0.95)); /* Opera */
+    background: -moz-linear-gradient(top,  #b8c5cc,  #b8c5cc); /* Firefox */
+    
+   
+    border-left:1px solid rgba(93,128,147,0.75);
+    border-right:1px solid rgba(93,128,147,0.75);
+    border-top:1px solid rgba(150,150,150,0.75);
+    border-bottom:1px solid rgba(93,128,147,0.75);
+    
+    -webkit-border-radius:1em;
+    background:-webkit-linear-gradient(top, #FFFFFF 0%,#dae1e5 50%,#FFFFFF 100%);/* Chrome10+ */
+}
+
+::-webkit-scrollbar-corner {
+    background: #FFF;
+    }
+    
+#menu
+{
+	height: 38px;
+	
+	vertical-align:middle;
+	
+    font-family: Consolas, Courier;
+    font-size: 14px;
+	color: #40bfff;
+    }
+
+
+.menuicons
+{
+    position:relative;
+    top:-12px;
+    vertical-align:middle;
+}
+    
+#menusave
+{
+    padding-left:10px;
+    width:250px;
+    display:block;
+    background:rgba(0,0,0,0.25);
+    color:#76bbfb;
+    }
+    
+.menutextright
+{
+    padding-left:38px;
+    text-align:right;
+    position:relative;
+    top:-10px;  
+    }
+
+#statustext
+{
+    float:right;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #5d8093;
+    font-size: 12px;
+    top: 6px;
+    left: 72px;
+    padding:0px; 
+    padding-left:0px; 
+    padding-right:0px;
+    margin: 0px;
+    margin-right: 10px;
+    position: relative;
+    }
+
+/* <----- Toolbar -----> */
+
+#toolbar, .toolbar
+{
+	min-width:180px;
+	
+	position:relative;
+	top:-1px;
+	
+	vertical-align:middle;
+
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0px;
+	margin-bottom:10px;
+	
+	border-top: 0px solid rgba(255,255,255,0.2);
+	border-bottom: 0px solid rgba(255,255,255,0.2);
+	padding-top:0px;	
+	
+    width:200px;
+    z-index:100;
+    min-height:40px;
+    height:40px;
+}
+
+.toolbartoggle
+{
+    float: left;
+    
+    height: 45px;
+    width: 24px;
+    cursor: pointer;
+    
+    border-left-width: 0px; 
+	border-right-width:0px;
+	-webkit-border-image: url('toolbar-close.png') 0 0 0 0;
+	-moz-border-image: url('toolbar-close.png') 0 0 0 0;
+	-o-border-image:url('toolbar-close.png') 0 0 0 0;
+}
+
+/*TODO remove #cameracmds*/
+#tools, .tools
+{
+	min-width: 50px;
+	min-height: 40px;
+	
+	margin-left:auto;
+	margin-right:auto;
+	
+	text-align:center;
+	
+	padding-top:5px;
+	
+	vertical-align:middle;
+    }
+    
+#cameracmds, .cameracmds
+{
+	min-width: 50px;
+	min-height: 40px;
+	
+	margin-left:auto;
+	margin-right:auto;
+	
+	text-align:center;
+	
+	padding-top:5px;
+	
+	vertical-align:middle;
+	display: inline-block;
+
+	float: left;
+	display: inline-block;
+    }
+    
+.tools span
+{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+    
+.appicon
+{
+    position:absolute;
+    left:15px;
+    top:3px;
+}
+
+.expandedviewtoolbar
+{
+	border-left-width: 15px; 
+	border-right-width:0px;
+	-webkit-border-image: url('toolbar_view_expanded.png') 0 1 0 15;
+	-moz-border-image: url('toolbar_view_expanded.png') 0 1 0 15;
+	-o-border-image:url('toolbar_view_expanded.png') 0 1 0 15;
+}
+
+.collapsedviewtoolbar 
+{
+	border-width: 25px; 
+	-webkit-border-image: url('toolbar_view_compacted.png') 0 0 0 25;
+	-moz-border-image: url('toolbar_view_compacted.png') 0 0 0 25;
+	-o-border-image:url('toolbar_view_compacted.png') 0 0 0 25;
+}
+
+.applicationtoolbar
+{
+	border-left-width: 25px; 
+	border-right-width:25px;
+	-webkit-border-image: url('application_toolbar.png') 0 25 0 25;
+	-moz-border-image:url('application_toolbar.png') 0 25 0 25;
+	-o-border-image:url('application_toolbar.png') 0 25 0 25;
+}
+
+/* <----- Container -----> */
+#controlContainer 
+{
+    position:absolute;
+    bottom:0px;
+    z-index:100;
+    width: 100%;
+}
+
+/* <----- Camera -----> */
+#camera, .camera
+{
+    padding-bottom:19px;
+    min-height:40px;
+    height:40px;
+    display: inline-block;
+}
+
+/* <---- Macros -----> */
+
+#macros
+{
+	z-index: -99;
+}
+
+
+.macrooutput
+{
+    position:relative;
+    
+    height: 8em;
+    width: 100%;
+
+    padding-left:2px;
+    padding-top:8px;
+    padding-bottom:8px;
+
+    overflow: auto;
+
+    border-top: 1px solid #FFFFFF;
+    
+	background-color: rgba(230,238,242,0.25);
+	
+	font-family: Consolas, Courier;
+    font-size: 12px;
+	color: #5d8093;
+	
+	z-index:101;
+    }
+
+.macroinput
+{
+    position:relative;
+    width: 100%;
+    z-index:500;
+    }
+
+.macroinputtext
+{
+	width: 100%;
+	height: 2em;
+
+	margin-top:1px;
+	padding-left:1px;
+	vertical-align: center;
+	
+	border-top: 1px solid rgba(255,255,255,0.75);
+	border: 0px;
+
+	outline:none;
+
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(230,238,242,0.75)), color-stop(50%,rgba(218,225,229,0.75)), color-stop(100%,rgba(183,197,204,0.75))); /* Chrome */
+	background: -webkit-linear-gradient(top, rgba(230,238,242,0.75) 0%,rgba(218,225,229,0.75) 50%,rgba(183,197,204,0.75) 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, rgba(230,238,242,0.75), rgba(183,197,204,0.75)); /* Opera */
+	background: -moz-linear-gradient(top,  rgba(230,238,242,0.75),  rgba(183,197,204,0.75)); /* Firefox */
+
+
+    font-family: Consolas, Courier;
+    font-size: 12px;
+	color: #186287;
+    }
+
+.macrobutton
+{
+    width:20px;
+    height:20px;
+}
+
+
+/* <----- Visibility Controls -----> */
+#visibilitycontrol
+{
+    float:right;
+    z-index:1000;
+    padding:0px;
+    margin:0px;
+    margin-right:35px;
+    position:relative;
+    opacity:0.15;
+    /*
+    top:2px;
+    */
+    top:76px;
+}
+    
+#visibilitycontrol:hover
+{
+    opacity:0.5;
+}
+ 
+ 
+ /* <----- Tooltip -----> */
+ 
+   
+.tooltip
+{
+    position:  absolute; 
+    display: none;
+    visibility: visible;
+    z-index: 999;
+    padding: 10px;
+    border: 1px solid #eee;
+    opacity: .9;
+  
+    background-color: #b7c5cc;                    
+    background-image: -webkit-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -moz-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -ms-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -o-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));  
+  
+    -moz-border-radius: 1px;
+    border-radius: 1px;  
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;  
+  
+    font-family: Courier;
+    font-size: 12px;
+    color: #186287;
+    }
+ 
+
+.tooltip :before,
+.tooltip :after
+{
+    content: "";
+    position: absolute;
+    z-index: 1000;
+    bottom: -6px;
+    left: 4px;
+  
+  
+    border-top: 6px solid #b7c5cc;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;        
+    border-bottom: 0;
+    }
+ 
+.tooltip :before
+{
+    border-top-color: #b7c5cc;
+    bottom: -6px;
+    }
+
+
+#invisibleSpan
+{
+	font-family: Consolas, Courier;
+    font-size: 12px;
+	color: #186287;
+    }
+
+
+/* <----- Menu ------> */
+
+
+body, ul, li 
+{
+	font-size:14px;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height:21px;
+	text-align:left;
+    }
+
+#megamenu 
+{
+	float:left;
+	position:relative;
+	top:0px;
+	margin-right:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-top:0px;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:32px;
+	color:#76bbfb;
+	z-index:2000;	
+	}
+
+
+#megamenu li 
+{
+    float:left;
+    text-align:center;
+    position:relative;
+    }
+
+#megamenu li:hover 
+{
+    background: rgba(204,204,204,0.01);
+    position:relative;
+    -moz-border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    }
+
+#megamenu li a 
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color: #76bbfb;
+	display:block;
+	outline:0;
+	text-decoration:none;
+    }
+
+#megamenu li:hover a 
+{
+	color:#161616;
+    }
+
+#megamenu li .drop 
+{
+    }
+    
+#megamenu li:hover .drop 
+{
+    }
+
+
+
+
+/* <----- Drop Down ------> */
+
+
+.dropdown_1column
+ {
+	margin:0px auto;
+	width:270px;
+	float:left;
+	position:absolute;
+	left:-5px;
+	top:-1000px;
+	text-align:left;
+	padding:10px 5px 10px 5px;
+	border-top:none;
+
+	background: rgba(23,53,92,0.85);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(23,53,92,0.85)), color-stop(100%,rgba(26,79,138,0.95))); /* Chrome */
+	background: -webkit-linear-gradient(top, rgba(23,53,92,0.85) 0%,rgba(26,79,138,0.95) 100%); /* Chrome10+ */
+	background: -moz-linear-gradient(top,  rgba(23,53,92,0.85),  rgba(26,79,138,0.95)); /* Firefox */
+	background: -o-linear-gradient(top, rgba(23,53,92,0.85), rgba(26,79,138,0.95)); /* Opera */
+
+	-moz-border-radius: 0px 0px 5px 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	box-shadow:0px 10px 10px rgba(0,0,0,0.25);
+}
+
+#megamenu li:hover .dropdown_1column
+{
+    top:auto;
+    }
+
+.col_1
+{
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 5px;
+	margin-right: 5px;
+    }
+    
+.col_1 {width:260px;}
+
+/* Drop Down Content Stylings */
+
+#megamenu p, #megamenu h2, #megamenu h3, #megamenu ul li 
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align:left;
+    }
+
+#megamenu h2 
+{
+	font-size:21px;
+	font-weight:400;
+	margin:7px 0 14px 0;
+	padding-bottom:14px;
+	border-bottom:1px solid #1a4f8a;
+    }
+
+#megamenu h3 
+{
+	font-size:14px;
+	margin:7px 0 14px 0;
+	padding-bottom:7px;
+	border-bottom:1px solid #666666;
+	color:#215189;
+    }
+
+#megamenu h3:hover 
+{
+	color:#029feb;
+    }
+
+#megamenu p 
+{
+	line-height:18px;
+	margin:0 0 10px 0;
+    }
+
+#megamenu li:hover div a 
+{
+	font-size:12px;
+	color:#697f9f;
+    }
+    
+#megamenu li:hover div a:hover 
+{
+	color:#029feb;
+    }
+
+.menu_item
+{
+    width:260px;
+    text-align:center;
+    vertical-align:text-top;
+    background:rgba(0,0,0,0.25);
+    
+    padding:0px 20px;
+    width:auto;
+}
+
+.img_menu 
+{
+ border:1px solid #bbbbbb;
+ margin-bottom:0px;
+ margin-top:0px;
+    }
+
+.img_menu:hover 
+{
+ border:1px solid #eeeeee;
+ position:relative;
+ top:-1px;
+    }
+
+.img_menu_name  
+{
+    position:relative;
+    float:left;
+    }
+
+#megamenu li ul 
+{
+	list-style:none;
+	padding:0;
+	margin:0 0 12px 0;
+    }
+
+#megamenu li ul li 
+{
+	font-size:12px;
+	line-height:24px;
+	position:relative;
+	padding:0;
+	margin:0;
+	float:none;
+	text-align:left;
+	width:130px;
+
+    width:260px;
+}
+
+#megamenu li ul li:hover 
+{
+	background:none;
+	border:none;
+	padding:0;
+	margin:0;
+    }
+
+
+* { font-family: Arial, Helvetica, Sans-Serif; }
+
+.button { cursor:pointer; }
+
+/*
+These are the strings used for input to the CursorController. 
+Using this, we can specify either a stock or a custom cursor without 
+making modifications in the CursorController 
+*/
+.cursor-busy {cursor: wait;}
+.cursor-default {cursor: default;}
+.cursor-progress {cursor: progress;}
+.cursor-zoom {cursor: url(sprites/zoom-32x32-activecursor.png), auto;  }
+.cursor-pan {cursor: url(sprites/pan-32x32-activecursor.png), auto;  }
+.cursor-orbit {cursor: url(sprites/orbit-32x32-activecursor.png), auto;  }
+.cursor-fit {cursor: url(sprites/fit-32x32-activecursor.png), auto; }
+.cursor-handlehover {cursor: url(sprites/handle-hover.png), auto; }
+.cursor-handlegrab {cursor: url(sprites/handle-grab.png), auto; }
+
+/*
+These are the strings used for plugin detection
+*/
+.installerPromptDefault {display: none; }
+.installerPromptVisible {display: block; height: 200px; position: absolute; top: 48px; left: 32px;  }
+.iFrameDefault {display: none; }
+.iFrameVisible {display: block; }
+
+/*
+Progress indicator styles
+*/
+.progressindicator2d
+{
+	position:absolute;
+
+	pointer-events: none;
+
+	background-repeat:repeat-x;
+	z-index:99;
+}
+
+.progressindicatorloading
+{
+	background-image: url("loading_loop.gif");
+}
+
+.progressindicatorbackground
+{
+	background-image: url("sprites/loading-background.png");
+}
+
+#progressindicatorsettings
+{
+	width: 100px;  /*The width of the progress loading bar.*/
+	height: 12px;  /*The height of the progress loading bar.*/
+	padding-right: 10px; /*The progress bar will be shown at the right bottom of the viewport by default, padding right is the gap of progress bar bewteen the right edge of the viewport.*/
+	padding-bottom: 10px; /*Similar as padding right, this is the gap between the progress bar and bottom edge of the viewport.*/
+	padding-left: 4px;  /*Use this to set the border thickness of the progress bar, which will dicide the border image's width and height, to have better ui looking, the value must > 3px.*/
+}
+
+/*
+Image capture styles
+*/
+#imagecapture
+{
+	position:absolute;
+	z-index:100;
+	width: 660px;  /* The width of the image capture window.*/
+	height: 660px;  /* The height of the image capture window.*/
+}
+
+#imagecaptureWindow
+{
+    position:absolute;
+    top:50%;
+    left:50%;
+	width: 600px;  /* The width of the image capture window.*/
+	height: 600px;  /* The height of the image capture window.*/
+    margin-top: -300px;
+    margin-left: -300px;
+}
+
+#imagecaptureWindow div
+{
+    position:absolute;
+    width:100px; /* The length of the vertical border line */
+    height:100px; /* The length of the horizontal border line */
+    border-color:white;
+    border-style: solid;
+    border-width: 4px; /* The width of the border line */
+}
+
+#imagecaptureMode
+{
+	position:absolute;
+    top: 0px;
+    left: 50%;
+    width: 160px;
+    height: 25px;    
+    margin-left: -80px;
+
+    color:#333333;
+    text-align: center;
+    font-weight: bold;
+
+	-moz-box-shadow:inset 1px 2px 15px #4d4d4d;
+   -webkit-box-shadow:inset 1px 2px 15px #4d4d4d;
+	box-shadow:inset 1px 2px 15px #4d4d4d;
+
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#dedede), to(#c8c8c8));
+    background-image: -webkit-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:    -moz-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:     -ms-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:      -o-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:         linear-gradient(top, #dedede, #c8c8c8);
+
+	border:solid 1px;
+	border-color: #dddddd;
+
+    -webkit-border-radius: 10px; /* Safari prototype */
+	-moz-border-radius: 10px; /* Gecko browsers */
+    border-radius: 10px; /* Everything else - limited support at the moment */
+}
+
+#imagecaptureBtnCamera
+{
+	position:absolute;
+    bottom: 0px;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    cursor:pointer;
+}
+
+#imagecaptureBtnClose
+{
+	position:absolute;
+    top: 0px;
+    right: 0px;
+    width: 16px;
+    height: 16px;
+    cursor:pointer;
+}
+
+/* Plugin object characteristics */
+#asmpId { visibility:hidden; height: 0px; margin:0px; padding:0px; }
+
+/*Adorner styles*/
+#windowselectadorner 
+{
+	position:absolute;
+
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 1px solid white;
+	pointer-events: none;
+	z-index:99;
+}
+
+#lassoselectadorner 
+{
+	position:absolute;
+	background-color: rgba(255, 255, 255, 0);
+	border: 0px solid white;
+	pointer-events: none;
+	z-index:99;
+}
+
+/*Intellisense styles*/
+.intellisense
+{
+	bottom: 28px;
+ 	position:  absolute; 
+    
+    z-index: 1000;
+    border: 1px solid #eee;
+    
+    background-color: #b7c5cc;                    
+    background-image: -webkit-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -moz-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -ms-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -o-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));  
+    
+    -moz-border-radius: 1px;
+    border-radius: 1px;  
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;  
+    
+    opacity:0.9;
+    
+}
+
+.intellisense ul
+{
+	list-style: none;
+	padding:0;
+	margin:0;
+	width:auto;
+}
+
+.intellisense li
+{
+	padding-left:2px;
+	padding-right:2px;
+	font-family: Courier;
+    font-size: 9px;
+    color: #186287;
+    
+    line-height:21px;
+}
+ 
+.intellisense li.selected
+{
+	background-color: #fafafa;
+	color:#5e5e5e;
+	border: 1px solid #eee;
+} 
+  
+  
+/*Tooltip styles*/
+    
+.tooltip
+{
+    position:  absolute; 
+    display: none;
+    visibility: visible;
+    z-index: 999;
+    padding: 10px;
+    border: 1px solid #eee;
+    opacity: .9;
+    bottom: 28px;
+  
+    background-color: #b7c5cc;                    
+    background-image: -webkit-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -moz-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -ms-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: -o-linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));
+    background-image: linear-gradient(rgba(255,255,255,.85), rgba(180,197,204,0.25));  
+  
+    -moz-border-radius: 1px;
+    border-radius: 1px;  
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;  
+  
+    font-family: Courier;
+    font-size: 12px;
+    color: #186287;
+}
+ 
+.tooltip :before,
+.tooltip :after
+{
+    content: "";
+    position: absolute;
+    z-index: 1000;
+    bottom: -6px;
+    left: 4px;
+  
+  
+    border-top: 6px solid #b7c5cc;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;        
+    border-bottom: 0;
+}
+ 
+.tooltip :before
+{
+    border-top-color: #b7c5cc;
+    bottom: -6px;
+}
+
+#invisibleSpan
+{
+	font-family: Consolas, Courier;
+    font-size: 12px;
+	color: #186287;
+}
+
+#MenuBGImage{ 
+    width:1024px;
+    background-repeat:no-repeat;
+    height:46px;
+}
+
+.floatLeft{ 
+    float:left;
+    background:rgba(0,0,0,0);
+}
+
+#MenuBG{ 
+    height:46px;
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#184f8a', endColorstr='#15355c'); /* IE */
+    width:100%;
+    z-index:-10;
+    background:-moz-linear-gradient(top,  #184f8a,  #15355c);  /* Firefox */
+    position:absolute;
+}
+
+.logo{ 
+    width:64px;
+    display:inline-block;
+    height:32px;
+}
+
+/* CSS for BlockUI */
+
+.blockUIZIndex
+{
+z-index:3001;	
+}
+
+.blockUIDialog
+{
+	position:absolute;
+	left:0px;
+	right:0px;
+	margin-left: auto;        /* adding auto-margins left and right will
+							center the element horizontally!*/
+	margin-right: auto;
+	top:0px;
+	bottom:0px;
+	margin-top:auto;
+	margin-bottom:auto;
+}
+
+.blockUI
+{
+	position:absolute;
+	left:0;
+	right:0;
+	width:100%;
+	height:100%;
+	background-color: Black;
+	opacity: 0.7;
+	z-index: 3000;
+}
+
+.blockUILight
+{
+	opacity:0.3;
+	background-color:#5e5e5e	
+}
+
+.closeuidialog
+{
+	height:20px;
+	width:20px;
+	background-image: url('closeblockdialog.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
+	top:7px;
+	right:7px;
+	margin-right:auto;
+	cursor:pointer;
+}
+
+.closeuidialogexternal
+{
+	top:0px;
+	right:-27px;
+}
+
+.closeuidialog:hover
+{
+	background-image: url('closeblockdialog-hover.png');
+}
+
+
+/* Dialog used for Ponoko frame*/
+.dialogcontainer
+{
+	width: 600px; 
+	height: 500px; 
+	display:none; 
+	border: 0px none;
+	}
+
+.dialogcontainer div.dialogheader
+{
+	height:34px;
+	/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3a434a), color-stop(50%,#6d7b88), color-stop(50%,#6d7b88), color-stop(100%,#a9aeb2)); /* Chrome */
+	/*background: -webkit-linear-gradient(top, #3a434a 0%, #6d7b88 50%, #6d7b88 50%, #a9aeb2 100%); /* Chrome10+ */ 
+	background-image: url('hor_bar.png');
+	
+}
+
+.logindialogcontainer
+{
+	width:500px;
+	height:550px;
+	background-color: #ffffff;
+}
+
+/* Controls */
+.RegularButtonDimensions
+{
+	width: 170px; /* TODO: Default can be set as 95% (or some other value) but need to provide a good mechanism to override this */
+	height: 30px;
+}
+
+.RegularButton
+{
+	font-family:Tahoma;
+    font-size:14px;
+    color: #ffffff;
+    background: rgb(115,160,205); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(115,160,205,1) 0%, rgba(93,140,186,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(115,160,205,1)), color-stop(100%,rgba(93,140,186,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(115,160,205,1) 0%,rgba(93,140,186,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(115,160,205,1) 0%,rgba(93,140,186,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(115,160,205,1) 0%,rgba(93,140,186,1) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(115,160,205,1) 0%,rgba(93,140,186,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73a0cd', endColorstr='#5d8cba',GradientType=0 ); /* IE6-9 */
+	border: 1px solid #5682ad;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-box-shadow: 1px 1px 1px #999999;
+    -webkit-box-shadow: 1px 1px 1px #999999;
+    box-shadow: 1px 1px 1px #999999;
+	cursor: pointer;
+}
+/*
+.RegularButton:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#f8f8f8), color-stop(50%,#f1f1f1), color-stop(100%,#f8f8f8));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f8f8f8 40%, #f1f1f1 50%, #f8f8f8 100%);
+	background: -o-linear-gradient(top, #ffffff , #f8f8f8); 
+	background: -moz-linear-gradient(top,  #ffffff,  #f8f8f8); 
+	color:#333333;
+	border:solid 1px;
+	border-color: #dddddd;
+	cursor: pointer;
+}
+
+.RegularButton:active
+{
+	-moz-box-shadow:inset 1px 2px 15px #4d4d4d;
+   -webkit-box-shadow:inset 1px 2px 15px #4d4d4d;
+	box-shadow:inset 1px 2px 15px #4d4d4d;
+	
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#dedede), to(#c8c8c8));
+    background-image: -webkit-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:    -moz-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:     -ms-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:      -o-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:         linear-gradient(top, #dedede, #c8c8c8);
+}
+*/
+.RegularButton-disabled
+{
+    font-family:Tahoma;
+    font-size:14px;
+    color: #ffffff;
+    background: rgb(204,204,204); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(204,204,204,1) 0%, rgba(102,102,102,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(204,204,204,1)), color-stop(100%,rgba(102,102,102,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#666666',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #aaaaaa;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+    cursor:default;
+    pointer-events: none;
+}
+
+.ImageButton
+{
+    border:none;
+    background-color:transparent;
+    cursor:pointer;
+}
+
+.FooterButtonDimensions, .FileButtonContainerDimensions
+{
+	width: 170px;
+	height: 30px;
+	
+	-webkit-border-radius: 5px; /* Safari prototype */
+	-moz-border-radius: 5px; /* Gecko browsers */
+	border-radius: 5px; /* Everything else - limited support at the moment */
+}
+
+.FooterButton
+{
+    font-family:Tahoma;
+    font-size:14px;
+    color: #ffffff;
+	background: rgb(69,135,214); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(69,135,214,1) 0%, rgba(28,87,159,1) 50%, rgba(17,81,158,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,135,214,1)), color-stop(50%,rgba(28,87,159,1)), color-stop(100%,rgba(17,81,158,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(69,135,214,1) 0%,rgba(28,87,159,1) 50%,rgba(17,81,158,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(69,135,214,1) 0%,rgba(28,87,159,1) 50%,rgba(17,81,158,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(69,135,214,1) 0%,rgba(28,87,159,1) 50%,rgba(17,81,158,1) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(69,135,214,1) 0%,rgba(28,87,159,1) 50%,rgba(17,81,158,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4587d6', endColorstr='#11519e',GradientType=0 ); /* IE6-9 */
+    
+    border: 1px solid #336699;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	cursor: pointer;
+}
+
+/*.FooterButton:hover, .FooterButton-hover
+{
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+    background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+	background: -o-linear-gradient(top, #ffffff , #ffffff); 
+	background: -moz-linear-gradient(top,  #ffffff,  #ffffff); 
+	color:#333333;
+	cursor: pointer;
+}*/
+
+.OnBoardingButton
+{
+    font-family:Tahoma;
+    font-size:9.5pt;
+    color: #154282;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe ), to(#e2e2e2));
+    background-image: -webkit-linear-gradient(top, #fefefe , #e2e2e2);
+    background-image:    -moz-linear-gradient(top, #fefefe , #e2e2e2);
+    background-image:     -ms-linear-gradient(top, #fefefe , #e2e2e2);
+    background-image:      -o-linear-gradient(top, #fefefe , #e2e2e2);
+    background-image:         linear-gradient(top, #fefefe , #e2e2e2);
+    
+    border: 1px solid #B7B7B7;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	cursor: pointer;
+}
+
+.OnBoardingButtonDimensions
+{
+    width:100px;
+    height:32px;
+}
+
+.SkipButton
+{
+    position:absolute;
+    bottom:3px;
+    right:20px;
+}
+
+.submissionButton:active
+{
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#d2bae4 ), to(#ffffff));
+    background-image: -webkit-linear-gradient(top, #d2bae4 , #ffffff);
+    background-image:    -moz-linear-gradient(top, #d2bae4 , #ffffff);
+    background-image:     -ms-linear-gradient(top, #d2bae4 , #ffffff);
+    background-image:      -o-linear-gradient(top, #d2bae4 , #ffffff);
+    background-image:         linear-gradient(top, #d2bae4 , #ffffff);
+}
+
+.FooterButton-disabled
+{
+    font-family:Tahoma;
+    font-size:14px;
+    color: #ffffff;
+    background: rgb(204,204,204); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(204,204,204,1) 0%, rgba(102,102,102,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(204,204,204,1)), color-stop(100%,rgba(102,102,102,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(204,204,204,1) 0%,rgba(102,102,102,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#666666',GradientType=0 ); /* IE6-9 */
+    
+    border: 1px solid #aaaaaa;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	cursor: default;
+}
+
+.FileButtonContainer
+{
+	position:relative;
+	display:inline-block;
+}
+
+.InvisibleFileButton 
+{
+	position: absolute; 
+	left:0px;
+	right: 0px; 
+	width:100%;
+	top: 0px; 
+	opacity: 0; 
+	cursor:pointer;
+	
+	filter: alpha(opacity=0); 
+	-ms-filter: "alpha(opacity=0)"; 
+	-khtml-opacity: 0; 
+	-moz-opacity: 0;
+}
+
+.FileButtonPositioning
+{
+	position: absolute;
+	top:0px;
+	left:0px;	
+}
+
+.DialogButtonDimensions
+{
+	width:160px;
+	margin:15px;
+}
+
+/* Search Button */
+
+.SearchControlContainer
+{
+	width:100%; /* TODO: Default can be set as 90% (or some other value) but need to provide a good mechanism to override this */
+	height:30px;
+	position:relative;
+	display: inline-block;
+	padding-top:5px;
+	padding-bottom:5px;
+	background-color: #F1F1F1;
+}
+
+.SearchControl
+{
+	padding:0px;
+	border:1px solid;
+	background-color: White;
+	margin:0px;
+	vertical-align:bottom;
+	text-indent:5px;
+}
+
+.SearchText
+{
+	width: 233px;
+	height:28px;
+	
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+	
+
+.SearchButton
+{
+	width:30px;
+	height:30px;
+	
+	background-image: url('search-button.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	
+	border-top-right-radius:5px;
+	border-bottom-right-radius: 5px;
+	
+}
+
+/* Paging Control */
+
+.PageControlGroup
+{
+	float:right;
+}
+
+.PageControlNavigationExtremes
+{
+	border:0px;
+	background-color:transparent;
+}
+
+.PageControlNavigation
+{
+	border:0px;
+	background-color:transparent;
+}
+
+.PageControlButton
+{
+    cursor: pointer;
+    opacity:100%;
+}
+
+.PageControlButtonDisable
+{
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* Toggle Button */
+
+.ToggleButtonGroup
+{
+	height:20px;
+	padding-top:10px;
+	padding-bottom:10px;
+	background-color: #4280BE;
+	}
+
+.ToggleButton
+{
+	text-align:center;
+	height:20px;
+	margin:0px;
+	padding-left:5px;
+	padding-right:5px;
+	display:inline-block;
+	
+}
+
+.ToggleButtonStandard
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfbfb), color-stop(50%,#ebe9e9), color-stop(50%,#ebe9e9), color-stop(100%,#cfcfcf)); /* Chrome */
+	background: -webkit-linear-gradient(top, #fcfbfb 0%, #ebe9e9 50%, #ebe9e9 50%, #cfcfcf 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #fcfbfb , #cfcfcf); /* Opera */
+	background: -moz-linear-gradient(top,  #fcfbfb,  #cfcfcf); /* Firefox */ 
+	color: #383838;
+	border:solid 1px;
+	border-color: #fbfbfb;
+	cursor: pointer;
+}
+
+.ToggleButtonFirst
+{
+	border-top-left-radius: 7.5px;
+	border-bottom-left-radius: 7.5px;
+}
+
+.ToggleButtonLast
+{
+	border-top-right-radius: 7.5px;
+	border-bottom-right-radius: 7.5px;
+}
+
+.ToggleButtonStandard:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#f8f8f8), color-stop(50%,#f1f1f1), color-stop(100%,#f8f8f8)); /* Chrome */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f8f8f8 40%, #f1f1f1 50%, #f8f8f8 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #ffffff , #f8f8f8); /* Opera */
+	background: -moz-linear-gradient(top,  #ffffff,  #f8f8f8); /* Firefox */ 
+	color:#333333;
+	border:solid 1px;
+	border-color: #fbfbfb;
+	cursor: pointer;
+}
+
+.ToggleButtonSelected
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(50%,#f8f8f8), color-stop(50%,#f8f8f8), color-stop(100%,#ffffff)); /* Chrome */
+	background: -webkit-linear-gradient(top, #eeeeee 0%, #f8f8f8 50%, #f8f8f8 50%, #ffffff 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #eeeeee , #ffffff); /* Opera */
+	background: -moz-linear-gradient(top,  #eeeeee,  #ffffff); /* Firefox */ 
+}
+
+.ToggleButtonDisabled
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#f1f1f1), color-stop(50%,#e1e1e1), color-stop(100%,#f3f3f3)); /* Chrome */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 40%, #e1e1e1 50%, #f3f3f3 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #ffffff , #f3f3f3); /* Opera */
+	background: -moz-linear-gradient(top,  #ffffff,  #f3f3f3); /* Firefox */ 
+	border:solid 1px;
+	border-color: #e1e1e1;
+	color: #9e9e9e;
+}
+
+.ToggleButtonDimensions
+{
+	width:136px;	
+	height:24px;	
+	
+	font-size:10pt;
+}
+
+
+
+.TabPanel
+{
+	position:absolute;
+	right:0px;
+	top:-1px;
+	bottom:0px;
+	width:310px; /* Default tab width */
+}
+
+/* Element that will hold the tab control (or any control on the right hand side) */
+.TabPanelWidth
+{
+	width:466px;
+}
+
+.TabPanelOuterWidth
+{
+	width:476px;
+}
+
+.TabPanelOuterWidth-Collapsed
+{
+	width:10px;
+}
+
+.CollapseBar
+{
+	width: 13px;
+	top:0px;
+	bottom:0px;
+	position:absolute;
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3b3b3),  color-stop(100%,#7d7d7d)); /* Chrome */
+	background: -webkit-linear-gradient(top, #b3b3b3 0%,  #7d7d7d 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #b3b3b3 , #7d7d7d); /* Opera */
+	background: -moz-linear-gradient(top,  #b3b3b3,  #7d7d7d); /* Firefox */ 
+    
+	padding: 0px;
+	margin: 0px;
+	visibility:hidden;
+	outline: 1px solid #666
+}
+
+.CollapseImage
+{
+	background-repeat: no-repeat;
+	background-position: center center;	
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.Collapse-Open
+{
+	background-image: url('slider-open.png');
+}
+
+.Collapse-Close
+{
+	background-image: url('slider-close.png');
+}
+
+/* Tab Control CSS */
+.TabControl
+{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	border: 1px solid #0F0A0E;
+	cursor:default;
+}
+
+.TabHeader
+{
+	background-color: #F1F1F1;
+	list-style-type: none;
+	padding-left:0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	height:35px;
+	
+	
+	border-bottom: 1px solid #DDDDDD;
+}
+
+.TabHeaderPadding
+{
+	/*position:absolute;
+	top:36px;
+	left:0;
+	right:0;
+	height:20px;
+	background-color:#FFFFFF;
+	border-bottom:1px solid #F6F6F6;
+*/
+}
+
+.TabButton
+{
+	float:left;
+	display: inline-block;
+	margin-left:0px;
+	margin-right:0px;
+	padding:0px;
+	height:100%;
+	width:90px;
+	font-family:Tahoma, Geneva, Arial, sans-serif;
+    font-size:12pt;
+    
+    text-align: center;
+    cursor: pointer;
+}
+
+.TabContentHeader
+{
+	background-color: #4280BE;
+	color:#FFFFFF;
+	height:40px;
+	margin-bottom: 15px;
+}
+
+.TabContentHeaderLabel
+{
+	line-height: 40px;
+	font-family: Tahoma;
+	font-size: 11.5pt;
+	padding-left: 20px;	
+}
+
+.TabButtonLabel
+{
+	font-family:Tahoma, Geneva, Arial, sans-serif;
+    font-size: 10pt;
+	display: inline-block;
+	line-height: 35px;
+	white-space: nowrap;
+}
+
+.TabButtonSelected
+{
+	background-color:#FFFFFF;
+	border: 1px solid #DDDDDD;
+	border-bottom: 1px solid #fafafa;
+}
+
+.TabContainer
+{
+	background-color:#FFFFFF;
+	position:absolute;
+	bottom:70px;
+	left:0;
+	right:0;
+	top:71px; /* 31 + 35 +24*/
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding:0px;
+	
+}
+
+.TabContainerOverride
+{
+	bottom:0px;
+}
+
+.TabContent
+{
+	padding-bottom:20px;
+}
+
+.TabFooter
+{
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+	height:30px;
+	padding:20px;
+	
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#F7F7F7), to(#EBEBEB));
+    background-image: -webkit-linear-gradient(top, #F7F7F7, #EBEBEB);
+	background: -o-linear-gradient(top, #F7F7F7 , #EBEBEB); /* Opera */
+	background: -moz-linear-gradient(top,  #F7F7F7,  #EBEBEB); /* Firefox */ 
+	color:#F7F7F7;
+	border:solid 1px;
+	border-color: #F8F8F8;
+}
+
+/* Breadcrumb CSS */
+
+.BreadcrumbContainer
+{
+	position:absolute;
+	top:36px;
+	color:#333333;
+    font-family:Tahoma, Geneva, Arial, sans-serif;
+    font-size:12px;	
+    background-color:#FFFFFF;
+    left:0px;
+    right:0px;
+    padding-bottom:8px;
+    padding-top:7px;
+    padding-left:20px;
+    height:20px;
+}
+
+.BreadcrumbItem
+{
+	display:inline-block;
+	vertical-align:middle;
+	margin-right:1px;
+}
+
+.BreadcrumbArrow
+{
+	background-image: url('breadcrumb-arrow.png');
+	width:7px;
+	height:30px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-left: 2px;
+	margin-right: 4px;
+}
+
+.BreadcrumbItem span
+{
+	font-family: Tahoma;
+	font-size: 10pt;
+	color: #666;
+	vertical-align: middle;
+	line-height: 21px;
+}
+
+
+/* Accordion CSS */
+
+.Accordion {
+	white-space: nowrap;
+	top:0;
+	margin: 0;
+	padding: 0;
+}
+
+.Accordion div.AccordionItem
+{
+	list-style-type: none;
+	color:#f0f0f0;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.Accordion div.AccordionItem div.AccordionItemHeader
+{
+	width: 100%;
+	text-align: left;
+	height: 30px;		
+	padding: 0;
+	margin:0;
+
+	background: rgb(236,236,236); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(236,236,236,1) 0%, rgba(205,205,205,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(236,236,236,1)), color-stop(100%,rgba(205,205,205,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(205,205,205,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(205,205,205,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(205,205,205,1) 100%); /* IE10+ */
+    background: linear-gradient(top,  rgba(236,236,236,1) 0%,rgba(205,205,205,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#cdcdcd',GradientType=0 ); /* IE6-9 */
+}
+/*
+.Accordion div.AccordionItem div.AccordionItemHeader:hover 
+{
+    background-color: #353f30;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+    background-image: -webkit-linear-gradient(top, #eee, #ddd);
+    background-image:    -moz-linear-gradient(top, #eee, #ddd);
+    background-image:     -ms-linear-gradient(top, #eee, #ddd);
+    background-image:      -o-linear-gradient(top, #eee, #ddd);
+    background-image:         linear-gradient(top, #eee, #ddd);
+}
+*/
+.Accordion div.AccordionItemHeader a 
+{
+	display: block;
+	position: relative;
+	
+	font: 14px 'Tahoma';
+	padding-left:10px;
+	padding-top:5px;
+	color: #333333;
+	text-decoration: none;
+	
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	
+	background-position: 98% 7.5px;
+	background-repeat:no-repeat;
+	background-size: auto;
+}
+
+.Accordion div.AccordionItemHeader a.pulldown-a 
+{
+	background-image: url('forms/icon_PullDownMenu_a.png');	
+}
+ 
+.Accordion div.AccordionItemHeader a.pulldown-b
+{
+	background-image: url('forms/icon_PullDownMenu_b.png');	
+}
+
+.Accordion div.AccordionItem div.AccordionItemContent
+{
+	font: 12px 'Tahoma';
+	color: #333333;
+	padding: 20px;
+	
+	font-family:Tahoma, Lucida Sans, Arial, sans-serif;
+    font-size:12px;
+    
+	background-color: #fafafa;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#eaeaea));
+    background-image: -webkit-linear-gradient(top, #fafafa, #eaeaea);
+    background-image:    -moz-linear-gradient(top, #fafafa, #eaeaea);
+    background-image:     -ms-linear-gradient(top, #fafafa, #eaeaea);
+    background-image:      -o-linear-gradient(top, #fafafa, #eaeaea);
+    background-image:         linear-gradient(top, #fafafa, #eaeaea);
+    vertical-align:middle;
+    text-align:center;
+}
+
+.Accordion div.AccordionItem div.AccordionItemContent table
+{
+	border: "0px";
+	
+}
+
+.Accordion div.AccordionItem div.AccordionItemContent table tr.separator
+{
+	height:10px;
+}
+
+.Accordion div.AccordionSeparator
+{
+	height:5px;
+}
+
+/* Form Dialog CSS */
+
+.InputDialog
+{
+	width:335px;
+	height:320px;
+	
+	background-color: #eaeaea;
+	box-shadow: 0px 5px 5px rgba(66,77,83,0.85);
+	
+	cursor:auto;
+}
+.InputDialog div.Header
+{
+	position:relative;	
+	text-align: left;
+	height: 25px;		
+	
+	font: 13px/1 'Tahoma', 'Lucida Sans';
+	padding-left:10px;
+	padding-top:7px;
+	color: #333333;
+	
+	background-color: #353f30;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#dedede), to(#c8c8c8));
+    background-image: -webkit-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:    -moz-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:     -ms-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:      -o-linear-gradient(top, #dedede, #c8c8c8);
+    background-image:         linear-gradient(top, #dedede, #c8c8c8);
+}
+    
+.InputDialog div.Container
+{
+	position:relative;
+	background-color: #fafafa;
+	height: 213px;
+	
+	padding-top:15px;
+}
+
+
+.InputDialog div.Header div.CloseDialog
+{
+	position:absolute;	
+	right: 5px;
+	top:5px;
+	width:17px;
+	height:17px;
+	background-image: url('closeDialog.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	cursor:pointer;
+}
+
+.InputDialog div.Footer
+{
+	position:relative;	
+	text-align:center;
+}
+
+/* These are for the Upload, Infinite and Error dialogs */
+
+
+.InputDialog div.DialogOptions{
+	position: absolute;
+	z-index: 31;
+	top: 170px;
+	left: 25px;
+	width: 290px;
+	height: 45px;
+	overflow: hidden;
+}
+
+.InputDialog div.DialogImage{
+	width: 128px;
+	height: 128px;
+	border: 2px #CCC solid;
+	z-index: 31;
+	position: absolute;
+	top: 21px;
+	left: 24px;
+	background: #333;
+	overflow: hidden;
+}
+
+
+.InputDialog div.DialogImageOverlay,.InputDialog div.DialogImageOverlayProcessing,.InputDialog div.DialogImageOverlayError {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 128px;
+	height: 128px;
+	z-index: 25;
+	overflow: hidden;
+	z-index: 3033;
+}
+
+
+
+.InputDialog div.DialogImageOverlayProcessing {
+	background: url(thumb-processing-128.png) center no-repeat;
+}
+
+.InputDialog div.DialogImageOverlayError {
+	background: url(thumb-error-128.png) center no-repeat;
+}
+
+.InputDialog div.DialogImage img {
+	z-index: 3032;	
+}
+
+.InputDialog div.DialogInfo, .InputDialog div.DialogLoading {
+	position: absolute;
+	top: 20px;
+	left: 172px;
+	height: 109px;
+	z-index: 20;
+	width: 140px;
+}
+
+.InputDialog div.DialogLoading {
+	text-align: center;
+}
+
+
+.InputDialog div.DialogInfoProgressBar {
+	position: absolute;
+	margin-top: 5px;
+	top: 18px;
+	left: 0px;
+	height: 20px;
+	width: 140px;
+	border: 1px #CCC solid;
+	height: 16px;
+}
+
+.InputDialog div#DialogUploadProgress, .InputDialog div#DialogErrorProgress{
+	background: url(loading-loop.gif) repeat-x;
+	width: 140px;
+	height: 16px;
+}
+
+.InputDialog div#DialogErrorProgress{
+	background: url(loading-loop-error.gif) repeat-x;	
+}
+
+.InputDialog div.DialogProgressMask{
+	background: url(loading-bg.png);
+	background-repeat: repeat-x;
+	z-index: 21;
+	height: 16px;
+	width: 100%;
+	float: right;
+}
+
+.InputDialog div.DialogInfoText {
+	position: absolute;
+	top: 48px;
+	left: 0px;
+	width: 140px;
+	height: 80px;
+	overflow: hidden;
+}
+
+/* Content Browser */
+
+.ContentBrowserThumbnailCollection
+{
+	margin-left: 8px;
+	margin-right: 8px;
+	padding: 15px;
+	width:100%;
+}
+
+.ContentBrowserThumbnail
+{
+	width:90px;
+	height:90px;
+	display:inline-block;
+	margin:6px;	
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: 1px solid #f1f1f1;
+	background-color: #eaeaea;
+	background-size: contain;
+	position:relative;
+}
+
+.ContentBrowserThumbnail .ThumbnailBottomBar
+{
+	position:absolute;
+	width:100%;
+	bottom:0px;
+	height:	25px;
+	background-color: #ffffff;
+	opacity: 0.7;
+	display:none;
+}
+
+.ContentBrowserThumbnail .ThumbnailLikes
+{
+	background-image: url('like_icon.png');	
+	height:16px;
+	width:18px;
+	margin-left:5px;
+	display:inline-block;
+	
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-top: 4px;
+	background-size: contain;
+}
+
+.ContentBrowserThumbnail .ThumbnailLabel
+{
+	line-height: 28px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5px;
+}
+
+
+.ContentBrowserThumbnail .ThumbnailDownload
+{
+	background-image: url('download_icon.png');	
+	height:16px;
+	width:16px;
+	position:absolute;
+	right:5px;
+	top:5px;
+	cursor:pointer;
+	display:none;
+}
+
+.ContentBrowser
+{
+	position:absolute;
+	
+	width: 100%;
+	top:0px;
+	bottom:70px;
+}
+
+.ContentBrowserOverrideNoFooter
+{
+	bottom:0px;
+}
+
+.ContentBrowserDefaultFont
+{
+	font-size: 10pt;
+}
+
+
+.ContentBrowserSearchComponent
+{
+	text-align: center;
+	background-color: #4280BE;
+	color: #666666;
+}
+
+.ContentBrowserGroup
+{
+	padding:0px;	
+}
+
+.ContentBrowserFilterButtonGroup
+{
+	background-color: #fafafa;
+}
+
+.ContentBrowserSortandPageGroup
+{
+	padding:10px;
+	min-height:24px;	
+	background-color: #4280BE;
+	color:#FFFFFF;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+.ContentBrowserSortGroup
+{
+	float:left;
+}
+
+.ContentBrowserButtonFooter
+{
+	position: absolute;
+	bottom: 0px;
+	padding: 10px;
+	display: inline-block;
+}
+
+/* My Corner - Main Page */
+
+.MyCornerSearchResults
+{
+	position: absolute;
+	bottom: 0px;
+	top: 50px;
+	width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* Gallery Search - Search Page */
+
+.GallerySearchResults
+{
+	position: absolute;
+	bottom: 0px;
+	top: 125px;
+	width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* Gallery Search - Model Details */
+
+.ModelDetails
+{
+	width: 100%;
+	background-color: white;
+	bottom: 70px;
+	position: absolute;
+	top: 0px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.ModelDescriptionContainer
+{
+	height:150px;
+	margin-bottom:35px;
+}
+
+.ModelDescriptionHeader
+{
+height: 30px;
+background-color:#4280BE;	
+padding-top:10px;
+padding-left:15px;
+}
+
+.ModelName
+{
+	padding-left:20px;
+	font-family: Tahoma, Courier;
+    font-size: 14pt;
+	color: #FFFFFF;
+}
+
+.ModelNamePublishPosition
+{
+	padding-left: 0px;	
+}
+
+.ModelImage
+{
+	float:left;
+	width:128px;
+	height:128px;
+	background-color: #CCCCCC;	
+	background-position: center;
+	background-size: cover;
+	border: 3px solid #4280BE;
+}
+
+.ModelInfoContainer
+{
+	padding-left: 19px;
+	margin-left: 128px;
+	margin-top: 18px;
+}
+.ModelInfoItems
+{
+	margin-left:10px;
+	margin-right:10px;
+	margin-bottom:12px;
+	position:relative;
+	height:20px;
+}
+
+.ModelInfoSingleRowItems
+{
+	display:inline-block;
+}
+
+
+.ModelInfoItem
+{
+	display:inline-block;
+	font-family: Tahoma, Courier;
+    font-size: 10.5pt;
+}
+
+.ModelInfoValue
+{
+	position:absolute;
+	left:100px;
+	color: #333333;
+}
+
+.ModelInfoValueDropDown
+{
+	float: left;
+	margin-left: 20px;
+}
+
+.ModelInfoKey
+{
+	color: #666666;
+	float:left;
+}
+
+.ModelOtherDetailsContainer
+{
+	margin-left:15px;
+	margin-right:35px;
+	padding-bottom:10px;
+	padding-top:10px;
+}
+
+.ModelControlLabel
+{
+	font-size:11pt;
+	color: #333333;
+}
+
+.ModelControlValue
+{
+	width:100%;
+	font-size:10.5pt;
+	color:#666666;
+}
+
+.ModelControlText
+{
+	
+}
+
+.ModelControlDescriptionLargeMultiline
+{
+	height:230px;
+}
+
+.ModelControlDescriptionSingleLine
+{
+	height:20px;
+}
+
+.ModelControlDescriptionSmallMultiline
+{
+	height:110px;
+}
+
+/* Gallery Publish */
+
+
+.CaptureThumbnailContainer
+{
+	width:100%;
+	text-align:center;
+	float:left;
+	padding-bottom:15px;
+}
+
+.CaptureThumbnailMain
+{
+	margin-top:20px;
+	margin-left:20px;
+	width:128px;
+	height:128px;
+	display:inline-block;
+}
+
+.CaptureThumbnail
+{
+	background: #CCCCCC;
+	background-size: contain;
+}
+
+.CaptureThumbnailPadding
+{
+	padding-top:20px;	
+}
+
+.AddCaptureThumbnail
+{
+    position: relative;
+	width:90px;
+	height:90px;
+	display:inline-block;
+	margin-left:4px;
+	margin-right:2px;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url("add_thumb.png");
+	cursor: pointer;
+}
+
+.CaptureThumbnailTextContainer
+{
+    position: absolute;
+    width: 90px;
+    font-family: tahoma;
+    font-size: 10px;
+    color: #ffffff;
+    line-height: 12px;
+    bottom: 6px;
+}
+
+.RoundedButtonDimensions
+{
+	text-align:center;
+	height:20px;
+	width:90px;
+	display:inline-block;
+}
+
+.RoundedButton
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#f1f1f1), color-stop(50%,#e1e1e1), color-stop(100%,#f3f3f3)); /* Chrome */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 40%, #e1e1e1 50%, #f3f3f3 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #ffffff , #f3f3f3); /* Opera */
+	background: -moz-linear-gradient(top,  #ffffff,  #f3f3f3); /* Firefox */ 
+	color: #383838;
+	border:solid 1px;
+	border-color: #e1e1e1;
+	cursor: pointer;
+	border-top-left-radius: 10px 10px;
+	border-bottom-left-radius: 10px 10px;
+	border-top-right-radius: 10px 10px;
+	border-bottom-right-radius: 10px 10px;
+}
+
+.RoundedButton:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(40%,#f8f8f8), color-stop(50%,#f1f1f1), color-stop(100%,#f8f8f8)); /* Chrome */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f8f8f8 40%, #f1f1f1 50%, #f8f8f8 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #ffffff , #f8f8f8); /* Opera */
+	background: -moz-linear-gradient(top,  #ffffff,  #f8f8f8); /* Firefox */ 
+	color:#333333;
+	border:solid 1px;
+	border-color: #dddddd;
+	cursor: pointer;
+}
+
+/* Share link css */
+.flyout ul
+{
+    list-style: none;
+    
+    position: absolute;
+    margin-left: -60px;
+    background-color: #fafafa;
+    border: 1px solid;
+    width: 110px;
+    display:none;
+    opacity: 1;
+    
+    bottom: 20px
+}
+
+.flyout li
+{
+    padding-bottom: 7px;
+    padding-top: 5px;
+}
+
+.flyout div
+{
+    margin-left: -34px;   
+}
+
+.flyout
+{
+    position: relative; 
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.flyoutarrow
+{
+    position: absolute;
+    background-image: url('sprites/flyout-arrow.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 10px;
+    background-position: center;
+    left: 0px;
+    right: 0px;
+    margin-top: -5px;
+}
+
+/* ToolbarComboBox css */
+.ToolbarComboBox
+{
+    position: relative;
+    display: inline-block;
+}
+
+.ToolbarComboBoxArrow
+{
+    background-image: url('sprites/toolbarcombobox-arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 10px;
+    display: inline-block;
+}
+
+.ToolbarComboBoxFlyout {
+    display:none;
+    position:absolute;
+    bottom:20px;
+    left: 0px;
+}
+
+.ToolbarComboBox ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.ToolbarComboBox li {
+    margin: 0px;
+    padding: 0px;
+}
+
+.ToolbarComboBoxItem
+{
+    height:32px;
+    width:32px;
+    background: #F1F1F1;
+    border: 1px solid gray;
+    -webkit-border-radius: 3px; /* Safari prototype */
+	-moz-border-radius: 3px; /* Gecko browsers */
+    border-radius: 3px; /* Everything else - limited support at the moment */
+}
+
+
+
+/* ToolbarPanel css */
+.ToolbarPanel
+{
+    position: relative;
+    display: inline-block;
+}
+
+.ToolbarPanelContainer {
+    display: none;
+    position: absolute;
+    margin-top: 36px;
+	min-width: 150px;
+	min-height: 40px;
+	padding: 4px 2px 2px 2px;
+	vertical-align: bottom;
+	z-index: -1;
+
+    border: 1px solid gray;
+
+    background: #f4f4f4;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#efefef)); /* Chrome */
+	background: -webkit-linear-gradient(top, #f4f4f4 0%,#efefef 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #f4f4f4, #efefef); /* Opera */
+	background: -moz-linear-gradient(top,  #f4f4f4,  #efefef); /* Firefox */
+
+    border-radius: 0px 0px 5px 5px;
+    -moz-border-radius: 0px 0px 5px 5px;
+    -webkit-border-radius: 0px 0px 5px 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+}
+
+.ToolbarPanelContainer div {
+	margin: 0px;
+	padding: 0px;
+}
+
+
+.StartHidden {
+	display: none;
+}
+
+*:focus 
+{
+    outline: 1px solid #00adee;
+    }
+
+textarea
+{
+    color:#666666;
+    
+    font-family:Verdana, Geneva, Arial, sans-serif;
+    font-size:12px;
+    
+    overflow:auto;
+    }
+
+input
+{
+    color:#666666;
+    
+    font-family:Verdana, Geneva, Arial, sans-serif;
+    font-size:12px;
+    
+    overflow:hidden;
+    }
+
+select
+{
+    color:#666666;
+    
+    font-family:Verdana, Geneva, Arial, sans-serif;
+    font-size:12px;
+    
+    overflow:hidden;
+    }
+
+.inputerror {
+	outline-width: 1px;
+	outline-style: solid;
+	outline-color: #ff0000;
+}
+
+
+
+/*                                     */
+/*     Specify Size                    */
+/*                                     */
+
+.core_m_auto
+{
+    margin-left:auto;
+    margin-right:auto;
+    }
+
+.core_w_100p
+{
+    width:100%;
+    }
+
+.core_w_80
+{
+    width:80px;
+    }
+
+.core_w_100
+{
+    width:100px;
+    }
+
+.core_w_150
+{
+    width:150px;
+    }
+
+.core_w_200
+{
+    width:185px;
+    }
+
+.core_w_190
+{
+    width:191px;
+    }
+
+.core_w_250
+{
+    width:250px;
+    }
+
+.core_w_300
+{
+    width:300px;
+    }
+
+.core_w_400
+{
+    width:400px;
+    }
+
+.core_w_430
+{
+    width:430px;
+    }
+
+.core_w_460
+{
+    width:460px;
+    }
+
+
+
+
+
+/*                                     */
+/*     Position                        */
+/*                                     */
+
+
+.core_Right
+{
+    float:right;
+    }
+
+.core_m_r_15
+{
+    margin-right:15px;
+    }
+
+
+
+/*                                     */
+/*     General Styling                 */
+/*                                     */
+
+
+.core_formContainer
+{
+    color:#333333;
+    
+    font-family:Verdana, Geneva, Arial, sans-serif;
+    font-size:12px;
+    
+    }
+
+.core_bg_form
+{
+    
+    background: #f4f4f4;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#efefef)); /* Chrome */
+	background: -webkit-linear-gradient(top, #f4f4f4 0%,#efefef 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #f4f4f4, #efefef); /* Opera */
+	background: -moz-linear-gradient(top,  #f4f4f4,  #efefef); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#efefef'); /* IE */
+    }
+
+.core_bg_page
+{
+    background-color:#ffffff;
+    
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    box-shadow: 0 1px 5px rgba(0,0,0,.2);  
+    }
+
+.core_panel
+{
+    background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#eaeaea)); /* Chrome */
+	background: -webkit-linear-gradient(top, #fafafa 0%,#eaeaea 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #fafafa, #eaeaea); /* Opera */
+	background: -moz-linear-gradient(top,  #fafafa,  #eaeaea); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#eaeaea'); /* IE */
+	
+	border:1px solid #d6d8d9;
+	
+    }
+    
+.core_panelContainer
+{
+    padding:10px;
+    }
+
+.core_panelSubContainer
+{
+    border-bottom:1px solid #dddddd;
+    }
+
+/*                                     */
+/*     Titles                          */
+/*                                     */
+
+
+.core_title_expand
+{
+    float:right;
+    border:none;
+    }
+
+.core_title_disabled
+{
+    float:right;
+    border:none;
+    }   
+
+.core_title_30
+{
+    height:22px;
+    
+    background:#eeeeee;
+    background-image:url(forms/bg_title_28.png);
+    background-repeat:repeat-x;
+    border:1px solid #e4e4e4;   
+    
+    vertical-align:middle;
+    text-align:left;
+    
+    padding:0px 0px 0px 15px;
+    padding-top:6px;
+    
+    color:#666666;
+    
+    font-size:16px;
+    }
+
+.core_title_panel
+{
+    height:22px;
+    
+    background:#dddddd;
+    background-image:url(forms/bg_panel_header_28.png);
+    background-repeat:repeat-x;
+    border:1px solid #d3d3d3;   
+    
+    vertical-align:middle;
+    text-align:left;
+    
+    padding:0px 0px 0px 6px;
+    padding-top:5px;
+    
+    font-size:14px;
+    }
+
+.core_title_bottom
+{
+    height:50px;
+    
+    background:#dddddd;
+    background-image:url(forms/bg_panel_header_50.png);
+    background-repeat:repeat-x;
+    border:1px solid #d3d3d3;   
+    
+    vertical-align:middle;
+    text-align:left;
+    
+    padding:0px 0px 0px 6px;
+    padding-top:15px;
+    
+    font-size:14px;
+    }
+
+.core_panel_name
+{
+    padding-left:25px;
+    margin-bottom:5px;
+    color:#666666;
+    }
+
+/*                                     */
+/*     Input Styling                   */
+/*                                     */
+
+    
+.core_txtfield
+{
+    background-color:#fdfdfd;
+    border:1px solid #c5c5c5;
+    padding-left:3px;
+    }
+    
+.core_txtfield:focus
+{
+    background-color:#ffffff;
+    }
+
+.core_txtfield:disabled
+{
+    background-color:#e8e8e8;
+    }  
+    
+.core_dropdown_18
+{
+    height:18px;
+    
+
+    background-image:url(forms/dropdown_sml_18.png);
+    border:1px solid #d3d3d3;   
+    
+    vertical-align:middle;
+    text-align:left;
+    
+    padding:0px 0px 0px 3px;
+    
+    font-size:12px;
+    
+    }
+
+.core_dropdown_18:disabled
+{
+
+    background-image:url(forms/dropdown_sml_18_d.png);
+    color:#666666;
+    }
+    
+.core_checkbox
+{
+    }
+    
+    
+/*                                     */
+/*     Button Styling                  */
+/*                                     */
+
+
+.core_bttn
+{
+    background: #f3f3f3;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f3f3), color-stop(100%,#d6d6d6)); /* Chrome */
+	background: -webkit-linear-gradient(top, #f3f3f3 0%,#d6d6d6 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #f3f3f3, #d6d6d6); /* Opera */
+	background: -moz-linear-gradient(top,  #f3f3f3,  #d6d6d6); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#d6d6d6'); /* IE */
+	
+	border:1px solid #c5c5c5;
+	
+	color:#333333;
+	
+	font-size:14px;
+	
+	height:28px;
+	
+    }
+    
+.core_bttn:hover
+{
+    background: #e4f9fe;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e4f9fe), color-stop(100%,#b1e1ed)); /* Chrome */
+	background: -webkit-linear-gradient(top, #e4f9fe 0%,#b1e1ed 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #e4f9fe, #b1e1ed); /* Opera */
+	background: -moz-linear-gradient(top,  #e4f9fe,  #b1e1ed); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e4f9fe', endColorstr='#b1e1ed'); /* IE */
+	
+	color:#00262f;
+    }
+    
+.core_bttn:active
+{
+    background: #c8f4ff;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c8f4ff), color-stop(100%,#72d6ed)); /* Chrome */
+	background: -webkit-linear-gradient(top, #c8f4ff 0%,#72d6ed 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #c8f4ff, #72d6ed); /* Opera */
+	background: -moz-linear-gradient(top,  #c8f4ff,  #72d6ed); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c8f4ff', endColorstr='#72d6ed'); /* IE */
+    }
+    
+.core_bttn:disabled
+{
+    background: #e8e8e8;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e8e8e8), color-stop(100%,#dddddd)); /* Chrome */
+	background: -webkit-linear-gradient(top, #e8e8e8 0%,#dddddd 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #e8e8e8, #dddddd); /* Opera */
+	background: -moz-linear-gradient(top,  #e8e8e8,  #dddddd); /* Firefox */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#dddddd'); /* IE */
+	
+	color:#bbbbbb;
+    }
+    
+.core_bttn_right{
+	margin-left: 10px;
+}
+    
+.core_title_expand_2    
+{
+    display:block;
+}
+
+/* status dialog css */
+.StatusDialog 
+{
+	/*position: relative;*/
+	padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+	/*height:145px; */
+	/*width: User specified */
+	background-color: #ffffff;
+}
+.StatusDialog div.Wrap 
+{
+    /*width: 390px; */
+}
+.StatusDialog div.Header 
+{
+    border: 1px solid #dfdfdf;
+    background-color: #1b5085;
+    height: 38px;
+	font-family: Tahoma; font-weight: bold; font-size: 24px; text-indent: 163px;
+	line-height:38px;
+	color: #ffffff;
+}
+.StatusDialog div.ThumbnContainer 
+{
+	position: relative; top: -1px; left: 5px;
+    height: 106px;
+    width:auto;
+    border-top: none;
+    float: left;
+    background-image: linear-gradient(top, rgb(27,80,133) 30%, rgb(17,65,118) 80%);
+	background-image: -o-linear-gradient(top, rgb(27,80,133) 30%, rgb(17,65,118) 80%);
+	background-image: -moz-linear-gradient(top, rgb(27,80,133) 30%, rgb(17,65,118) 80%);
+	background-image: -webkit-linear-gradient(top, rgb(27,80,133) 30%, rgb(17,65,118) 80%);
+	background-image: -ms-linear-gradient(top, rgb(27,80,133) 30%, rgb(17,65,118) 80%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.3, rgb(27,80,133)), color-stop(0.8, rgb(17,65,118)));
+}
+.StatusDialog div.ThumbnContainer img.StatusImage 
+{
+	position: relative; 
+	padding-left: 4px; 
+	padding-right: 4px; 
+	padding-bottom: 4px; 
+	padding-top: 0px; 
+	top: -26px;
+}
+.StatusDialog div.Description 
+{
+    position: relative;  
+	line-height:30px;
+    float: left;
+	font-family: Tahoma; font-weight: normal; font-size: 12px;
+	left: 28px;
+	right: 0px;
+}
+.StatusDialog div.Content 
+{
+	position: relative;
+    float: left;
+	font-family: Tahoma; font-weight: normal; font-size: 12px;
+	line-height: 14px;
+	width: 60%;
+	left: 28px;
+}
+.StatusDialog div.Footer 
+{
+	position: relative;
+    float: left;
+	font-family: Tahoma; font-weight: normal; font-size: 12px;
+	left: 20px;
+}
+
+/* Error doalog specific styles. error dialog derived from status dialog */
+.ErrorDialog 
+{
+	width: 390px;
+	height: 145px;
+}
+.ErrorDialogButton 
+{
+	font-family: Tahoma; font-weight: normal; font-size: 12px; 
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	height: 20px;
+	width: 100px;
+	-moz-box-shadow: 0px 0px 0px #999999;
+    -webkit-box-shadow: 0px 0px 0px #999999;
+    box-shadow: 0px 0px 0px #999999;
+}
+.ErrorContent
+{
+    font-family: Tahoma; font-weight: normal; font-size: 12px; color: #ff0000;
+}
+.ErrorSpacer
+{
+	width:20px; 
+	height: 20px; 
+	position: relative; padding-left: 20px;
+}
+
+/* Progress bar dialog specific styles. Progress bar dialog derived from status dialog */
+.ProgressDialog
+{
+    width: 345px;
+    height:150px;
+    padding-top: 10px; 
+    padding-bottom: 5px;
+    border: 1px solid #646464;
+}
+.ProgressDialog div.Description 
+{
+    width: 200px;
+    left: 5px;
+    text-align: center;
+    float:left;
+}
+.ProgressDialog div.Content 
+{
+    position:relative;
+    height: 65px;
+    left: 5px;
+    top: -5px;
+}
+.ProgressContainer
+{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    /*background-image: url("progressbar_infinite.gif");
+    background-position: center center;
+    background-repeat: no-repeat;*/
+}
+.ProgressDialogPosition
+{
+	position:absolute;
+	left:0px;
+	right:0px;
+	margin-left: auto;       
+	margin-right: auto;
+	top:0px;
+	bottom:0px;
+	margin-top:auto;
+	margin-bottom:auto;
+	z-index:99;
+}
+.ProgressDialog div.Footer
+{
+    display:none;
+}
+.ProgressDialog div.Header
+{
+    text-indent: 160px;
+    text-align: left;
+}
+.ProgressDialog div.ProgressBar2D
+{
+    top: -20px;
+}
+
+/* Banner styles */
+.Banner
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 47px;
+	background-color: #124177;
+	
+}
+.Banner div.SeperatorLine
+{
+	position: relative;
+	display: inline-block;
+	width: 1px;
+	height: 31px;
+	margin-top: 10px;
+	background-color: #376eae;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+.Banner div.Seperator
+{
+	position: relative;
+	display: inline-block;
+	width: 10px;
+	height: 47px;
+}
+.Banner div.Button
+{
+	position: relative;
+	display: inline-block;
+	width: 146px;
+	height: 29px;
+	background-color: #21548d;
+	top: 10px;
+	-moz-box-shadow: 3px 3px 3px #0c305e;
+    -webkit-box-shadow: 3px 3px 3px #0c305e;
+	box-shadow: 3px 3px 3px #0c305e;
+	margin-right: 4px;
+	cursor: pointer;
+}
+.Banner div.Button.Disabled
+{
+	background-color: #4f6c8d;
+	-moz-box-shadow: 3px 3px 3px #103d6c;
+    -webkit-box-shadow: 3px 3px 3px #103d6c;
+	box-shadow: 3px 3px 3px #103d6c;
+	cursor: default;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6; 
+}
+.Banner div.Button a
+{
+	position:absolute;
+	width: 146px;
+	height: 29px;
+}
+.Banner div.Button.Disabled a
+{
+    cursor: default;
+}
+.Banner div.Label
+{
+	position: relative;
+	display: inline-block;
+	height: 47px;
+	line-height: 47px;
+	font-family: Tahoma; font-weight: normal; font-size: 12px;
+	color: #ffffff;
+}
+.Banner div.Info
+{
+	position: relative;
+	display: inline-block;
+	height: 47px;
+	width: 24px;
+	background-image: url("info.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointer;
+}
+.Banner div.Logo
+{
+	position: relative;
+	display: inline-block;
+	height: 47px;
+	width: 65px;
+	background-image: url("123Dlogo.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.Banner div.AppDrop
+{
+	position: relative;
+	display: inline-block;
+	height: 47px;
+	width: 12px;
+	background-image: url("dropBig.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.Banner div#app
+{
+    cursor: pointer;
+}
+.Banner div#user
+{
+	cursor: pointer;
+}
+
+.Banner div#signin
+{
+     cursor: pointer;
+}
+
+.Banner div.UserDrop
+{
+	position: relative;
+	display: inline-block;
+	height: 47px;
+	width: 9px;
+	background-image: url("dropSmall.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointer;
+}
+.Banner div.UserThumbn
+{
+	position: relative;
+	display: inline-block;
+	height: 27px;
+	width: 27px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.Banner div.UserThumbn img
+{
+	height:100%;
+}
+
+.Banner div.Link
+{
+	cursor:pointer;
+}
+
+.FloatLeft
+{
+	float: left;
+}
+.FloatRight
+{
+	float: right;
+}
+.ComingSoon a
+{
+    background-image: url('coming_soon.png');
+    background-repeat:no-repeat;
+    background-position:6px center;
+}
+/*dropdown for banner */
+.Callout 
+{
+ 	width: 189px;
+    background-color: #f5f5f5;
+	box-shadow: 3px 3px 3px #9facb3;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  position: relative;
+}
+.Notch 
+{
+    position: absolute;
+    top: -7px;
+    left: 87px;
+    margin: 0;
+    border-top: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #f5f5f5;
+    padding: 0;
+    width: 0;
+    height: 0;
+}
+
+
+ul.subnavlist
+{
+    margin-top: 0px;
+    display: block;
+    position: relative;
+    font-size: 14pt;
+    padding-top: 5px;
+    padding-left:0px;
+    margin-bottom:0px;
+    background-color: #f5f5f5;
+    font-family: Tahoma;
+    list-style-type: none;
+}
+
+ul.subnavlist li a
+{
+    color:#3c73b5;
+    text-decoration: none;
+    display: block;
+    margin-right:5px;
+    height: 20px;
+    border: none;
+    padding:6px;
+    background-color:  #f5f5f5;
+    cursor:pointer;
+    font-family: 
+    font-size: 11.5pt; 
+}
+ul.subnavlist li a:hover
+{
+    color: #ffffff;
+    background-color: #3c73b5;
+}
+
+
+ul.subnavlist li.logout a#logoutlink
+{
+    color: #114176;
+}
+
+ul.subnavlist li.logout a:hover#logoutlink
+{
+    color: #ffffff;
+}
+ul.subnavlist li.logout a#back
+{
+    color: #114176;
+}
+
+ul.subnavlist li.logout a:hover#back
+{
+    color: #ffffff;
+}
+ul.subnavlist li.logout
+{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+
+ul.subnavlist li div.Divide { border-bottom:2px solid #b7c2d0; margin-left:0px;}
+#usercallout.Callout
+{
+    z-index: 500;
+    top: 47px;
+    margin-left: -120px;
+    display:none;
+    width: 150px;
+}
+
+#usercallout.Callout ul.subnavlist li a
+{
+    text-align:right;
+}
+#user span.Notch
+{
+    left: 119px; 
+}
+
+#appcallout.Callout
+{
+    z-index: 500;
+    text-align:left;
+    top: 47px;
+    display:none;
+    margin-left: -90px;
+    left: 50%;
+}
+#app span.Notch
+{
+    left: 83px; 
+}
+
+/* Onboarding styles */
+.OnBording
+{
+    position:absolute;
+	background-color: #ffffff;
+	height: 506px;
+	width: 676px;
+}
+.OnBording div.Header
+{
+	position: relative;
+	height: 90px;
+	width: 676px;
+	background-image: linear-gradient(top, rgb(26,78,137) 30%, rgb(21,53,92) 80%);
+	background-image: -o-linear-gradient(top, rgb(26,78,137) 30%, rgb(21,53,92) 80%);
+	background-image: -moz-linear-gradient(top, rgb(26,78,137) 30%, rgb(21,53,92) 80%);
+	background-image: -webkit-linear-gradient(top, rgb(26,78,137) 30%, rgb(21,53,92) 80%);
+	background-image: -ms-linear-gradient(top, rgb(26,78,137) 30%, rgb(21,53,92) 80%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.3, rgb(26,78,137)), color-stop(0.8, rgb(21,53,92))); 
+	vertical-align: middle;
+}
+.OnBording div.Header div.LeftLogo
+{
+	position: absolute;
+	display: inline-block;
+	left: 10px;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.OnBording div.Header div.CenterLogo
+{
+	position: absolute;
+	display: inline-block;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.OnBording div.Header div.CloseButton
+{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 5px;
+	right: 5px;
+}
+.OnBording div.Header div.CloseButton a
+{
+    background-image: url("close-button.png");
+    width: 20px;
+	height: 20px;
+	position: absolute;
+}
+.OnBording div.SubTitle 
+{
+	position: relative;
+	height: 45px;
+	width: 676px;
+	color: #aaaaaa;
+	font-family: Tahoma; font-weight: bold; font-size: 18px; text-indent: 20px;
+	line-height: 45px;
+	vertical-align: middle;
+}
+.OnBording div.Content
+{
+	position: relative;
+	height: 331px;
+	overflow: hidden;
+	margin-left: 10px;
+    margin-right: 10px;
+	padding-top: 0px;
+	outline: 1px solid #d3d3d3;
+}
+.OnBording div.Footer
+{
+	position: absolute;
+	height: 40px;
+	width: 160px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0px;
+	right: 0px;
+}
+.OnBording div.Footer div.LeftNavigation a
+{
+	position: absolute;
+	left: 0px;
+	bottom: 3px;
+	width: 40px;
+	height: 32px;
+	background-image: url("prev_normal.png");
+	background-repeat: no-repeat;
+}
+.OnBording div.Footer div.LeftNavigation a:hover
+{
+	background-image: url("prev_hover.png");
+}
+.OnBording div.Footer div.LeftNavigation a:active
+{
+	background-image: url("prev_pressed.png");
+}
+.OnBording div.Footer div.LeftNavigation a.disabled
+{
+	background-image: url("prev_normal.png");
+	opacity: 0.3;
+	cursor: default;
+	pointer-events: none;
+}
+.OnBording div.Footer div.RightNavigation a
+{
+	position: absolute;
+	right: 0px;
+	bottom: 3px;
+	width: 40px;
+	height: 32px;
+	background-image: url("next_normal.png");
+	background-repeat: no-repeat;
+}
+.OnBording div.Footer div.RightNavigation a:hover
+{
+	background-image: url("next_hover.png");
+}
+.OnBording div.Footer div.RightNavigation a:active
+{
+	background-image: url("next_pressed.png");
+}
+.OnBording div.Footer div.RightNavigation a.disabled
+{
+	background-image: url("next_normal.png");
+	opacity: 0.3;
+	cursor: default;
+	pointer-events: none;
+}
+.OnBording div.Footer div.PageCounter
+{
+    position:absolute;
+    left:0px;
+    right:0px;
+    bottom: 3px;
+	height: 32px;
+	width:160px;
+	color: #333333;
+	font-family: Tahoma; 
+	font-size: 11px;
+	line-height: 32px;
+	vertical-align: middle;
+	text-align: center;
+	background-image: url("pagecounter-background.png");
+}
+.OnBording div.Content div.PageList
+{
+	height: 100%; 
+	width: 100%; 
+	background-color: #aaaaaa;
+	position: absolute;
+}
+.OnboardingPage
+{
+	position:absolute;
+	width: 656px;
+	height: 331px;
+	bottom: 0;
+	margin: 0;
+    padding-left: 15;
+    padding-right: 15;
+}
+
+.ModelContainer
+{
+    position:relative;
+    width: 656px;
+    height: 331px;
+    background-color:#EEEEEE;
+}
+
+
+.ModelContainer .PanelWidth
+{
+	position:absolute;
+	top: 0px;
+	bottom: 0px;
+}
+.ModelContainer .FirstPanel
+{
+	width: 327px;	
+	left:0px;
+}
+
+.ModelContainer .SecondPanel
+{
+	width: 327px;	
+	left:327px;
+}
+
+.ModelContainer .PanelSeparator
+{
+    position:absolute; 
+    width:1px; 
+    height:100%; 
+    left:50%; 
+    background-color:#C2C2C2;
+}
+
+.OnBoardingUploadWidget
+{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    margin: auto;
+}
+
+.OnBoardingUploadWidgetImage
+ {   
+    height:170px; 
+    left:360px; 
+    background-image:url('upload.png');
+    background-position:center;
+    background-repeat:no-repeat;
+    margin-bottom: 27px;
+}
+
+.OnBoardingUploadWidgetHeight
+{
+    height:205px;
+}
+
+.OnBoardingUploadWidgetWidth
+{
+    width:202px;
+}
+
+.OnBoardingWidgetButton
+{
+    font-family:Tahoma;
+    font-size:11pt;
+    color: #FFFFFF;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1A4B8C), color-stop(20%,#124276), color-stop(50%,#124276), color-stop(100%,#0F2E58)); /* Chrome */
+	background: -webkit-linear-gradient(top, #1A4B8C 0%, #124276 20%, #124276 50%,#0F2E58 100%); /* Chrome10+ */
+	background: -o-linear-gradient(top, #1A4B8C , #124276); /* Opera */
+	background: -moz-linear-gradient(top,  #1A4B8C,  #124276); /* Firefox */
+    border:0px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	cursor: pointer;   
+}
+
+.OnBoardingWidgetButtonDimensions
+{
+    height:30px;
+    width:202px;
+}
+
+.OnBoardingDefModelWidgetImage
+{
+    background-repeat: no-repeat;
+	background-position: center center;
+	left: 0px;
+	right: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+/* Precise input */
+.PreciseInput 
+{
+    z-index: 500;
+	/*position: absolute;*/
+	height: 30px;
+	width: 170px;
+	/*left: 35%;
+	bottom: 30px;*/
+}
+.PreciseInput .InputContainer
+{
+    position: absolute;
+    height: 30px;
+	width: 140px;
+    /*background-color:#e9eef5;
+    border:1px solid #636363;
+	border-radius: 14px;
+	-moz-border-radius: 14px;*/
+	background-image: url("precise_input_bg.png");
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+.PreciseInput .InputContainer .InputContent
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.PreciseInput .InputContainer .InputLabel
+{
+    position: absolute;
+    left:15px;
+	color: #a3a4a6;
+	vertical-align: middle;
+    line-height: 30px;
+    width: 50px;
+}
+.PreciseInput .InputContainer .InputControlContainer
+{
+    position:absolute;
+    right: 15px;
+	height: 30px;
+	width: 60px;
+	color: #282828;
+}
+.PreciseInput div.CheckContainer
+{
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	left: 141px;
+}
+
+.LengthTextBox, .AngleTextBox, .RangeTextBox
+{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 2px;
+    bottom: 2px;
+    border: none;
+    background: transparent;
+    text-align: right;
+    padding: 0px;
+    width: 45px;
+    height: 20px;
+}
+
+/* Checkmark */
+.Checkmark
+{
+    position: absolute;
+    width: 29px;
+    height: 29px;
+}
+.CheckmarkDisable
+{
+	opacity: 0.3;
+	cursor: default;
+	pointer-events: none;
+}
+
+/* Banner */
+
+.SculptIt {
+    background-image: url('sculpt_it.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.PrintIt3D
+{
+    background-image: url('3d_print_it.png');
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+.MakeIt
+{
+    background-image: url('make_it.png');
+    background-repeat:no-repeat;
+    background-position:center center;
+}
+
+/* Progress bar 2D styles */
+.ProgressBar2D
+{
+	position: absolute;
+	width: 150px;
+	height: 20px;
+}
+.ProgressBar2D div.Background
+{
+	position: absolute;
+	height: 20px;
+	left:4px;
+	right:4px;
+	background-image: url("sprites/loading-background.png");
+	background-position: center center;
+	background-repeat:repeat-x;
+}
+.ProgressBar2D div.Left
+{
+	position: absolute;
+	width: 4px;
+	height: 20px;
+	left: 0px;
+}
+.ProgressBar2D div.Right
+{
+	position: absolute;
+	width: 4px;
+	height: 20px;
+	right: 0px;
+}
+.ProgressBar2D div.Border
+{
+    position:absolute;
+    left:4px;
+    right:4px;
+    height: 20px;
+    background-image: url("sprites/loading-front-middle.png");
+    background-repeat:repeat-x;
+}
+.ProgressBar2D div.Progress
+{
+    position:absolute;
+    left:4px;
+    right:4px;
+    height: 20px;
+    background-image: url("loading-loop.gif");
+    background-position: center center;
+    background-repeat:repeat-x;
+}
+
+/* Progress wheel 2D styles */
+.ProgressWheel2D
+{
+    position: absolute;
+	width: 64px;
+	height: 64px;
+	background-image: url("progressbar_infinite.gif");
+    background-repeat:no-repeat;
+}
+
+.CenterPosition
+{
+	position:absolute;
+	left:0px;
+	right:0px;
+	margin-left: auto;       
+	margin-right: auto;
+	top:0px;
+	bottom:0px;
+	margin-top:auto;
+	margin-bottom:auto;
+}
+
+/** css for slider control **/
+.sliderItem 
+{
+    float: left;
+    margin: 2px auto auto 1px;
+    color: white;
+    margin-top: -1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+        
+.sliderItem_value
+{
+    float: right;
+    color: Black;
+    font-size: 12px;
+    margin: 0px auto auto 1px;
+    min-width: 20px;
+}   
+
+.SliderBar
+{
+    float: left;
+    text-align: left;
+    position: relative;
+    border:1px solid #CCC;
+    border-radius:4px;
+    
+} 
+.slider_bar
+{ 
+    width: 280px;
+    margin-top: 20px;
+    margin-left:35px;
+    height:9px;
+    background-color:White;
+}
+
+.SliderMin
+{
+    margin: 1px 0px 1px 0px;
+    border-radius: 3px;
+}
+
+.slider_min
+{
+	background-color:#73a0cd;
+    height: 7px;
+}
+
+        
+.ui-widget-header
+{
+    background-color: #0068AC;
+}
+        
+.ui-slider-horizontal
+{
+    height: 10px;
+}
+
+.SliderAnchor
+{
+    width: 10px;
+    height: 18px;
+    margin-left:-3px;
+    margin-top:-13px;
+    z-index: 2;
+    position: absolute;
+}
+
+.Slider_Item
+{
+    background: url('../res/forms/progress_bar_bg.png') no-repeat scroll center;
+    height: 40px;
+}
+
+.Slider_Item div.slider_bar a
+{
+    background: url('../res/forms/preview_slider.png') no-repeat;
+}
+.MainWindow
+{
+    border-collapse:collapse;
+    border-spacing:0px;
+}
+
+.MainWindow td
+{
+    margin: 0px; 
+    padding: 0px;
+}
+
+.MainWindowHeader
+{
+    width: 100%;
+    height: 47px;
+    min-height: 47px;
+    margin: 0px;
+    padding: 0px;  
+}
+
+.MainWindowContent
+{
+    height: 100%;
+    width: 100%; 
+    margin: 0px;
+    padding: 0px;
+}
+
+.MainWindowFooter
+{
+    width: 100%;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.MainWindowHeaderPanel
+{
+    position: relative;
+    width: 100%;
+    height: 47px;
+}
+
+.MainWindowFooterPanel
+{
+    position: relative;
+    width: 100%;
+}
+
+.MainWindowLeftPanel
+{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.MainWindowRightPanel
+{
+    position: relative;
+    height: 100%;
+    cursor:pointer;
+}
+
+/* Plugin object characteristics */
+.PluginObject
+{
+    visibility:hidden;
+    height: 0px; 
+    margin:0px;
+    padding:0px; 
+}
+

@@ -10,6 +10,9 @@
  */
 {template .filedialog}
 <div id="file-dialog">
+	<div id="file-source">
+		File Source
+	</div>
 	<div id="file-navigator">File navigator</div>
 	<div id="file-header" class="file-header"> </div>
 	<ul id = "file-list">
@@ -21,15 +24,56 @@
 /**
  * Navigator
  @param folderPath The folder {name, id} array shown on the navigator.
+ @param thumbnail
  */
 {template .navigator}
 	{foreach $folder in $folderPath}
     	<div id="{$folder.id}" class="file-navigator-item"> {$folder.name}</div>
     	{if not isLast($folder)}
-      		<div class="file-navigator-separator"> | </div>  // separator 
+      		<div class="file-navigator-separator"> 
+				<img class = "{$thumbnail}"></img>
+			</div>  // separator 
     	{/if}
   {/foreach}
 {/template}
+
+/**
+ * Navigator
+ @param id The folder {id} array shown on the navigator.
+ */
+{template .source}
+<fieldset id = "sourceField">
+  	<legend>File Source</legend>
+	<ul>
+		<li>
+			<ul id="{$id}">
+				<li> <div> <img id = "box" class="provider-icon" src="images/box.png"/></div></li>
+				<li> <div> <img id = "dropbox" class="provider-icon" src="images/dropbox.png"/></div></li>
+				<li> <div> <img id = "baidu" class="provider-icon" src="images/baidu.png"/></div></li>
+				<li> <div> <img id = "a360" class="provider-icon" src="images/a360.png"/></div></li>
+				<li> <div> <img id = "qq" class="provider-icon" src="images/qq.png"/></div></li>
+			</ul>
+		</li>
+	</ul>
+</fieldset>
+{/template}
+
+/**
+ * Source
+  * @param id
+  * @param thumbnail
+  * The source {thumbnail, id} array shown on the navigator.
+ */
+{template .sourceFile}
+	<ul id="storage-provider-list", id="{$id}">
+		<li>
+			<div class="sourcefile-thumbnail-spaceholder" data-area-name="source-thumbnail">
+				<img class="{$thumbnail}"></img>				
+			</div> 
+		</li>
+	</ul>
+{/template}
+
 
 /**
  * Header
@@ -38,7 +82,10 @@
 		<div class="file-header-name-column" >
 			<div data-area-name="name"> Name</div> 
 		</div> 
+		
+
 		<div class="file-header-size-column"  data-area-name="size"> Size</div> 
+		
 		<div class="file-header-modification-date-column" data-area-name="midification-date"> Modification Date </div>
 {/template}
 

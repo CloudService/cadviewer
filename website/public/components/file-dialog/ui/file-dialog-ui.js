@@ -9,7 +9,7 @@ if (typeof component.ui.fileDialog.template == 'undefined') { component.ui.fileD
 
 component.ui.fileDialog.template.filedialog = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
-  output.append('<div id="file-dialog"><div id="file-navigator">File navigator</div><div id="file-header" class="file-header"> </div><ul id = "file-list"></ul></div>');
+  output.append('<div id="file-dialog"><div id="file-source">File Source</div><div id="file-navigator">File navigator</div><div id="file-header" class="file-header"> </div><ul id = "file-list"></ul></div>');
   return opt_sb ? '' : output.toString();
 };
 
@@ -21,8 +21,22 @@ component.ui.fileDialog.template.navigator = function(opt_data, opt_sb) {
   var folderListLen6 = folderList6.length;
   for (var folderIndex6 = 0; folderIndex6 < folderListLen6; folderIndex6++) {
     var folderData6 = folderList6[folderIndex6];
-    output.append('<div id="', soy.$$escapeHtml(folderData6.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData6.name), '</div>', (! (folderIndex6 == folderListLen6 - 1)) ? '<div class="file-navigator-separator"> | </div>' : '');
+    output.append('<div id="', soy.$$escapeHtml(folderData6.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData6.name), '</div>', (! (folderIndex6 == folderListLen6 - 1)) ? '<div class="file-navigator-separator"><img class = "' + soy.$$escapeHtml(opt_data.thumbnail) + '"></img></div>' : '');
   }
+  return opt_sb ? '' : output.toString();
+};
+
+
+component.ui.fileDialog.template.source = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<fieldset id = "sourceField"><legend>File Source</legend><ul><li><ul id="', soy.$$escapeHtml(opt_data.id), '"><li> <div> <img id = "box" class="provider-icon" src="images/box.png"/></div></li><li> <div> <img id = "dropbox" class="provider-icon" src="images/dropbox.png"/></div></li><li> <div> <img id = "baidu" class="provider-icon" src="images/baidu.png"/></div></li><li> <div> <img id = "a360" class="provider-icon" src="images/a360.png"/></div></li><li> <div> <img id = "qq" class="provider-icon" src="images/qq.png"/></div></li></ul></li></ul></fieldset>');
+  return opt_sb ? '' : output.toString();
+};
+
+
+component.ui.fileDialog.template.sourceFile = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('\t<ul id="storage-provider-list", id="', soy.$$escapeHtml(opt_data.id), '"><li><div class="sourcefile-thumbnail-spaceholder" data-area-name="source-thumbnail"><img class="', soy.$$escapeHtml(opt_data.thumbnail), '"></img></div></li></ul>');
   return opt_sb ? '' : output.toString();
 };
 
