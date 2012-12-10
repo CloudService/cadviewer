@@ -29,6 +29,8 @@ var addRoute = function(options){
 	/**********************************************************************/
 
 	var nextTaskId=0;
+	var build = config.get('build');
+	var server = config.get(build);
 	
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.info("==> /api/1.0/tasks");
