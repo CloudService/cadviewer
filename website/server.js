@@ -2,11 +2,12 @@
 /**
  * Module dependencies.
  */
+var log4js = require('log4js');
+var nconf = require('nconf');
 var express = require('express')
   , everyauth = require('everyauth')
   , request = require('request')
   , sio = require('socket.io');
-var log4js = require('log4js');
 var http = require('http');
 
 /**********************************************************************/
@@ -15,6 +16,15 @@ var http = require('http');
 var pendingTranslationTasks=[];
 var workerSockets = [];
 var nextTaskId=0;
+
+/**********************************************************************/
+// Load configuration
+/**********************************************************************/
+
+nconf.argv().env().file({file: __dirname + '/lib/config.json'}); // argv overrides env, env overrides file.
+
+var build = nconf.get('build');
+var server = nconf.get(build);
 
 /**********************************************************************/
 // Configure logger
@@ -59,9 +69,9 @@ everyauth.everymodule
   .findUserById( function (id, callback) {
     callback(null, usersById[id]);
   });
-
+ 
 everyauth.box
-  .apiKey(conf.box.apiKey)
+  .apiKey(server.box.apiKey)
   .findOrCreateUser( function (sess, authToken, boxUser) {
     return usersByBoxId[boxUser.user_id] ||
       (usersByBoxId[boxUser.user_id] = addUser('box', boxUser));
@@ -72,8 +82,8 @@ everyauth.box
 // Configure express
 /**********************************************************************/
 
-var importFormats = require('./lib/conf')['formats']['import'];
-var exportFormats = require('./lib/conf')['formats']['export'];
+var importFormats = nconf.get('formats')['import'];
+var exportFormats = nconf.get('formats')['export'];
 
 var app = express();
 app.use(express.static(__dirname + '/public'))
@@ -118,7 +128,7 @@ app.get('/', function(req, res, next){
    	
 		// Get root folder
 		var url = 'https://www.box.com/api/2.0/folders/0';
-		var apiKey = conf.box.apiKey;
+		var apiKey = server.box.apiKey;
 		var access_token = req.session.auth.box.authToken;//"gymnnxkbxikj0jm6rz25cq4kwe8go808";
 		var headers = {Authorization: "BoxAuth api_key=" + apiKey + "&auth_token=" + access_token};
 	
@@ -240,7 +250,7 @@ app.post('/api/1.0/tasks', function(req, res, next){
 	// Todo - only box is supported.
 	task["taskId"]= nextTaskId++;
 	task["storageProvider"] = "box";
-	task["apiKey"] = conf.box.apiKey;
+	task["apiKey"] = server.box.apiKey;
 	task["access_token"] = req.session.auth.box.authToken;
 	
 	pendingTranslationTasks.push(task);
@@ -331,6 +341,6 @@ io.sockets.on('connection', function (socket) {
 //**********************************************************************/
 // Done! log the system information
 /**********************************************************************/
-logger.info('BUILD=' + build + " (development/production) [Run 'BUILD=development node server.js' for local server.]");
+logger.info('BUILD=' + build + " (development/production) [Run 'node server.js --build=development' for local server.]");
 logger.info('Web site is listening on port ' + listeningPort);
 logger.info('Socket is listening on port ' + listeningPort);
