@@ -111,6 +111,7 @@ service.trans.translator = function (){
 				
 			// Save the task
 			var task = service.trans.translator.task;
+			task["file_id"] = selection["id"];
 			task["srcFileId"] = selection["id"];
 			task["srcFileName"] = selection["name"];
 			

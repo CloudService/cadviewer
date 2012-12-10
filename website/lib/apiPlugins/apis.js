@@ -4,6 +4,7 @@
 
 var everyauth = require('everyauth');
 var request = require('request');
+var uuid = require('node-uuid');
 
 /**********************************************************************/
 // Define and implement the REST api.
@@ -36,24 +37,46 @@ var addRoute = function(options){
 	var server = config.get(build);
 	var importFormats = config.get('formats')['import'];
 	
+	/**
+	* Http request body
+	{
+		"file_id": "128420334"
+	}
+	*/
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.debug("==> /api/1.0/tasks");
 		// req.body saves posted JSON object.
-		var task = req.body;
-		var taskString = JSON.stringify(task);
+		var fileInfo = req.body;
 		
-		logger.info("==> New Task:");
-		logger.info(taskString);
+		logger.debug("==> New Task:");
+		logger.debug(JSON.stringify(task));
 		
+		var task = {};
 		// Todo - only box is supported.
-		task["taskId"]= nextTaskId++;
+		task["id"]= nextTaskId++;
 		task["storageProvider"] = "box";
 		task["apiKey"] = server.box.apiKey;
 		task["access_token"] = req.session.auth.box.authToken;
 		
 		taskManager.pendingTranslationTasks.push(task);
 		
-		res.send(200); // success
+		var model_id = task["id"].toString();
+		
+		var taskObject = {
+			"type": "task",
+			"id": task["id"].toString(),
+			"action": "import",
+			"file_id": fileInfo["file_id"],
+			"model_id": model_id
+		};
+		
+		logger.debug(taskObject);
+		
+		req.session.models = {
+			model_id:null
+		};
+
+		res.send(200, taskObject); // success
 
 	});
 	
@@ -191,6 +214,7 @@ var addRoute = function(options){
 	});
 	
 	expressApp.get('/api/1.0/models/:id', function(req, res, next){
+		
 		
 		apiErrorManager.responseNotImplemented(res);
 		

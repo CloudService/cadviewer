@@ -7,10 +7,10 @@
     "nconf":"0.6.x",
 	"log4js":"0.5.x",
 	"express": "3.0.x",	
-      "ejs":"*",
-      "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
-      "request":"",
-      "socket.io":"" 
+    "ejs":"*",
+    "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
+    "request":"",
+    "node-uuid":"" 
   }, 
 	"devDependencies": {
     "jade": ">=0.12.1"
