@@ -5,10 +5,9 @@
   "main": "index.js",
   "dependencies": {
       "log4js":"",
-      "socket.io-client":"",
+	  "nconf":"",
       "request":"",
-      "restler": "",
-      "nconf":"",
+      "restler": "",      
       "sendmail":"",
       "step":""
   },
