@@ -86,8 +86,8 @@ expressApp.get('/', function(req, res, next){
 	var boxAuth = auth ? auth.box : null;
 	var showDefault = req.query.d ? true : false; // http://server.com/?d=1
 	
-	var workerNum = workerSockets.length;
-	var taskNum = pendingTranslationTasks.length;
+	var workerNum = 0;
+	var taskNum = 0;
 	var locals = { "amessage": ""
 					  , "workerNum": workerNum
 					  , "taskNum" : taskNum 
@@ -240,4 +240,4 @@ else{
 }
 
 logger.info('build=' + build + " (development/production) [Run 'node server.js --build=development' for local server.]");
-logger.logger.info('Server ('+ (secure ? 'https' : 'http') +') ['+config.get('build')+'] is listening on port ' + listeningPort);
+logger.info('Server ('+ (secure ? 'https' : 'http') +') ['+config.get('build')+'] is listening on port ' + listeningPort);

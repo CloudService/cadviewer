@@ -53,7 +53,7 @@ var addRoute = function(options){
 	
 	
 	// Rest API to get the tasks
-	app.get('/api/1.0/tasks', function(req, res, next){
+	expressApp.get('/api/1.0/tasks', function(req, res, next){
 
 		var task = taskManager.pendingTranslationTasks.splice(0,1); // Pop the front one.
 		
