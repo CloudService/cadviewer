@@ -1,50 +1,30 @@
-
 /**
  * Module dependencies.
  */
-var log4js = require('log4js');
-var nconf = require('nconf');
 var express = require('express')
   , everyauth = require('everyauth')
-  , request = require('request')
-  , sio = require('socket.io');
+  , request = require('request');
 var http = require('http');
 
 /**********************************************************************/
-// global variables
+// Initialize the server appliation
 /**********************************************************************/
-var pendingTranslationTasks=[];
-var workerSockets = [];
-var nextTaskId=0;
+var serverApp =  require('./lib/serverApplication.js');
 
 /**********************************************************************/
-// Load configuration
+// Configuration
 /**********************************************************************/
+var config = serverApp.config;
 
-nconf.argv().env().file({file: __dirname + '/lib/config.json'}); // argv overrides env, env overrides file.
+var build = config.get('build');
+var server = config.get(build);
 
-var build = nconf.get('build');
-var server = nconf.get(build);
-
-/**********************************************************************/
-// Configure logger
-/**********************************************************************/
-
-log4js.configure({
-    appenders: [
-        { type: "console" }
-    ],
-    replaceConsole: true
-});
-
-var logger = log4js.getLogger();
+var logger = serverApp.logger;
 
 /**********************************************************************/
 // Configure everyauth
 /**********************************************************************/
 everyauth.debug = true;
-var build = process.env.BUILD || "production"; 
-var conf = require('./lib/conf')[build];
 
 var usersById = {};
 var nextUserId = 0;
@@ -82,25 +62,25 @@ everyauth.box
 // Configure express
 /**********************************************************************/
 
-var importFormats = nconf.get('formats')['import'];
-var exportFormats = nconf.get('formats')['export'];
+var importFormats = config.get('formats')['import'];
+var exportFormats = config.get('formats')['export'];
 
-var app = express();
-app.use(express.static(__dirname + '/public'))
+var expressApp = express();
+expressApp.use(express.static(__dirname + '/public'))
   .use(express.bodyParser())
   .use(express.cookieParser('htuayreve'))
   .use(express.session())
-  .use(everyauth.middleware(app));
+  .use(everyauth.middleware(expressApp));
 
 // Configurations
-app.set('port', process.env.PORT || 3000); // Configure the listening port
-app.set('views', __dirname + '/views'); // The folder for the views, such as .html. The folder is <website>/views/
-app.set('view engine', 'ejs');
+expressApp.set(config.get('port')); // Configure the listening port
+expressApp.set('views', __dirname + '/views'); // The folder for the views, such as .html. The folder is <website>/views/
+expressApp.set('view engine', 'ejs');
 
-app.engine('html', require('ejs').renderFile);
+expressApp.engine('html', require('ejs').renderFile);
 
 // routers
-app.get('/', function(req, res, next){
+expressApp.get('/', function(req, res, next){
 	
 	var auth = req.session.auth;
 	var boxAuth = auth ? auth.box : null;
@@ -221,126 +201,43 @@ app.get('/', function(req, res, next){
 			locals['amessage'] = amessage;
 					
 		   	res.render('index', {'locals': locals});
-		});
-   		
-   	
-   	}
-   	
-   	 
-   	 
+		});  
+   	}  
 });
 
-app.get('/error', function (req, res)
+expressApp.get('/error', function (req, res)
 {
     res.send('Unexpected error is encountered when post your request.');
 });
 
 /**********************************************************************/
-// Define the REST api.
+// Load the REST APIs
 /**********************************************************************/
+require("./lib/apiLoader.js")({'expressApp': expressApp, 'serverApp': serverApp});
 
-app.post('/api/1.0/tasks', function(req, res, next){
-	// req.body saves posted JSON object.
-	var task = req.body;
-	var taskString = JSON.stringify(task);
-	
-	logger.info("==> New Task:");
-	logger.info(taskString);
-	
-	// Todo - only box is supported.
-	task["taskId"]= nextTaskId++;
-	task["storageProvider"] = "box";
-	task["apiKey"] = server.box.apiKey;
-	task["access_token"] = req.session.auth.box.authToken;
-	
-	pendingTranslationTasks.push(task);
-	
-	res.send(200); // success
-	
-	/*
-	// This function results in the server error hosted by appfog. Disable it.
-	
-	Response header
-		HTTP/1.1 500 Internal Server Error
-		Accept-Ranges: bytes
-		Age: 0
-		Content-Type: text/plain
-		Date: Thu, 04 Oct 2012 10:43:23 GMT
-		Server: nginx
-		Via: 1.1 varnish
-		X-Powered-By: Express
-		X-Varnish: 1494411374
-		Content-Length: 1360
-		Connection: keep-alive
-	*/
-	
-	dispatchTasks(); 
-});
+/**********************************************************************/
+// Start the web server
+/**********************************************************************/
+var listeningPort = config.get('port');
+var secure = config.get("secure");
+if(secure){
+	var keyPath = path.join(__dirname, config.get('key'));
+	var certPath = path.join(__dirname, config.get('cert'));
+	var sslkey = fs.readFileSync(keyPath).toString();
+	var sslcert = fs.readFileSync(certPath).toString();
 
-// Rest API to get the tasks
-app.get('/api/1.0/tasks', function(req, res, next){
+	var options = {
+	    key: sslkey,
+	    cert: sslcert
+	};
 
-	var task = pendingTranslationTasks.splice(0,1); // Pop the front one.
-	
-	res.send(task);
-	
-});
-
-function dispatchTasks(){
-
-	if(workerSockets.length == 0)
-		return;
-		
-	var length = pendingTranslationTasks.length;
-	if(length == 0)
-		return;
-		
-	 var socket = workerSockets[0]; // ToDo only support one worker so far. Add more when necessary
-	 
-	 for(var i = 0; i < length; ++i){
-	 	var task = pendingTranslationTasks[i];
-		 socket.emit('dispatchTask', task);
-	 }
-	 
-	 pendingTranslationTasks = [];
+	var https = require('https');
+	https.createServer(options, expressApp).listen(listeningPort);
 }
-  
-/**********************************************************************/
-// Configure http server.
-/**********************************************************************/
-var listeningPort = app.get('port');
-var httpApp = http.createServer(app).listen(listeningPort);
+else{
+	var http = require('http');
+	http.createServer(expressApp).listen(listeningPort);
+}
 
-/**********************************************************************/
-// socket.io.  Listens on the same port as http
-/**********************************************************************/
-var io = sio.listen(httpApp);
-io.set('log level', 1); // reduce logging
-io.set("transports", ['websocket']); 
-io.set("polling duration", 10); 
-io.set("match origin protocol", true);
-
-io.sockets.on('connection', function (socket) {
-		workerSockets.push(socket);
-		logger.info("New client is connected.");
-  		
-  		socket.on('disconnect', function () {
-  			logger.info("Client is disconnected.");
-    		
-    		var length = workerSockets.length;
-    		for(var i = 0; i < length; i++){
-    			if(workerSockets[i] == socket){
-    				workerSockets.splice(i, 1);
-    				break;
-    			}
-    		}
-  		});
-  		
-	});
-	
-//**********************************************************************/
-// Done! log the system information
-/**********************************************************************/
-logger.info('BUILD=' + build + " (development/production) [Run 'node server.js --build=development' for local server.]");
-logger.info('Web site is listening on port ' + listeningPort);
-logger.info('Socket is listening on port ' + listeningPort);
+logger.info('build=' + build + " (development/production) [Run 'node server.js --build=development' for local server.]");
+logger.logger.info('Server ('+ (secure ? 'https' : 'http') +') ['+config.get('build')+'] is listening on port ' + listeningPort);

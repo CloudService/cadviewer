@@ -4,9 +4,9 @@
   "description": "3d translator service",
   "main": "server.js",
   "dependencies": {
-  	  "log4js":"",
-	  "nconf":"",
-      "express": "3.0.0rc4",
+    "nconf":"0.6.x",
+	"log4js":"0.5.x",
+	"express": "3.0.x",	
       "ejs":"*",
       "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
       "request":"",
