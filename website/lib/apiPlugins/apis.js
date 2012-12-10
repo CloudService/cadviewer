@@ -53,13 +53,35 @@ var addRoute = function(options){
 
 	});
 	
+	expressApp.get('/api/1.0/files/:id', function(req, res, next){
+
+		apiErrorManager.responseNotImplemented(res);
+		
+	});
 	
-	// Rest API to get the tasks
 	expressApp.get('/api/1.0/tasks', function(req, res, next){
 
 		var task = taskManager.pendingTranslationTasks.splice(0,1); // Pop the front one.
 		
 		res.send(task);
+		
+	});
+	
+	expressApp.post('/api/1.0/jobs/import', function(req, res, next){
+
+		apiErrorManager.responseNotImplemented(res);
+		
+	});
+	
+	expressApp.get('/api/1.0/models/:id', function(req, res, next){
+
+		apiErrorManager.responseNotImplemented(res);
+		
+	});
+	
+	expressApp.put('/api/1.0/models/:id', function(req, res, next){
+
+		apiErrorManager.responseNotImplemented(res);
 		
 	});
 	
