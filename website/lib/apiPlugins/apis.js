@@ -38,6 +38,7 @@ var addRoute = function(options){
 	var importFormats = config.get('formats')['import'];
 	
 	/**
+	* Post a task to the server.
 	* Http request body
 	{
 		"file_id": "128420334"
@@ -57,6 +58,7 @@ var addRoute = function(options){
 		task["storageProvider"] = "box";
 		task["apiKey"] = server.box.apiKey;
 		task["access_token"] = req.session.auth.box.authToken;
+		task["file_id"]=file_id;
 		
 		taskManager.pendingTranslationTasks.push(task);
 		
@@ -72,14 +74,18 @@ var addRoute = function(options){
 		
 		logger.debug(taskObject);
 		
-		req.session.models = {
-			model_id:null
-		};
+		// Add one empty object
+		if(!req.session.models)
+			req.session.models = {};
+		req.session.models[model_id] = null;
 
 		res.send(200, taskObject); // success
 
 	});
 	
+	/**
+	* Get the file object with the specific file id.
+	*/
 	expressApp.get('/api/1.0/files/:id', function(req, res, next){
 		logger.debug("==> /api/1.0/files/:id");
 		
@@ -205,6 +211,9 @@ var addRoute = function(options){
 		});  
 	});
 	
+	/**
+	* Client get a pending task from the server. The returned task will be deleted.
+	*/
 	expressApp.get('/api/1.0/tasks', function(req, res, next){
 		
 		var task = taskManager.pendingTranslationTasks.splice(0,1); // Pop the front one.
@@ -213,18 +222,67 @@ var addRoute = function(options){
 		
 	});
 	
+	/** 
+	* Client gets the model from the server. The model will be deleted.
+	*/
 	expressApp.get('/api/1.0/models/:id', function(req, res, next){
+		logger.debug("==> get /api/1.0/models/:id");
 		
+		var id = req.params.id;
 		
-		apiErrorManager.responseNotImplemented(res);
+		var models = req.session.models;
 		
+		if(!models || !models[id]){
+			apiErrorManager.responseNotFound(res);
+		}
+		else{
+			var modelObject = models[id];
+			res.send(200, modelObject);
+			
+			delete models[id];
+		}	
 	});
 	
+	/**
+	* The client uploads the mesh for a model.
+	
+	http request body.
+	{
+     	"mesh":{...}
+	}
+
+	*/
 	expressApp.put('/api/1.0/models/:id', function(req, res, next){
-		logger.debug("==> /api/1.0/models/:id");
+		logger.debug("==> put /api/1.0/models/:id");
 		
-		apiErrorManager.responseNotImplemented(res);
+		// Check if the passed JSON data is valid.
+		var modelInfo = req.body;
+		if(!modelInfo || !modelInfo.mesh){
+			apiErrorManager.responseBadRequest(res);
+		}
 		
+		var models = req.session.models;
+		var id = req.params.id;
+		// Check if the id exists.
+		if(!models || !models[id]){
+			apiErrorManager.responseNotFound(res);
+		}
+		
+		// Cache the model object.
+		var modelObject = {
+				"type": "model",
+				"id":id,
+				"mesh": modelInfo.mesh
+			};
+		models[id] = modelObject;
+		
+		// Response the mini object.
+		var miniModelObject = {
+				"type": "model",
+				"id":id
+			};
+			
+		res.send(200, miniModelObject);
 	});
 	
 	return this;
