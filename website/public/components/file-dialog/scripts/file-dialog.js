@@ -38,6 +38,8 @@ component.ui.fileDialog.dialog = function () {
     /** @type {bool} */
     var _isOKClicked = false;
 
+
+    var _btnOK = null;
     /** Constructor
     *@this {component.ui.fileDialog}
     *@api public
@@ -98,7 +100,14 @@ component.ui.fileDialog.dialog = function () {
 		    buttons:
     		{
     		    "OK": function () { _isOKClicked = true; $(this).dialog("close"); }
-        		, "Cancel": function () { $(this).dialog("close"); }
+        		, "Cancel": function () {
+        		    $(this).dialog("close");
+
+        		    //remove dialog from document
+        		    var dlg = document.getElementById('file-dialog');
+        		    var parent = dlg.parentNode.parentNode;
+        		    parent.removeChild(dlg.parentNode);
+        		}
     		}
     		, title: "Select a file to import"
 			, width: 800
@@ -108,17 +117,31 @@ component.ui.fileDialog.dialog = function () {
 			, resizable: false
 			, autoOpen: false
 		});
-		
-		var args =
+
+        var btnName = this.getElementsByClassName('ui-button-text');
+        for (var i = 0; i < btnName.length; i++) {
+            if (btnName[i].textContent == 'OK') {
+                _btnOK = btnName[i].parentNode;
+                break;
+            }
+        }
+
+        var args =
 		{
-			"folderPath": [{ name: _rootDirectory.name, id: _rootDirectory.id}],
-			"thumbnail": "folder-seprator"
+		    "folderPath": [{ name: _rootDirectory.name, id: _rootDirectory.id}],
+		    "thumbnail": "folder-seprator"
 		}
-		
+
         this.updateFileNavigator(args);
         this.showSource();
-
+        this.enableOKButton(true);
         _dialogElement.dialog("open");
+
+        return this;
+    }
+
+    this.enableOKButton = function (toEnable) {
+        _btnOK.disabled = toEnable;
 
         return this;
     }
@@ -399,10 +422,6 @@ component.ui.fileDialog.dialog = function () {
 
             this.openFolder("0", files);
 
-            //            var nav = document.get.getElementById('file-navigator');
-            //            var arrayLen = nav.childNodes.length;
-            //            var arrayNav = new Array(arrayLen + 1);
-
             var nav = this.getElementsByClassName('file-navigator-item');
 
             var arrayLen = nav.length;
@@ -410,16 +429,20 @@ component.ui.fileDialog.dialog = function () {
 
             for (var i = 0; i < arrayLen; i++) {
 
-                arrayNav.push({name: nav[i].innerText, id: nav[i].id});
+                arrayNav.push({ name: nav[i].innerText, id: nav[i].id });
             }
-            arrayNav.push({ name: file.name, id: arrayLen});
+            arrayNav.push({ name: file.name, id: arrayLen });
 
-//                    this.updateFileNavigator([{ name: _rootDirectory.name, id: _rootDirectory.id}]);
-			var args = {"folderPath": arrayNav, "thumbnail": "folder-separator"};
+            var args = { "folderPath": arrayNav, "thumbnail": "folder-separator" };
             this.updateFileNavigator(args);
+
+            this.enableOKButton(true);
 
             return this;
 
+        }
+        else {
+            this.enableOKButton(false);
         }
 
         var length = _selectedItems.length;
@@ -466,7 +489,7 @@ component.ui.fileDialog.dialog = function () {
 
     this.getElementsByClassName = function (n) {
         var el = [],
-            _el = document.getElementsByTagName('*');
+              _el = document.getElementsByTagName('*');
         for (var i = 0; i < _el.length; i++) {
             if (_el[i].className == n) {
                 el[el.length] = _el[i];
