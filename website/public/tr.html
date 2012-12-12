@@ -68,9 +68,11 @@
       <script type="text/javascript" src="components/thirdparty/three.js/three.min.js"></script>
       <script type="text/javascript" src="components/thirdparty/three.js/Detector.js"></script>
       <script type="text/javascript" src="components/thirdparty/three.js/OrbitControls.js"></script>
+
       <script>
           if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-          
+          // alert("starting");
+
           var container;
           var currentlyPressedKeys = {};
           var camera, controls, scene, renderer, materials;
@@ -117,11 +119,18 @@
               object = new THREE.ArrowHelper( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 0 ), 50 );
               object.position.set( 200, 0, 400 );
               scene.add( object );
+
+              object = THREE.SceneUtils.createMultiMaterialObject( new THREE.CubeGeometry( 100, 100, 100, 4, 4, 4 ), materials );
+              object.position.set( -200, 0, 400 );
+              scene.add( object );
               
               renderer = new THREE.WebGLRenderer( { antialias: true } );
               renderer.setSize( window.innerWidth, window.innerHeight );
               
               container.appendChild( renderer.domElement );
+
+              // parse json data and draw triangles
+              addTriangles();
               
               //
               
@@ -129,6 +138,38 @@
               
           }
           
+          function addTriangles()
+          {
+            var bodies = jQuery.parseJSON('[{"id":"1","name":"meshcube","colors":[{"r":1,"g":0,"b":0},{"r":0,"g":1,"b":0},{"r":0,"g":0,"b":1}],"vertices":[{"x":0,"y":0,"z":0},{"x":0,"y":-10,"z":0},{"x":10,"y":-10,"z":0},{"x":10,"y":0,"z":0},{"x":0,"y":0,"z":10},{"x":0,"y":-10,"z":10},{"x":10,"y":-10,"z":10},{"x":10,"y":0,"z":10}],"normals":[{"x":0,"y":0,"z":-1},{"x":1,"y":0,"z":0},{"x":0,"y":0,"z":1},{"x":-1,"y":0,"z":0},{"x":0,"y":-1,"z":0},{"x":0,"y":1,"z":0}],"faces":[{"vertexindices":[0,1,2],"normalindex":0,"colorindex":0},{"vertexindices":[2,3,0],"normalindex":0,"colorindex":0},{"vertexindices":[2,3,7],"normalindex":1,"colorindex":1},{"vertexindices":[7,6,2],"normalindex":1,"colorindex":0},{"vertexindices":[5,6,7],"normalindex":2,"colorindex":0},{"vertexindices":[7,4,5],"normalindex":2,"colorindex":0},{"vertexindices":[4,5,1],"normalindex":3,"colorindex":0},{"vertexindices":[1,0,4],"normalindex":3,"colorindex":0},{"vertexindices":[1,2,6],"normalindex":4,"colorindex":2},{"vertexindices":[6,5,1],"normalindex":4,"colorindex":2},{"vertexindices":[4,0,3],"normalindex":5,"colorindex":1},{"vertexindices":[3,7,4],"normalindex":5,"colorindex":1}]}]');
+              alert( bodies[0].name);
+              
+              for(var i = 0; i < bodies.length; ++i)
+              {
+                var geom = new THREE.Geometry;
+                var body = bodies[i];
+                geom.id = body.id;
+                geom.name = body.name;
+                for(var j = 0; j < body.vertices.length; ++j)
+                {
+                  geom.vertices.push(new THREE.Vector3(body.vertices[j].x, body.vertices[j].y, body.vertices[j].z));
+                }
+
+                for (var i = 0; i < body.colors.length; i++) {
+                  var tri_color = new THREE.Color;
+                  tri_color.setRGB(body.colors[i].r, body.colors[i].g, body.colors[i].b);
+                  geom.colors.push(tri_color);
+                };
+
+                for(var k = 0; k < body.faces.length; ++k)
+                {
+                  var tri = body.faces[k];
+                  geom.faces.push(new THREE.Face3(tri.vertexindices[0],tri.vertexindices[1],tri.vertexindices[2], undefined, tri.colorindex ))
+                }
+
+                scene.add(new THREE.Mesh(geom, materials[1]))
+              }
+          }
+
           function onWindowResize() {
               
               camera.aspect = window.innerWidth / window.innerHeight;
@@ -152,21 +193,12 @@
           }
           function render() {
               
-              var timer = Date.now() * 0.0001;
+              //var timer = Date.now() * 0.0001;
               
-              camera.position.x = Math.cos( timer ) * 800;
-              camera.position.z = Math.sin( timer ) * 800;
+              //camera.position.x = Math.cos( timer ) * 800;
+              //camera.position.z = Math.sin( timer ) * 800;
               
-              camera.lookAt( scene.position );
-              
-              for ( var i = 0, l = scene.children.length; i < l; i ++ ) {
-                  
-                  var object = scene.children[ i ];
-                  
-                  object.rotation.x = timer * 5;
-                  object.rotation.y = timer * 2.5;
-                  
-              }
+              //camera.lookAt( scene.position );
               
               renderer.render( scene, camera );
               
