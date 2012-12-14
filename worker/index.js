@@ -7,6 +7,7 @@ var fs = require('fs');
 var rest = require('restler');
 var nconf = require('nconf');
 var Step = require("Step");
+var path = require("path");
 
 /**********************************************************************/
 // Load configuration
@@ -59,7 +60,18 @@ var getTaskFromServer = function(){
    }
    
    // make the request to get the task from server
-   
+   /**
+   The returned job object.
+   {
+		"type": "job",
+		"id": "2342",
+		"model_id": "3452",
+		"source_file_name": "robot.stl",
+		"source_file_id": "4451234",
+		"api_key": "243ba09e93248d0cc",
+		"auth_token": "aeb2732bd098ce"
+	}
+   */
    
    var url = server + '/api/1.0/tasks';
    
@@ -116,20 +128,24 @@ var executeTask = function(t){
 		},
 		function(err, t) {
 			if (err) {
-				logger.debug("Skip doTranslation");
+				logger.debug("Skip generateMesh");
 				throw err;
 			}
-			doTranslation(t, this);
+			generateMesh(t, this);
 		},
 		function(err, t) {
 			if (err) {
-				logger.debug("Skip uploadFile");
+				logger.debug("Skip generateTaskFile");
 				throw err;
 			}
-			uploadFile(t, this);
+			generateTaskFile(t, this);
 		},
 		function(err, t) {
-			sendMailNotification(t, this);
+			if (err) {
+				logger.debug("Skip uploadMesh");
+				throw err;
+			}
+			uploadMesh(t, this);
 		},
 		function(err, t) {
 			cleanupTempFiles(t, this);
@@ -145,20 +161,22 @@ var executeTask = function(t){
 };
 
 var downloadFile = function(t, cb){
-	logger.debug("Downloading file: " + t.srcFileName);
+	logger.debug("Downloading file: " + t.source_file_name);
 	
 	// ToDo download file from box
-	var url = 'https://api.box.com/2.0/files/'+t.srcFileId +'/data';
-	var headers = {Authorization: 'BoxAuth api_key='+t.apiKey +'&auth_token='+t.access_token};
+	var url = 'https://api.box.com/2.0/files/'+t.source_file_id +'/data';
+	var headers = {Authorization: 'BoxAuth api_key='+t.api_key +'&auth_token='+t.auth_token};
 
-	var localSrcFileName =  taskFolder + '/' + t.taskId.toString() + '_' + t.srcFileName;
-	t.localSrcFileName =localSrcFileName;
+	t.x_data = t.x_data || {}; // add all the external data to this object.
+	
+	var localSrcFileName =  path.join(taskFolder, t.id.toString() + '_' + t.source_file_name);
+	t.x_data.local_source_file_name =localSrcFileName;
 	
 	try{
 		var writeStream = fs.createWriteStream(localSrcFileName);
 		request.get({url:url, headers:headers}).pipe(writeStream);
 		writeStream.on('close', function () {
-			logger.debug("[Success]: File [" + t.srcFileName + "] is download as ["+localSrcFileName+"].");
+			logger.debug("[Success]: File [" + t.source_file_name + "] is download as ["+localSrcFileName+"].");
 			cb(null, t);
 	  	});
 	}
@@ -169,99 +187,96 @@ var downloadFile = function(t, cb){
 
 };
 
-var doTranslation = function(t, cb){
-	logger.debug("Translating file: " + t.srcFileName);
+var generateTaskFile = function(t, cb){
+	logger.debug("Generating task file");
 	
-	var localDestFileName = taskFolder + '/' + t.destFileName;
-	t.localDestFileName = localDestFileName;
+	var task_file = path.join(taskFolder, t.id.toString() + '_task.json');
+	t.x_data.task_file = task_file;
+	
+	// Todo - save the task file 
+	
+	fs.open(task_file,"w",0644,function(err,fd){
+		if(err) {
+			logger.debug("[Fail]: Failed to create task file: " + task_file);
+			throw err;
+		}
+		
+		fs.write(fd,JSON.stringify(t),0,'utf8',function(err){
+			if(err){
+				logger.debug("[Fail]: Failed to write task file: " + task_file);
+				throw err;
+			}
+			
+			fs.closeSync(fd);
+			
+			cb(null, t);
+		});
+	});
+};
+
+var generateMesh = function(t, cb){
+	logger.debug("Generating mesh for file: " + t.x_data.local_source_file_name);
+	
+	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' +t.source_file_name + '.json');
+	t.x_data.local_mesh_file_name = localMeshFileName;
 	
 	try{
-		fs.renameSync(t.localSrcFileName, localDestFileName); // Todo - use the rename for prototype.
-		logger.debug("[Success]: File [" + localDestFileName + "] is generated.");
+		fs.renameSync(t.x_data.local_source_file_name, localMeshFileName); // Todo - use the rename for prototype.
+		logger.debug("[Success]: File [" + localMeshFileName + "] is generated.");
 		cb(null, t);
 	}
 	catch(err){
-		logger.debug("[Fail]: Failed to generate [" + localDestFileName + "].");
+		logger.debug("[Fail]: Failed to generate [" + localMeshFileName + "].");
 		cb(err, t);
 	}
 };
 
-var uploadFile = function(t, cb){
+var uploadMesh = function(t, cb){
 
-	logger.debug("Uploading file: " + t.srcFileName);
-	// curl https://www.box.com/api/2.0/files/data -H "Authorization: BoxAuth api_key=ujdb2e8pe3geqmkgm2fg66pg552dwl2f&auth_token=jbpktqjbkz4qrmsc2ok5rmx8j2lbenmu" -F filename=@avatar_n.jpg -F folder_id=0
+	logger.debug("Uploading mesh: " + t.source_file_name);
 	
-	var auth = 'BoxAuth api_key='+t.apiKey +'&auth_token='+t.access_token + '';
-	var url = 'https://api.box.com/2.0/files/data';
-	var headers = {Authorization: auth};
+	var url = server.server + '/api/1.0/models/' + t.model_id;
 	
-	var fileName = t.localDestFileName;
+	var fileName = t.x_data.local_mesh_file_name;
 	var stats = fs.lstatSync(fileName);
 	var fileSize = stats.size;
 	logger.debug('File size: ' + fileSize);
 	
+	var requestObject = {mesh: {count:205}};
+	
+	/**
+	* The format of the request body is:
+	{
+		"mesh": "..."
+	}
+	*/
 	try{
 	   rest.post(url, {
-		 multipart: true,
-		 headers: headers,
-		 data: {
-		   'file': rest.file(fileName, null, fileSize, null, null),
-		   'folder_id': t.destFolderId
-		 }
+		 body: requestObject,
+		 headers: {"Content-type": "application/json"},
 	   }).on('complete', function(data) {
 		   logger.debug(data);
-		   logger.debug("[Success] File [" + t.localDestFileName + "] is uploaded.");
+		   logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
 		   cb(null ,t);
 	   });
 	}
 	catch(err){
-		logger.debug("[Fail]: Failed to upload [" + t.localDestFileName + "].");
+		logger.debug("[Fail]: Failed to upload mesh [" + t.x_data.local_mesh_file_name + "].");
 		cb(err, t);
 	}
-};
-
-var sendMailNotification = function(t, cb ){
-	var mailAddr = t.email || "";
-	
-	logger.debug("Sending mail to [" + mailAddr + "].");
-	
-	if(!looksLikeMail(mailAddr)){
-		logger.debug("[Fail] The mail address is invalid. Skip the mail notification.");
-		cb(null, t);
-	}
-	
-	var subject = 'Your file translation is completed';
-	var body = 'Your file "' + t.srcFileName + '" is translated to be "' + t.destFileName + '".';
-	
-	var options = {
-		from: "do-not-reply@cloudservice.com",
-		to: mailAddr,
-		subject: subject,
-		content: body
-	};
-	
-	mailManager.sendMail(options, function(err, reply) {
-		if(!err)
-			logger.debug("[Success] Mail notification is sent to [" + mailAddr + "].");
-		else{
-			logger.debug("[Fail] Failed to send the mail to ["  + mailAddr + "].");
-			logger.debug(err.stack);
-		}
-	});
-	
-	cb(null, t);
-	
 };
 
 var cleanupTempFiles = function(t, cb){
 	logger.debug("Cleaning up task files");
 	
 	try{
-		fs.unlink(t.localSrcFileName);
-		fs.unlink(t.localDestFileName);
+		fs.unlink(t.x_data.local_source_file_name);
+		fs.unlink(t.x_data.task_file);
+		fs.unlink(t.x_data.local_mesh_file_name);
 		
-		logger.debug(t.localSrcFileName + ' is deleted');
-		logger.debug(t.localDestFileName + ' is deleted');
+		logger.debug(t.x_data.local_source_file_name + ' is deleted');
+		logger.debug(t.x_data.task_file + ' is deleted');
+		logger.debug(t.x_data.local_mesh_file_name + ' is deleted');
 		logger.debug("[Success]: Cleanup is completed.");
 		cb(null,t);
 	}
@@ -271,9 +286,4 @@ var cleanupTempFiles = function(t, cb){
 	}
 };
 
-var looksLikeMail = function(str) {
-    var lastAtPos = str.lastIndexOf('@');
-    var lastDotPos = str.lastIndexOf('.');
-    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
-}
 

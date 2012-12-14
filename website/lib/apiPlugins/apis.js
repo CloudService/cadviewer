@@ -41,7 +41,15 @@ var addRoute = function(options){
 	* Post a task to the server.
 	* Http request body
 	{
-		"file_id": "128420334"
+		"source_file_id": "128420334",
+		"source_file_name": "robot.stl"
+	}
+	
+	* Http response body
+	{
+		"type": "task",
+		"id": "2342",
+		"model_id": "2342"
 	}
 	*/
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
@@ -50,29 +58,31 @@ var addRoute = function(options){
 		var fileInfo = req.body;
 		
 		logger.debug("==> New Task:");
-		logger.debug(JSON.stringify(task));
+		logger.debug(JSON.stringify(fileInfo));
 		
-		var task = {};
-		// Todo - only box is supported.
-		task["id"]= nextTaskId++;
-		task["storageProvider"] = "box";
-		task["apiKey"] = server.box.apiKey;
-		task["access_token"] = req.session.auth.box.authToken;
-		task["file_id"]=file_id;
+		nextTaskId++;
+		var task_id = nextTaskId.toString();
+		var model_id = task_id;
+		
+		var task = {
+			"type": "task",
+			"id": task_id,
+			"model_id": model_id,
+			"source_file_id": fileInfo["source_file_id"],
+			"source_file_name": fileInfo["source_file_name"],
+			"api_key": server.box.apiKey,
+			"auth_token": req.session.auth.box.authToken
+		};
+		
+		logger.debug(task);
 		
 		taskManager.pendingTranslationTasks.push(task);
 		
-		var model_id = task["id"].toString();
-		
 		var taskObject = {
 			"type": "task",
-			"id": task["id"].toString(),
-			"action": "import",
-			"file_id": fileInfo["file_id"],
+			"id": task_id,
 			"model_id": model_id
 		};
-		
-		logger.debug(taskObject);
 		
 		// Add one empty object
 		if(!req.session.models)
