@@ -27,7 +27,7 @@ var ServerApplication = function(){
 
 	this.logger = log4js.getLogger();
 	
-	this.apiErrorManager = require(path.join(__dirname, './ApiErrorManager.js'))();
+	this.apiErrorManager = require(path.join(__dirname, './apiErrorManager.js'))();
 	this.taskManager = require(path.join(__dirname, './datamodel/taskManager.js'))();
 	this.modelManager = require(path.join(__dirname, './datamodel/modelManager.js'))();
 };
