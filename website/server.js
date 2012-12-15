@@ -5,6 +5,8 @@ var express = require('express')
   , everyauth = require('everyauth')
   , request = require('request');
 var http = require('http');
+var path = require('path');
+var fs = require('fs');
 
 /**********************************************************************/
 // Initialize the server appliation
