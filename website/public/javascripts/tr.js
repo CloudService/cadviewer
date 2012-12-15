@@ -1,73 +1,31 @@
 
 $(document).ready(function(){
-	$("#start-button").button();
-	$("#start-button").click( function(e){
-		// Check 
-		var task = service.trans.translator.task;
-		
-		var fileFullName = task["srcFileName"];
-		if(fileFullName === ""){
-			alert("Please select the file you want to translate.");
-			return;
-			}
-		
-		task["email"] = $("#email").val();
-		
-		$.post("/api/1.0/tasks", task, function() {
-			parent.location.href='/?d=1'; // update the task queue number
-			alert("Your request is accepted.");
-		})
-		.error(function() { parent.location.href='/error';});
-    
-	});
 	
-	// update the destination format.
-	var supportedFormats = parent.getDestFormats();
-	var formatListElement = $("#format-list");
-	formatListElement.children().remove(); // Remove all children.
-	var formatLength = supportedFormats.length;
-	for(var i = 0; i < formatLength; ++i){
-		var format = supportedFormats[i];
-		if(0 == i)
-			var formatHTML = '<li> <div>  <input type="radio" name="format" value="'+format+'" checked>'+format+'</div></li>'; // Check the first one
-		else
-			var formatHTML = '<li> <div>  <input type="radio" name="format" value="'+format+'">'+format+'</div></li>';
-		
-		formatListElement.append($(formatHTML));
-	}
-	
+	// Execute the action message from server
 	var messageSolver = actionMessage.getMessageSolver(); 
-	messageSolver.register("translator", new service.trans.translator());
+	
+	translator = new service.trans.translator();
+	
+	messageSolver.register("translator", translator);
 	
 	// Check the action message from the parent.
 	
 	var astring = parent.getAction();
-	if(astring && astring != "")
-		messageSolver.evaluate(astring);
-	   $("#fancybox-new").click(function(event){
+	//if(astring && astring != "")
+		//messageSolver.evaluate(astring);
 	
-		var files = [];
-		openDialog(files, _onOK);
-
-     //parent.location.href='/auth/box';
+	// Click the import command 
+	$("#fancybox-new").click(function(event){
+	
+		translator.openFileDialog();
    });   
   
+  	// Click the box drive icon.
    $("#box").click(function(event){
 	
      parent.location.href='/auth/box';
    });
 
-   
-   $('input:radio[name=format]').change(function(){
-  			var task = service.trans.translator.task;
-			var fileFullName = task["srcFileName"];
-			if(fileFullName != ""){
-				// Update destination format
-				service.trans.translator.updateDestFormat();
-			}
-	   }
-   ); 
-   
  });
  
 var service = service || {};
@@ -76,26 +34,34 @@ service.trans = service.trans || {};
 service.trans.translator = function (){
 
 	this.openFileDialog = function(data){
-	
-	var files = [];
-	
-	var fileList = data.files;
-	var length = fileList.length;
-	for(var i = 0; i < length; i++){
-		var fileInfo = fileList[i];
-		var file = new component.ui.fileDialog.fileObject();
 		
-		file.id = fileInfo.id;
-		file.name = fileInfo.name;
-		file.isFolder = fileInfo.isFolder;
-		file.size = fileInfo.size;
-		file.moddate = fileInfo.moddate;
-		
-		files.push(file);
-	}
-	
-		openDialog(files, _onOK);
-	}
+		$.get("/api/1.0/files/entry", function(data) {
+			
+			alert(JSON.stringify(data));
+			
+			// todo - request the root folder from server.
+			var files = [];
+			var fileList = data.children || [];
+			var length = fileList.length;
+			for(var i = 0; i < length; i++){
+				var fileInfo = fileList[i];
+				var file = new component.ui.fileDialog.fileObject();
+				
+				file.id = fileInfo.id;
+				file.name = fileInfo.name;
+				file.isFolder = fileInfo.is_folder;
+				file.size = fileInfo.size;
+				file.moddate = fileInfo.modified_at;
+				
+				files.push(file);
+			}
+			
+			openDialog(files, _onOK);
+		})
+		.error(function() { 
+			// do nothing.
+		});
+	};
 	
 	_onOK = function (event){
 		var dialog = event.data.dialog;
@@ -109,40 +75,23 @@ service.trans.translator = function (){
 			if(selection.isFolder)
 				return;
 				
-			// Save the task
+			// Get the task info from selected file.
 			var task = service.trans.translator.task;
-			task["file_id"] = selection["id"];
-			task["srcFileId"] = selection["id"];
-			task["srcFileName"] = selection["name"];
+			task["source_file_id"] = selection["id"];
+			task["source_file_id"] = selection["name"];
 			
-			var fileFullName = selection.fullName();
-			task["srcFileFullName"] = fileFullName;
-			task["destFolderId"] = selection["parent"]["id"];
-			
-			// Update DOM
-			$("#srcFile").val(fileFullName);
-			
-			// Update destination format
-			service.trans.translator.updateDestFormat();
+			// Post it task to server
+			$.post("/api/1.0/tasks", task, function(data) {
+				
+				alert("Your request is accepted.");
+				alert(data);
+			})
+			.error(function() { 
+				alert("Error.");
+			});
 		}
-	}
-}
+	};
+};
 
-service.trans.translator.task={
-	"srcFileId" : ""
-	, "srcFileName" : ""
-	, "srcFileFullName" :""
-	, "destFolderId": ""
-	, "destFormat": ""
-	, "destFileName" : ""
-	, "email": ""};
-service.trans.translator.updateDestFormat = function(){
-	var task = service.trans.translator.task;
-	
-	var ext = $('input:radio[name=format]:checked').val();
-	task["destFormat"] = ext;
-	task["destFileName"] = task["srcFileName"] + "." + ext;
-	
-	var destFullName = task["srcFileFullName"] + "." + ext;
-	$("#destFile").val(destFullName);		
-}
+service.trans.translator.task={};
+

@@ -153,6 +153,7 @@ var addRoute = function(options){
 		logger.debug("==> /api/1.0/files/:id");
 		
 		var id = req.params.id;
+		logger.debug(id);
 		
 		if(id === 'entry'){
 			var fileObject = {
@@ -180,6 +181,7 @@ var addRoute = function(options){
 			}
 			
 			res.send(200, fileObject);
+			return;
 		}
 		
 		if(!isBoxLogin(req.session)){
