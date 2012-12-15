@@ -121,40 +121,44 @@ var executeTask = function(t){
 	
 	
 	Step(
-		function() {
+		function _downloadFileFromCloudDrive() {
 			logger.debug("=======Task Begin==========");
 			logger.debug("The task is: ");
 			logger.debug(t);
 			downloadFile(t, this);
 		},
-		function(err) {
-			if (err) {
-				logger.debug("Skip generateMesh");
-				throw err;
-			}
-			generateMesh(t, this);
-		},
-		function(err) {
+		function _generateTaskFile(err) {
 			if (err) {
 				logger.debug("Skip generateTaskFile");
 				throw err;
 			}
 			generateTaskFile(t, this);
 		},
-		function(err) {
+		function _generateMesh(err) {
 			if (err) {
-				logger.debug("Skip uploadMesh");
+				logger.debug("Skip generateMesh");
 				throw err;
 			}
-			
-			uploadMesh(t, this);
+			generateMesh(t, this);
 		},
-		function(err) {
+		function _loadMesh(err) {
+			if (err) {
+				logger.debug("Skip loadMesh");
+				throw err;
+			}
+			loadMesh(t, this);
+		},
+		function _updateModel(err) {
+
+			// always update the model, even though there is error in previous step.
+			updateModel(t, this);
+		},
+		function _cleanupTempFiles(err) {
 			cleanupTempFiles(t, this);
 			
 			//this(err);
 		},
-		function (err) {			
+		function _completeTask(err) {			
 			isTaskExecuting = false;
 			
 			logger.debug("=======Task Complete==========");
@@ -248,6 +252,7 @@ var generateMesh = function(t, cb){
 	  		exe.on('exit', function (code, signal) {
 			  if(0 === code){
 				  	logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
+				  	
 				  	cb(null, t);
 			  }
 			  else{
@@ -259,14 +264,10 @@ var generateMesh = function(t, cb){
 	});
 };
 
-var uploadMesh = function(t, cb){
+var loadMesh = function(t, cb){
 
-	logger.debug("Uploading mesh: " + t.source_file_name);
-	
-	var url = serverConf.server + '/api/1.0/models/' + t.model_id;
-	
-	logger.debug(url);
-	
+	logger.debug("Loading mesh from file: " + t.x_data.local_mesh_file_name);
+
 	var fileName = t.x_data.local_mesh_file_name;
 	//fileName = t.x_data.task_file; // Todo - comment this line. the task file is only for test purpose.
 	
@@ -282,37 +283,62 @@ var uploadMesh = function(t, cb){
 			cb(err);
 		}
 		
-		var requestObject = {mesh: JSON.parse(data)};
-		
-		//logger.debug(JSON.stringify(requestObject));
-		/**
-		* The format of the request body is:
-		{
-			"mesh": "..."
-		}
-		*/
 		try{
-		   rest.put(url, {
-			 data: JSON.stringify(requestObject),
-			 headers: {"Content-type": "application/json"},
-			}).on('complete', function(result, response) {
-		   
-			   if (response.statusCode >= 200 && response.statusCode <300) {
-					logger.debug(result);
-					logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
-					cb(null ,t);
-			   }
-			   else{
-					logger.debug("[Fail]");
-					cb(new Error("Fail to upload the mesh"), t);
-			   }
-		   });
+			t.x_data.mesh = JSON.parse(data);
+			
+			t.x_data.has_mesh = true; // It is used to indicate whether the mesh is generated correctly.
+			
+			cb(null, t);
 		}
 		catch(err){
 			logger.debug("[Fail]");
-			cb(err, t);
+			cb(err);
 		}
 	});
+};
+
+var updateModel = function(t, cb){
+
+	logger.debug("Updating model: " + t.source_file_name);
+	
+	var requestObject = {
+		status: t.x_data.has_mesh ? "good" : "bad",
+		mesh: t.x_data.mesh || {}
+		};
+		
+	//logger.debug(JSON.stringify(requestObject));
+	/**
+	* The format of the request body is:
+	{
+		"status": "good",
+		"mesh": {}
+	}
+	*/
+	try{
+		var url = serverConf.server + '/api/1.0/models/' + t.model_id;
+	
+		logger.debug(url);
+	
+		rest.put(url, {
+		  data: JSON.stringify(requestObject),
+		  headers: {"Content-type": "application/json"},
+		 }).on('complete', function(result, response) {
+		
+			if (response.statusCode >= 200 && response.statusCode <300) {
+				 logger.debug(result);
+				 logger.debug("[Success]");
+				 cb(null ,t);
+			}
+			else{
+				 logger.debug("[Fail]");
+				 cb(new Error("Fail to update the model"), t);
+			}
+		});
+	}
+	catch(err){
+		logger.debug("[Fail]");
+		cb(err, t);
+	}
 };
 
 var cleanupTempFiles = function(t, cb){
