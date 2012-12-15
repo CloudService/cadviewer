@@ -6,12 +6,14 @@
     "cert": "./lib/certificate/cert.pem",
     "development": {
         "box": {
-            "apiKey": "ujdb2e8pe3geqmkgm2fg66pg552dwl2f"
+            "apiKey": "ujdb2e8pe3geqmkgm2fg66pg552dwl2f",
+            "callback":"http://localhost:3000/auth/box/callback"
         }
     },
     "production": {
         "box": {
-            "apiKey": "ch60klzmc4zksm3l101169y7sr371ck0"
+            "apiKey": "ye6trxsaaxji5u4647te9700sjlu6z4a",
+            "callback":"http://tr.ap01.aws.af.cm/auth/box/callback"
         }
     },
     "formats": {
