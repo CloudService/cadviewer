@@ -257,7 +257,7 @@ var uploadMesh = function(t, cb){
 	
 	var requestObject = {mesh: {count:205}};
 	
-	logger.debug(JSON.stringify(requestObject));
+	//logger.debug(JSON.stringify(requestObject));
 	/**
 	* The format of the request body is:
 	{
@@ -266,7 +266,7 @@ var uploadMesh = function(t, cb){
 	*/
 	try{
 	   rest.put(url, {
-		 data: requestObject,
+		 data: JSON.stringify(requestObject),
 		 headers: {"Content-type": "application/json"},
 	   	}).on('complete', function(result, response) {
 	   
