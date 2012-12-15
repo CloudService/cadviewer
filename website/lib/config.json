@@ -1,6 +1,6 @@
 {
-    "build": "production",
-    "port": "80",
+    "build": "development",
+    "port": "3000",
     "secure": false,
     "key": "./lib/certificate/key.pem",
     "cert": "./lib/certificate/cert.pem",
