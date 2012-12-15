@@ -27,6 +27,7 @@ var addRoute = function(options){
 	var apiErrorManager = serverApp.apiErrorManager;
 	var logger = serverApp.logger;	
 	var taskManager = serverApp.taskManager;
+	var modelManager = serverApp.modelManager;
 		
 	/**********************************************************************/
 	// Add the route implementation here
@@ -79,7 +80,8 @@ var addRoute = function(options){
 		
 		nextTaskId++;
 		var task_id = nextTaskId.toString();
-		var model_id = task_id;
+		
+		var model_id = uuid.v1();
 		
 		// Generate the job object.
 		var task = {
@@ -101,9 +103,8 @@ var addRoute = function(options){
 			"type": "model",
 			"id": model_id
 		};
-		if(!req.session.models)
-			req.session.models = {};
-		req.session.models[model_id] = model;
+
+		modelManager.models[model_id] = model;
 
 		// Generate the response object
 		var taskObject = {
@@ -281,13 +282,17 @@ var addRoute = function(options){
 		var modelInfo = req.body;
 		if(!modelInfo || !modelInfo.mesh){
 			apiErrorManager.responseBadRequest(res);
+			return;
 		}
 		
-		var models = req.session.models;
+		var models = modelManager.models;
 		var id = req.params.id;
 		// Check if the id exists.
+		
+		logger.debug(models);
 		if(!models || !models[id]){
 			apiErrorManager.responseNotFound(res);
+			return;
 		}
 		
 		// Update the model object. Add the mesh.
