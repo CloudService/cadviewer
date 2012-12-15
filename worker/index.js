@@ -268,7 +268,7 @@ var uploadMesh = function(t, cb){
 	logger.debug(url);
 	
 	var fileName = t.x_data.local_mesh_file_name;
-	fileName = t.x_data.task_file; // Todo - comment this line. the task file is only for test purpose.
+	//fileName = t.x_data.task_file; // Todo - comment this line. the task file is only for test purpose.
 	
 	var stats = fs.lstatSync(fileName);
 	var fileSize = stats.size;
