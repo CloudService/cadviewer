@@ -240,6 +240,7 @@ var addRoute = function(options){
 		logger.debug("==> get /api/1.0/models/:id");
 		
 		var id = req.params.id;
+		logger.debug(id);
 		
 		var models = modelManager.models;
 		
@@ -287,7 +288,7 @@ var addRoute = function(options){
 		
 		var models = modelManager.models;
 		var id = req.params.id;
-		// Check if the id exists.
+		logger.debug(id);
 		
 		//logger.debug(models);
 		if(!models || !models[id]){
