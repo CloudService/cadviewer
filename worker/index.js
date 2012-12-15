@@ -228,18 +228,35 @@ var generateTaskFile = function(t, cb){
 var generateMesh = function(t, cb){
 	logger.debug("Generating mesh for file: " + t.x_data.local_source_file_name);
 	
-	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' +t.source_file_name + '.json');
+	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' + t.source_file_name + '.json');
 	t.x_data.local_mesh_file_name = localMeshFileName;
 	
-	try{
-		fs.renameSync(t.x_data.local_source_file_name, localMeshFileName); // Todo - use the rename for prototype.
-		logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
-		cb(null, t);
-	}
-	catch(err){
-		logger.debug("[Fail]: Failed to generate [" + localMeshFileName + "].");
-		cb(err, t);
-	}
+	var mesh_generator_exe = nconf.get("mesh_generator");
+	
+	fs.exists(mesh_generator_exe, function (exists) {
+	  	if(!exists){
+	  		logger.debug("[Fail]: The mesh generator exe doesn't exist.");
+	  		cb(new Error("The mesh generator exe doesn't exist"));
+	  	}
+	  	else{
+	  		// spawn the chile process to generate the mesh.
+	  		var spawn = require('child_process').spawn;
+	  		var task_file = t.x_data.task_file;
+	  		
+	  		// Todo - check if the exe works.
+	  		var exe = spawn(mesh_generator_exe, [task_file]);
+	  		exe.on('exit', function (code, signal) {
+			  if(0 === code){
+				  	logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
+				  	cb(null, t);
+			  }
+			  else{
+			  		logger.debug("[Fail]: Failed to generate [" + localMeshFileName + "].");
+					cb(new Error("Fail to generate the mesh"));
+			  }
+			});
+	  	}
+	});
 };
 
 var uploadMesh = function(t, cb){
@@ -287,7 +304,7 @@ var uploadMesh = function(t, cb){
 			   }
 			   else{
 					logger.debug("[Fail]");
-					cb(new Error("fail"), t);
+					cb(new Error("Fail to upload the mesh"), t);
 			   }
 		   });
 		}
@@ -313,7 +330,7 @@ var cleanupTempFiles = function(t, cb){
 		cb(null,t);
 	}
 	catch(err){
-		logger.debug("[Fail]: Failed to clean up task files");
+		logger.debug("[Fail]: Failed to clean up task files:" + JSON.stringify(err));
 		cb(err, t);
 	}
 };

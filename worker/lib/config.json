@@ -1,6 +1,7 @@
 {
 	"build" : "development",
 	"poll_interval":5000,
+	"mesh_generator": "./bin/atf/atf.exe",
 	"development": {
 		"server": "http://localhost:3000"
 	},
