@@ -186,12 +186,13 @@ var addRoute = function(options){
 		
 		if(!isBoxLogin(req.session)){
 			apiErrorManager.responseUnauthorized(res);
+			return;
 		}
 		
 		var apiKey = server.box.apiKey;
 		var access_token = req.session.auth.box.authToken;//"gymnnxkbxikj0jm6rz25cq4kwe8go808";
 	
-		getFilesFromBox(apiKey, access_token, id, function(err, fileObject){
+		getFilesFromBox(apiKey, access_token, id, importFormats, function(err, fileObject){
 			if(err)
 				apiErrorManager.responseInternalError(res);
 			else
@@ -316,7 +317,8 @@ var addRoute = function(options){
  * @param {function} cb, The callback function which gets two arguments (err, fileObject)
 */
 
-var getFilesFromBox = function(api_key, auth_token, id, cb){
+// Todo importFormats should NOT be passed in this function. We should check the extension outside this function.
+var getFilesFromBox = function(api_key, auth_token, id, importFormats, cb){
 		
 		// Get folder
 		var url = 'https://www.box.com/api/2.0/folders/' + id;

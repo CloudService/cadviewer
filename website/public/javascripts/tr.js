@@ -35,7 +35,10 @@ service.trans.translator = function (){
 
 	this.openFileDialog = function(data){
 		
-		$.get("/api/1.0/files/entry", function(data) {
+		// todo - we should use the entry folder instead of the box root folder when initiate the dialog.
+		//var entryfoldedurl = "/api/1.0/files/entry";
+		var entryfoldedurl = "/api/1.0/files/0";
+		$.get(entryfoldedurl, function(data) {
 			
 			// alert(JSON.stringify(data));
 			
@@ -59,7 +62,8 @@ service.trans.translator = function (){
 			openDialog(files, _onOK);
 		})
 		.error(function() { 
-			// do nothing.
+			// Show the dialog with no folders.
+			openDialog([], _onOK);
 		});
 	};
 	
