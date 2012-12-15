@@ -11,8 +11,8 @@ $(document).ready(function(){
 	// Check the action message from the parent.
 	
 	var astring = parent.getAction();
-	//if(astring && astring != "")
-		//messageSolver.evaluate(astring);
+	if(astring && astring != "")
+		messageSolver.evaluate(astring);
 	
 	// Click the import command 
 	$("#fancybox-new").click(function(event){
