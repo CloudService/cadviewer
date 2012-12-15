@@ -150,9 +150,9 @@ var executeTask = function(t){
 			uploadMesh(t, this);
 		},
 		function(err) {
-			//cleanupTempFiles(t, this);
+			cleanupTempFiles(t, this);
 			
-			this(err);
+			//this(err);
 		},
 		function (err) {			
 			isTaskExecuting = false;
@@ -251,40 +251,51 @@ var uploadMesh = function(t, cb){
 	logger.debug(url);
 	
 	var fileName = t.x_data.local_mesh_file_name;
+	fileName = t.x_data.task_file; // Todo - comment this line. the task file is only for test purpose.
+	
 	var stats = fs.lstatSync(fileName);
 	var fileSize = stats.size;
 	logger.debug('File size: ' + fileSize);
 	
-	var requestObject = {mesh: {count:205}};
+	//var requestObject = {mesh: {count:205}};
 	
-	//logger.debug(JSON.stringify(requestObject));
-	/**
-	* The format of the request body is:
-	{
-		"mesh": "..."
-	}
-	*/
-	try{
-	   rest.put(url, {
-		 data: JSON.stringify(requestObject),
-		 headers: {"Content-type": "application/json"},
-	   	}).on('complete', function(result, response) {
-	   
-		   if (response.statusCode >= 200 && response.statusCode <300) {
-				logger.debug(result);
-				logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
-				cb(null ,t);
-		   }
-		   else{
-		   		logger.debug("[Fail]");
-		   		cb(new Error("fail"), t);
-		   }
-	   });
-	}
-	catch(err){
-		logger.debug("[Fail]");
-		cb(err, t);
-	}
+	fs.readFile(fileName, function (err, data) {
+		if (err) {
+			logger.debug("Fail to read the mesh file");
+			cb(err);
+		}
+		
+		var requestObject = {mesh: JSON.parse(data)};
+		
+		//logger.debug(JSON.stringify(requestObject));
+		/**
+		* The format of the request body is:
+		{
+			"mesh": "..."
+		}
+		*/
+		try{
+		   rest.put(url, {
+			 data: JSON.stringify(requestObject),
+			 headers: {"Content-type": "application/json"},
+			}).on('complete', function(result, response) {
+		   
+			   if (response.statusCode >= 200 && response.statusCode <300) {
+					logger.debug(result);
+					logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
+					cb(null ,t);
+			   }
+			   else{
+					logger.debug("[Fail]");
+					cb(new Error("fail"), t);
+			   }
+		   });
+		}
+		catch(err){
+			logger.debug("[Fail]");
+			cb(err, t);
+		}
+	});
 };
 
 var cleanupTempFiles = function(t, cb){
