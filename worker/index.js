@@ -38,7 +38,8 @@ var mailManager = require("./lib/mailManager.js")({config: nconf, logger: logger
 
 
 var build = nconf.get('build');
-var server = nconf.get(build).server;
+var serverConf = nconf.get(build);
+var server = serverConf.server;
 
 logger.info('build=' + build + " (development/production) [Run 'node index.js --build=development' for local server.]");
 
@@ -126,31 +127,32 @@ var executeTask = function(t){
 			logger.debug(t);
 			downloadFile(t, this);
 		},
-		function(err, t) {
+		function(err) {
 			if (err) {
 				logger.debug("Skip generateMesh");
 				throw err;
 			}
 			generateMesh(t, this);
 		},
-		function(err, t) {
+		function(err) {
 			if (err) {
 				logger.debug("Skip generateTaskFile");
 				throw err;
 			}
 			generateTaskFile(t, this);
 		},
-		function(err, t) {
+		function(err) {
 			if (err) {
 				logger.debug("Skip uploadMesh");
 				throw err;
 			}
+			
 			uploadMesh(t, this);
 		},
-		function(err, t) {
-			cleanupTempFiles(t, this);
+		function(err) {
+			//cleanupTempFiles(t, this);
 			
-			//this(err);
+			this(err);
 		},
 		function (err) {			
 			isTaskExecuting = false;
@@ -188,12 +190,20 @@ var downloadFile = function(t, cb){
 };
 
 var generateTaskFile = function(t, cb){
-	logger.debug("Generating task file");
 	
 	var task_file = path.join(taskFolder, t.id.toString() + '_task.json');
 	t.x_data.task_file = task_file;
 	
-	// Todo - save the task file 
+	logger.debug("Generating task file: " + task_file);
+	
+	/**
+	* Save the json object to the file.
+	{
+		"local_source_file_name": "/Users/jeffreysun/sunzhongkui/code/cadviewer/worker/tasks/1_auxi-d.sat.dwg",
+		"local_mesh_file_name": "/Users/jeffreysun/sunzhongkui/code/cadviewer/worker/tasks/1_auxi-d.sat.dwg.json",
+		"task_file": "/Users/jeffreysun/sunzhongkui/code/cadviewer/worker/tasks/1_task.json"
+	}
+	*/
 	
 	fs.open(task_file,"w",0644,function(err,fd){
 		if(err) {
@@ -201,7 +211,7 @@ var generateTaskFile = function(t, cb){
 			throw err;
 		}
 		
-		fs.write(fd,JSON.stringify(t),0,'utf8',function(err){
+		fs.write(fd,JSON.stringify(t.x_data),0,'utf8',function(err){
 			if(err){
 				logger.debug("[Fail]: Failed to write task file: " + task_file);
 				throw err;
@@ -209,6 +219,7 @@ var generateTaskFile = function(t, cb){
 			
 			fs.closeSync(fd);
 			
+			logger.debug("[Success]");
 			cb(null, t);
 		});
 	});
@@ -222,7 +233,7 @@ var generateMesh = function(t, cb){
 	
 	try{
 		fs.renameSync(t.x_data.local_source_file_name, localMeshFileName); // Todo - use the rename for prototype.
-		logger.debug("[Success]: File [" + localMeshFileName + "] is generated.");
+		logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
 		cb(null, t);
 	}
 	catch(err){
@@ -235,7 +246,9 @@ var uploadMesh = function(t, cb){
 
 	logger.debug("Uploading mesh: " + t.source_file_name);
 	
-	var url = server.server + '/api/1.0/models/' + t.model_id;
+	var url = serverConf.server + '/api/1.0/models/' + t.model_id;
+	
+	logger.debug(url);
 	
 	var fileName = t.x_data.local_mesh_file_name;
 	var stats = fs.lstatSync(fileName);
@@ -244,6 +257,7 @@ var uploadMesh = function(t, cb){
 	
 	var requestObject = {mesh: {count:205}};
 	
+	logger.debug(JSON.stringify(requestObject));
 	/**
 	* The format of the request body is:
 	{
@@ -251,17 +265,24 @@ var uploadMesh = function(t, cb){
 	}
 	*/
 	try{
-	   rest.post(url, {
-		 body: requestObject,
+	   rest.put(url, {
+		 data: requestObject,
 		 headers: {"Content-type": "application/json"},
-	   }).on('complete', function(data) {
-		   logger.debug(data);
-		   logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
-		   cb(null ,t);
+	   	}).on('complete', function(result, response) {
+	   
+		   if (response.statusCode >= 200 && response.statusCode <300) {
+				logger.debug(result);
+				logger.debug("[Success] Mesh [" + t.x_data.local_mesh_file_name + "] is uploaded.");
+				cb(null ,t);
+		   }
+		   else{
+		   		logger.debug("[Fail]");
+		   		cb(new Error("fail"), t);
+		   }
 	   });
 	}
 	catch(err){
-		logger.debug("[Fail]: Failed to upload mesh [" + t.x_data.local_mesh_file_name + "].");
+		logger.debug("[Fail]");
 		cb(err, t);
 	}
 };

@@ -29,6 +29,7 @@ var ServerApplication = function(){
 	
 	this.apiErrorManager = require('./ApiErrorManager.js')();
 	this.taskManager = require('./datamodel/taskManager.js')();
+	this.modelManager = require('./datamodel/modelManager.js')();
 };
 
 
