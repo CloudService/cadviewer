@@ -316,7 +316,7 @@ var addRoute = function(options){
 		var miniModelObject = {
 				"type": "model",
 				"id":id,
-				"status":modelInfo.mesh
+				"status":modelInfo.status
 			};
 			
 		res.send(200, miniModelObject);
