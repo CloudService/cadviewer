@@ -93,6 +93,8 @@ service.trans.translator = function (){
 				var model_id = taskObject.model_id;
 				
 				pollingModelObject(model_id);
+				
+				// Todo - display a working in progress dialog.
 			})
 			.error(function() { 
 				alert("Error.");
@@ -112,8 +114,11 @@ var pollingModelObject = function (model_id){
 		alert("Model is returned.");
 		alert(JSON.stringify(modelObject));
 		
+		// Todo - hide working in progress dialog.
+		
 		// Todo - render the mesh with webGL.
 		var mesh = modelObject.mesh;
+		
 		
 	})
 	.error(function() { 
