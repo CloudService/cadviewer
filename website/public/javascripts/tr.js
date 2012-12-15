@@ -37,7 +37,7 @@ service.trans.translator = function (){
 		
 		$.get("/api/1.0/files/entry", function(data) {
 			
-			alert(JSON.stringify(data));
+			// alert(JSON.stringify(data));
 			
 			// todo - request the root folder from server.
 			var files = [];
@@ -78,13 +78,17 @@ service.trans.translator = function (){
 			// Get the task info from selected file.
 			var task = service.trans.translator.task;
 			task["source_file_id"] = selection["id"];
-			task["source_file_id"] = selection["name"];
+			task["source_file_name"] = selection["name"];
 			
 			// Post it task to server
-			$.post("/api/1.0/tasks", task, function(data) {
+			$.post("/api/1.0/tasks", task, function(taskObject) {
 				
 				alert("Your request is accepted.");
-				alert(data);
+				// alert(JSON.stringify(taskObject));
+				
+				var model_id = taskObject.model_id;
+				
+				pollingModelObject(model_id);
 			})
 			.error(function() { 
 				alert("Error.");
@@ -94,4 +98,24 @@ service.trans.translator = function (){
 };
 
 service.trans.translator.task={};
+
+
+var pollingModelObject = function (model_id){
+	
+	var url = "/api/1.0/models/" + model_id;
+	$.get(url, function(modelObject) {
+		
+		alert("Model is returned.");
+		alert(JSON.stringify(modelObject));
+		
+		// Todo - render the mesh with webGL.
+		var mesh = modelObject.mesh;
+		
+	})
+	.error(function() { 
+		//alert("No model.");
+		
+		setTimeout(function(){pollingModelObject(model_id);}, 2000);
+	});
+}
 
