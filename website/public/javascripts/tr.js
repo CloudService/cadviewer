@@ -114,12 +114,15 @@ var pollingModelObject = function (model_id){
 		alert("Model is returned.");
 		alert(JSON.stringify(modelObject));
 		
-		// Todo - hide working in progress dialog.
-		
-		// Todo - render the mesh with webGL.
-		var mesh = modelObject.mesh;
-		
-		
+		if(modelObject.status != "good"){
+			alert("Failed to generate the mesh.");
+		}
+		else{
+			// Todo - hide working in progress dialog.
+			
+			// Todo - render the mesh with webGL.
+			var mesh = modelObject.mesh;
+		}
 	})
 	.error(function() { 
 		//alert("No model.");

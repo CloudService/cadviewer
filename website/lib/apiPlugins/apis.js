@@ -67,7 +67,8 @@ var addRoute = function(options){
 	* A incomplete model object is generated and added to the session. 'mesh' property isn't included.
 	{
 		"type": "model",
-		"id": "358034830"
+		"id": "358034830",
+		"statu": "pending"
 	}
 	*/
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
@@ -101,7 +102,8 @@ var addRoute = function(options){
 		// Generate the model object
 		var model ={
 			"type": "model",
-			"id": model_id
+			"id": model_id,
+			"status": "pending"
 		};
 
 		modelManager.models[model_id] = model;
@@ -227,11 +229,16 @@ var addRoute = function(options){
 	
 	/** 
 	* Client gets the model from the server. The model will be deleted.
+	* The value of the 'status' can be 'pending', 'good', 'bad'.
+	* 'pending' - The object is new created. The worker hasn't update the mesh.
+	* 'good' - the mesh is updated and it is valid.
+	* 'bad' - the worker tries to generate the mesh, but the it fails. 
 	*
 	* http response body
 	{
 		"type": "model",
 		"id": "358034830",
+		"status": "good",
 		"mesh": {}
 	}
 
@@ -244,14 +251,18 @@ var addRoute = function(options){
 		
 		var models = modelManager.models;
 		
-		if(!models || !models[id] || !models[id].mesh){
+		if(!models || !models[id] || !models[id].status){
 			apiErrorManager.responseNotFound(res);
 		}
 		else{
-			var modelObject = models[id];
-			res.send(200, modelObject);
-			
-			delete models[id];
+			if(models[id].status === 'pending')
+				apiErrorManager.responseNotFound(res);
+			else{
+				var modelObject = models[id];
+				res.send(200, modelObject);
+				
+				delete models[id];
+			}
 		}	
 	});
 	
@@ -260,7 +271,8 @@ var addRoute = function(options){
 	
 	* http request body.
 	{
-     	"mesh":{...}
+     	"mesh":{...},
+     	"status":"good"
 	}
 	
 	* http response body. (A mini model object)
@@ -281,7 +293,7 @@ var addRoute = function(options){
 		
 		// Check if the passed JSON data is valid.
 		var modelInfo = req.body;
-		if(!modelInfo || !modelInfo.mesh){
+		if(!modelInfo || !modelInfo.status){
 			apiErrorManager.responseBadRequest(res);
 			return;
 		}
@@ -297,12 +309,14 @@ var addRoute = function(options){
 		}
 		
 		// Update the model object. Add the mesh.
+		models[id].status = modelInfo.status;
 		models[id].mesh = modelInfo.mesh;
 		
 		// Response the mini object.
 		var miniModelObject = {
 				"type": "model",
-				"id":id
+				"id":id,
+				"status":modelInfo.mesh
 			};
 			
 		res.send(200, miniModelObject);
