@@ -241,7 +241,7 @@ var addRoute = function(options){
 		
 		var id = req.params.id;
 		
-		var models = req.session.models;
+		var models = modelManager.models;
 		
 		if(!models || !models[id] || !models[id].mesh){
 			apiErrorManager.responseNotFound(res);
@@ -289,7 +289,7 @@ var addRoute = function(options){
 		var id = req.params.id;
 		// Check if the id exists.
 		
-		logger.debug(models);
+		//logger.debug(models);
 		if(!models || !models[id]){
 			apiErrorManager.responseNotFound(res);
 			return;
