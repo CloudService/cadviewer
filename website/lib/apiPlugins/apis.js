@@ -395,11 +395,17 @@ var getFilesFromBox = function(api_key, auth_token, id, importFormats, cb){
 			}
 		}"
 		*/
-		request.get({url:url, headers:headers}, function (e, r, body) {	
+		request.get({url:url, headers:headers}, function (err, res, body) {	
 		
-			if(e){
-				console.log("Failed to get folders from box:" + e);
+			if(err){
+				console.log("Failed to get folders from box:" + err);
 				cb(e);
+				return;
+			}
+			
+			if(res.statusCode < 200 || res.statusCode >= 300){
+				console.log("Failed to get folders from box:" + body);
+				cb(new Error(body));
 				return;
 			}
 			
