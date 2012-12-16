@@ -194,7 +194,7 @@ function renderCanvas(mesh)
     }
     function addTriangles(mesh)
     {
-        var bodies = jQuery.parseJSON(mesh);
+        var bodies = mesh;
         //alert( bodies[0].name);
         
         for(var i = 0; i < bodies.length; ++i)
