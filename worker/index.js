@@ -170,8 +170,8 @@ var downloadFile = function(t, cb){
 	logger.debug("Downloading file: " + t.source_file_name);
 	
 	// ToDo download file from box
-	var url = 'https://api.box.com/2.0/files/'+t.source_file_id +'/data';
-	var headers = {Authorization: 'BoxAuth api_key='+t.api_key +'&auth_token='+t.auth_token};
+	var url = 'https://api.box.com/2.0/files/'+t.source_file_id +'/content';
+	var headers = {Authorization: 'BoxAuth api_key=' + t.api_key +'&auth_token='+t.auth_token};
 
 	t.x_data = t.x_data || {}; // add all the external data to this object.
 	
@@ -250,8 +250,17 @@ var generateMesh = function(t, cb){
 	  		
 	  		// Todo - check if the exe works.
 	  		// The command line is: atf.exe source_file_name mesh_file_name
-	  		var exe = spawn(mesh_generator_exe, [t.x_data.local_source_file_name, localMeshFileName]);
-	  		exe.on('exit', function (code, signal) {
+	  		var generator = spawn(mesh_generator_exe, [t.x_data.local_source_file_name, localMeshFileName]);
+	  		
+			generator.stdout.on('data', function (data) {
+				logger.debug('stdout: ' + data);
+			});
+	
+			generator.stderr.on('data', function (data) {
+				logger.debug('stderr: ' + data);
+			});
+			
+	  		generator.on('exit', function (code, signal) {
 			  if(0 === code){
 				  	logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
 				  	
