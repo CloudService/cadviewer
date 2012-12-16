@@ -15,8 +15,10 @@ $(document).ready(function(){
 		messageSolver.evaluate(astring);
 	
 	// Click the import command 
-	$("#fancybox-new").click(function(event){
-	
+	$("#fancybox-new").click(function(event){	
+		var dlg = document.getElementById('file-dialog');
+		var parent = dlg.parentNode.parentNode;
+		parent.removeChild(dlg.parentNode);
 		translator.openFileDialog();
    });   
   
@@ -36,8 +38,8 @@ service.trans.translator = function (){
 	this.openFileDialog = function(){
 		
 		// todo - we should use the entry folder instead of the box root folder when initiate the dialog.
-		//var entryfoldedurl = "/api/1.0/files/entry";
-		var entryfoldedurl = "/api/1.0/files/0";
+		var entryfoldedurl = "/api/1.0/files/entry";
+		//var entryfoldedurl = "/api/1.0/files/0";
 		$.get(entryfoldedurl, function(data) {
 			
 			// alert(JSON.stringify(data));
