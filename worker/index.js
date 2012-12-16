@@ -235,7 +235,7 @@ var generateMesh = function(t, cb){
 	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' + t.source_file_name + '.json');
 	t.x_data.local_mesh_file_name = localMeshFileName;
 	
-	var mesh_generator_exe = nconf.get("mesh_generator");
+	var mesh_generator_exe = path.join(__dirname, nconf.get("mesh_generator"));
 	
 	fs.exists(mesh_generator_exe, function (exists) {
 	  	if(!exists){
