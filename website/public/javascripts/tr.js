@@ -33,7 +33,7 @@ service.trans = service.trans || {};
 
 service.trans.translator = function (){
 
-	this.openFileDialog = function(data){
+	this.openFileDialog = function(){
 		
 		// todo - we should use the entry folder instead of the box root folder when initiate the dialog.
 		//var entryfoldedurl = "/api/1.0/files/entry";
