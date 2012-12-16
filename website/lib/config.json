@@ -19,7 +19,6 @@
     "formats": {
         "import": [
             "sat",
-            "stl",
             "stp",
             "step",
             "STEP",
