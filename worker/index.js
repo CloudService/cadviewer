@@ -247,10 +247,10 @@ var generateMesh = function(t, cb){
 	  	else{
 	  		// spawn the chile process to generate the mesh.
 	  		var spawn = require('child_process').spawn;
-	  		var task_file = t.x_data.task_file;
 	  		
 	  		// Todo - check if the exe works.
-	  		var exe = spawn(mesh_generator_exe, [task_file]);
+	  		// The command line is: atf.exe source_file_name mesh_file_name
+	  		var exe = spawn(mesh_generator_exe, [t.x_data.local_source_file_name, localMeshFileName]);
 	  		exe.on('exit', function (code, signal) {
 			  if(0 === code){
 				  	logger.debug("[Success]: Mesh file [" + localMeshFileName + "] is generated.");
