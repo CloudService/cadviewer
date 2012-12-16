@@ -18,10 +18,15 @@
     },
     "formats": {
         "import": [
-            "ipt",
             "sat",
-            "dwg",
-            "stl"
+            "stl",
+            "stp",
+            "step",
+            "STEP",
+            "prt",
+            "igs",
+            "iges",
+            "IGS"
         ],
         "export": [
             "dwg",
