@@ -24,15 +24,13 @@
 /**
  * Navigator
  @param folderPath The folder {name, id} array shown on the navigator.
- @param thumbnail
  */
 {template .navigator}
 	{foreach $folder in $folderPath}
     	<div id="{$folder.id}" class="file-navigator-item"> {$folder.name}</div>
     	{if not isLast($folder)}
-      		<div class="file-navigator-separator"> 
-				<img class = "{$thumbnail}"></img>
-			</div>  // separator 
+      		<span class="file-navigator-separator">></span>		
+			</span>  // separator 
     	{/if}
   {/foreach}
 {/template}

@@ -21,7 +21,7 @@ component.ui.fileDialog.template.navigator = function(opt_data, opt_sb) {
   var folderListLen6 = folderList6.length;
   for (var folderIndex6 = 0; folderIndex6 < folderListLen6; folderIndex6++) {
     var folderData6 = folderList6[folderIndex6];
-    output.append('<div id="', soy.$$escapeHtml(folderData6.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData6.name), '</div>', (! (folderIndex6 == folderListLen6 - 1)) ? '<div class="file-navigator-separator"><img class = "' + soy.$$escapeHtml(opt_data.thumbnail) + '"></img></div>' : '');
+    output.append('<div id="', soy.$$escapeHtml(folderData6.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData6.name), '</div>', (! (folderIndex6 == folderListLen6 - 1)) ? '<span class="file-navigator-separator">></span></span>' : '');
   }
   return opt_sb ? '' : output.toString();
 };

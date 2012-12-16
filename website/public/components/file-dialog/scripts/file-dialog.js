@@ -79,6 +79,7 @@ component.ui.fileDialog.dialog = function () {
 
         // navigator
         _folderNavigatorElement = $("#file-navigator", _dialogElement);
+        _folderNavigatorElement.on("click", { dialog: this }, _selectFolderHandler);
 
         // file header
         var fileHeaderHtml = component.ui.fileDialog.template.fileheader();
@@ -129,7 +130,6 @@ component.ui.fileDialog.dialog = function () {
         var args =
 		{
 		    "folderPath": [{ name: _rootDirectory.name, id: _rootDirectory.id}],
-		    "thumbnail": "folder-seprator"
 		}
 
         this.updateFileNavigator(args);
@@ -146,7 +146,7 @@ component.ui.fileDialog.dialog = function () {
         return this;
     }
 
-    this.openFolder = function (parentId, files) {
+    this.openFolder = function (parentId, files) {	
 
         var parent = this._getFile(parentId);
         if (!parent) {
@@ -323,6 +323,81 @@ component.ui.fileDialog.dialog = function () {
         alert("The box storage provider is supported. The support for your selection is working in progress. ^_^");
     }
 
+	
+	_selectFolderHandler = function (e) {
+	    var dlg = e.data.dialog;
+        var id = null;
+
+        var eventElement = e.srcElement;
+        while (eventElement) {
+            id = eventElement["id"];
+
+            if (id) {
+			
+				var entryfoldedurl = "/api/1.0/files/" +id;
+				$.get(entryfoldedurl, function(data) {
+				
+				// alert(JSON.stringify(data));
+				
+				// todo - request the root folder from server.
+				var files = [];
+				var fileList = data.children || [];
+				var length = fileList.length;
+				for(var i = 0; i < length; i++){
+					var fileInfo = fileList[i];
+					var subFile = new component.ui.fileDialog.fileObject();
+					
+					subFile.id = fileInfo.id;
+					subFile.name = fileInfo.name;
+					subFile.isFolder = fileInfo.is_folder;
+					subFile.size = fileInfo.size;
+					subFile.moddate = fileInfo.modified_at;
+					
+					files.push(subFile);
+				}
+				
+				dlg.openFolder(id, files);
+
+				var nav = dlg.getElementsByClassName('file-navigator-item');
+
+				var arrayLen = nav.length;
+				var arrayNav = new Array(0);
+				
+				//arrayNav.push({ name: "|Box", id: "0" });
+				for (var i = 0; i < arrayLen; i++) {
+					arrayNav.push({ name: nav[i].innerText, id: nav[i].id });	
+					if (nav[i].id == id)
+						break;
+				}
+				var args = { "folderPath": arrayNav};
+				dlg.updateFileNavigator(args);
+
+				dlg.enableOKButton(true);
+
+				})	
+				break;
+            }
+            else {
+                showWipMessage();
+                break;
+            }
+
+            eventElement = eventElement.parentElement;
+        }
+
+
+
+        // x-browser prevent default action and cancel bubbling 
+        if (typeof e.preventDefault === 'function') {
+            e.preventDefault();
+            e.stopPropagation();
+        } else {
+            e.returnValue = false;
+            e.cancelBubble = true;
+        }
+
+	
+	}
     _selectSourceHandler = function (e) {
         var dialog = e.data.dialog;
         var id = null;
@@ -397,50 +472,65 @@ component.ui.fileDialog.dialog = function () {
     *@return this for chain.
     */
     this.setSingleSelection = function (id) {
+	
+		var dlg = this;
         var file = this._getFile(id);
         if (!file) {
             console.log("Error: invalid file id: " + id);
             return this;
         }
         if (file["isFolder"]) {
+			var folderId = file["id"];
+			
+			var entryfoldedurl = "/api/1.0/files/" +folderId;
+			$.get(entryfoldedurl, function(data) {			
+			var files = [];
+			var fileList = data.children || [];
+			var length = fileList.length;
+			for(var i = 0; i < length; i++){
+				var fileInfo = fileList[i];
+				var subFile = new component.ui.fileDialog.fileObject();
+				
+				subFile.id = fileInfo.id;
+				subFile.name = fileInfo.name;
+				subFile.isFolder = fileInfo.is_folder;
+				subFile.size = fileInfo.size;
+				subFile.moddate = fileInfo.modified_at;
+				
+				files.push(subFile);
+			}
+			
+			dlg.openFolder(folderId, files);
 
-            var folder = new component.ui.fileDialog.fileObject();
-            folder.id = "1";
-            folder.name = "Folder 1";
-            folder.isFolder = true;
-            folder.size = "-";
-            folder.moddate = "2012-10-4 10:59";
+            var nav = dlg.getElementsByClassName('file-navigator-item');
+			
+			var arrayLen = nav.length;
+			var arrayNav = new Array(0);
+				
+			if (id == "0")
+			    arrayNav.push({ name: "|Box", id: "0" });
+			else {
+			
 
-            var subFile = new component.ui.fileDialog.fileObject();
-            subFile.id = "2";
-            subFile.name = "File 1";
-            subFile.isFolder = false;
-            subFile.size = "30k";
-            subFile.moddate = "2012-10-4 10:59";
+				// currently the root folder is the box
+				//arrayNav.push({ name: "|Box", id: "0" });
+				for (var i = 0; i < arrayLen; i++) {
+					arrayNav.push({ name: nav[i].innerText, id: nav[i].id });
+				}
+				arrayNav.push({name: file["name"], id: folderId});
+			}
 
-            var files = [folder, subFile];
 
-            this.openFolder("0", files);
 
-            var nav = this.getElementsByClassName('file-navigator-item');
+            var args = { "folderPath": arrayNav};
+            dlg.updateFileNavigator(args);
 
-            var arrayLen = nav.length;
-            var arrayNav = new Array(0);
-
-            for (var i = 0; i < arrayLen; i++) {
-
-                arrayNav.push({ name: nav[i].innerText, id: nav[i].id });
-            }
-            arrayNav.push({ name: file.name, id: arrayLen });
-
-            var args = { "folderPath": arrayNav, "thumbnail": "folder-separator" };
-            this.updateFileNavigator(args);
-
-            this.enableOKButton(true);
+            dlg.enableOKButton(true);
 
             return this;
+		})
+		}
 
-        }
         else {
             this.enableOKButton(false);
         }

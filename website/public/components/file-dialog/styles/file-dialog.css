@@ -83,7 +83,11 @@ ul {
 }
 .file-navigator-separator{
 	float:left;
-	display:block;
+	display:inline-block;
+	width:18px;
+	left:5px;
+	zoom: 0.8;
+	padding: 2px;
 }
 .folder-separator {
 	background: transparent url('spriteimage1.png') no-repeat;
@@ -103,7 +107,6 @@ position:relative;
 	display:block;
 	color: black;
 	cursor: pointer;
-	left: 5px;
 }
 
 #file-list { 
