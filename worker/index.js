@@ -154,9 +154,9 @@ var executeTask = function(t){
 			updateModel(t, this);
 		},
 		function _cleanupTempFiles(err) {
-			//cleanupTempFiles(t, this);
+			cleanupTempFiles(t, this);
 			
-			this(err);
+			//this(err);
 		},
 		function _completeTask(err) {			
 			isTaskExecuting = false;
