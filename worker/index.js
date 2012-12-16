@@ -154,9 +154,9 @@ var executeTask = function(t){
 			updateModel(t, this);
 		},
 		function _cleanupTempFiles(err) {
-			cleanupTempFiles(t, this);
+			//cleanupTempFiles(t, this);
 			
-			//this(err);
+			this(err);
 		},
 		function _completeTask(err) {			
 			isTaskExecuting = false;
@@ -198,6 +198,9 @@ var generateTaskFile = function(t, cb){
 	var task_file = path.join(taskFolder, t.id.toString() + '_task.json');
 	t.x_data.task_file = task_file;
 	
+	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' + t.source_file_name + '.json');
+	t.x_data.local_mesh_file_name = localMeshFileName;
+	
 	logger.debug("Generating task file: " + task_file);
 	
 	/**
@@ -232,8 +235,7 @@ var generateTaskFile = function(t, cb){
 var generateMesh = function(t, cb){
 	logger.debug("Generating mesh for file: " + t.x_data.local_source_file_name);
 	
-	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' + t.source_file_name + '.json');
-	t.x_data.local_mesh_file_name = localMeshFileName;
+	var localMeshFileName = t.x_data.local_mesh_file_name;
 	
 	var mesh_generator_exe = path.join(__dirname, nconf.get("mesh_generator"));
 	
