@@ -4,6 +4,7 @@
 var log4js = require('log4js');
 var request = require('request');
 var fs = require('fs');
+var fse= require('fs-extra');
 var rest = require('restler');
 var nconf = require('nconf');
 var Step = require("Step");
@@ -40,6 +41,7 @@ var server = serverConf.server;
 
 logger.info('build=' + build + " (development/production) [Run 'node index.js --build=development' for local server.]");
 
+var tempFolder = path.join(__dirname, nconf.get("temp_folder"));
 
 /**********************************************************************/
 // Polling the tasks.
@@ -106,22 +108,27 @@ var getTaskFromServer = function(){
 // Execute one task
 /**********************************************************************/
 
-// Create task folder __dirname + '/tasks'
-
-var taskFolder = __dirname + '/tasks';
-if(!fs.existsSync(taskFolder))
-	fs.mkdirSync(taskFolder);
 
 var executeTask = function(t){
 
 	isTaskExecuting = true;
 	
-	
 	Step(
-		function _downloadFileFromCloudDrive() {
+		function _createTaskFolder(){
 			logger.debug("=======Task Begin==========");
 			logger.debug("The task is: ");
 			logger.debug(t);
+			
+			t.x_data = t.x_data || {}; // add all the external data to this object.
+			
+			createTaskFolder(t, this);
+		},
+		function _downloadFileFromCloudDrive(err) {
+			if (err) {
+				logger.debug("Skip downloadFile");
+				throw err;
+			}
+			
 			downloadFile(t, this);
 		},
 		function _generateTaskFile(err) {
@@ -153,7 +160,7 @@ var executeTask = function(t){
 		function _cleanupTempFiles(err) {
 			// Don't clean up the temp file for the testing and debugging purpose.
 			// Do the cleanup when the server is robust enough.
-			// cleanupTempFiles(t, this); 
+			//cleanupTempFiles(t, this); 
 			
 			this(err);
 		},
@@ -165,16 +172,33 @@ var executeTask = function(t){
 	);
 };
 
+var createTaskFolder = function(t, cb){
+
+	var taskfolder = path.join(tempFolder, t.id);
+	logger.debug("Creating task folder: " + taskfolder);
+	
+	t.x_data.task_folder = taskfolder;
+	// Create the folder recursively.
+	fse.mkdirs(taskfolder, function(err){
+		if (err) {
+		  	logger.debug("[Fail]");
+			cb(err);
+		}
+		else {
+		  	logger.debug("[Success]");
+		  	cb(null, t);
+		}
+	});
+};
+
 var downloadFile = function(t, cb){
 	logger.debug("Downloading file: " + t.source_file_name);
 	
 	// ToDo download file from box
 	var url = 'https://api.box.com/2.0/files/'+t.source_file_id +'/content';
 	var headers = {Authorization: 'BoxAuth api_key=' + t.api_key +'&auth_token='+t.auth_token};
-
-	t.x_data = t.x_data || {}; // add all the external data to this object.
 	
-	var localSrcFileName =  path.join(taskFolder, t.id.toString() + '_' + t.source_file_name);
+	var localSrcFileName =  path.join(t.x_data.task_folder, t.source_file_name);
 	t.x_data.local_source_file_name =localSrcFileName;
 	
 	try{
@@ -187,17 +211,17 @@ var downloadFile = function(t, cb){
 	}
 	catch(err){
 		logger.debug("[Fail]: Failed to download [" + localSrcFileName + "].");
-		cb(err, t);
+		cb(err);
 	}
 
 };
 
 var generateTaskFile = function(t, cb){
 	
-	var task_file = path.join(taskFolder, t.id.toString() + '_task.json');
+	var task_file = path.join(t.x_data.task_folder, 'task.json');
 	t.x_data.task_file = task_file;
 	
-	var localMeshFileName = path.join(taskFolder, t.id.toString() + '_' + t.source_file_name + '.json');
+	var localMeshFileName = path.join(t.x_data.task_folder, t.source_file_name + '.json');
 	t.x_data.local_mesh_file_name = localMeshFileName;
 	
 	logger.debug("Generating task file: " + task_file);
@@ -214,13 +238,13 @@ var generateTaskFile = function(t, cb){
 	fs.open(task_file,"w",0644,function(err,fd){
 		if(err) {
 			logger.debug("[Fail]: Failed to create task file: " + task_file);
-			throw err;
+			cb(err);
 		}
 		
-		fs.write(fd,JSON.stringify(t.x_data),0,'utf8',function(err){
+		fs.write(fd,JSON.stringify(t),0,'utf8',function(err){
 			if(err){
 				logger.debug("[Fail]: Failed to write task file: " + task_file);
-				throw err;
+				cb(err);
 			}
 			
 			fs.closeSync(fd);
@@ -352,22 +376,23 @@ var updateModel = function(t, cb){
 };
 
 var cleanupTempFiles = function(t, cb){
-	logger.debug("Cleaning up task files");
+	logger.debug("Deleting task folder " + t.x_data.task_folder);
 	
 	try{
-		fs.unlink(t.x_data.local_source_file_name);
-		fs.unlink(t.x_data.task_file);
-		fs.unlink(t.x_data.local_mesh_file_name);
-		
-		logger.debug(t.x_data.local_source_file_name + ' is deleted');
-		logger.debug(t.x_data.task_file + ' is deleted');
-		logger.debug(t.x_data.local_mesh_file_name + ' is deleted');
-		logger.debug("[Success]: Cleanup is completed.");
-		cb(null,t);
+		fse.delete(t.x_data.task_folder, function (err){
+			if(err){
+				logger.debug("[Fail]" + JSON.stringify(err));
+				cb(err);
+			}
+			else{
+				logger.debug("[Success]");
+				cb(null,t);
+			}
+		});
 	}
 	catch(err){
-		logger.debug("[Fail]: Failed to clean up task files:" + JSON.stringify(err));
-		cb(err, t);
+		logger.debug("[Fail]" + JSON.stringify(err));
+		cb(err);
 	}
 };
 
