@@ -17,8 +17,10 @@ $(document).ready(function(){
 	// Click the import command 
 	$("#fancybox-new").click(function(event){	
 		var dlg = document.getElementById('file-dialog');
-		var parent = dlg.parentNode.parentNode;
-		parent.removeChild(dlg.parentNode);
+		if (dlg) {
+			var parent = dlg.parentNode.parentNode;
+			parent.removeChild(dlg.parentNode);
+		}
 		translator.openFileDialog();
    });   
   
