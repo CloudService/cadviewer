@@ -406,15 +406,16 @@ component.ui.fileDialog.dialog = function () {
         while (eventElement) {
             id = eventElement["id"];
 
-            if (id && id == "box") {
-                parent.location.href = '/auth/box';
-                break;
-            }
-            else {
-                showWipMessage();
-                break;
-            }
-
+            if (id){			
+				if (id == "box") {
+					parent.location.href = '/auth/box';
+					break;
+				}
+				else  if (id == "dropbox" || id == "baidu" || id == "a360" || id == "qq"){
+					showWipMessage();
+					break;
+				}
+			}
             eventElement = eventElement.parentElement;
         }
 
