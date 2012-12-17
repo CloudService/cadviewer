@@ -1,5 +1,12 @@
 
 
+#progressbar {
+	position:fixed;
+	left:45%;top:50%;
+	margin-left:width/2;
+	margin-top:height/2; 
+}
+
 .section{
 	margin-top:20px;
 	margin-bottom: 20px;
