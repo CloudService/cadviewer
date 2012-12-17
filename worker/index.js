@@ -154,9 +154,11 @@ var executeTask = function(t){
 			updateModel(t, this);
 		},
 		function _cleanupTempFiles(err) {
-			cleanupTempFiles(t, this);
+			// Don't clean up the temp file for the testing and debugging purpose.
+			// Do the cleanup when the server is robust enough.
+			// cleanupTempFiles(t, this); 
 			
-			//this(err);
+			this(err);
 		},
 		function _completeTask(err) {			
 			isTaskExecuting = false;

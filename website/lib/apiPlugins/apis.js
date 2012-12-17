@@ -33,7 +33,6 @@ var addRoute = function(options){
 	// Add the route implementation here
 	/**********************************************************************/
 
-	var nextTaskId=0;
 	var build = config.get('build');
 	var server = config.get(build);
 	var importFormats = config.get('formats')['import'];
@@ -79,10 +78,9 @@ var addRoute = function(options){
 		logger.debug("==> New Task:");
 		logger.debug(JSON.stringify(fileInfo));
 		
-		nextTaskId++;
-		var task_id = nextTaskId.toString();
+		var task_id = uuid.v1();
 		
-		var model_id = uuid.v1();
+		var model_id = task_id; // Use the task id as the model id directly.
 		
 		// Generate the job object.
 		var task = {
