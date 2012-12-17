@@ -31,11 +31,8 @@ var logger = log4js.getLogger();
 
 
 /**********************************************************************/
-// private modules
+// Configuration
 /**********************************************************************/
-
-var mailManager = require("./lib/mailManager.js")({config: nconf, logger: logger});
-
 
 var build = nconf.get('build');
 var serverConf = nconf.get(build);
