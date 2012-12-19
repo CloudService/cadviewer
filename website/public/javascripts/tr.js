@@ -169,66 +169,55 @@ var pollingModelObject = function (model_id){
 function renderCanvas(mesh)
 {
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-          // alert("starting");
-    var container;
-    //var currentlyPressedKeys = {};
-    var camera, controls, scene, renderer, materials;
-    //document.onkeydown = handleKeyDown;
-    //document.onkeyup = handleKeyUp;
-    init();
-    animate();
-    
-    function init() {
-        
-        container = document.createElement( 'div' );
-        document.body.appendChild( container );
-        
-        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+
+    var container, camera, controls, scene, renderer;
+
+	refreshContainer();
+    initCamera();
+    initControls();
+    initScene(mesh);
+    intiWebGLRenderer();
+    window.addEventListener( 'resize', onWindowResize, false );
+	animate();
+
+	function refreshContainer() {
+		container = document.getElementById('canvas3d');
+		if (container !== null) {
+			container.innerHTML = "";
+		}
+		else {
+			container = document.createElement('div');
+			container.setAttribute('id', 'canvas3d');
+			document.body.appendChild( container );
+		}
+	}
+	
+	function initCamera() {
+		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
         camera.position.y = 200;
-        
-        controls = new THREE.OrbitControls( camera );
+	}
+	
+	function initControls() {
+		controls = new THREE.OrbitControls( camera );
         controls.addEventListener( 'change', render );
-        
-        scene = new THREE.Scene();
-        
-        var light, object, object2;
-        
-        scene.add( new THREE.AmbientLight( 0x404040 ) );
-        
-        light = new THREE.DirectionalLight( 0xffffff );
+	}
+	
+	function intiWebGLRenderer() {
+		renderer = new THREE.WebGLRenderer({
+			antialias: true 
+		});
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        container.appendChild( renderer.domElement );
+	}
+	
+    function initScene(mesh)
+    {
+		scene = new THREE.Scene();
+        var light = new THREE.DirectionalLight( 0xffffff );
         light.position.set( 0, 1, 0 );
         scene.add( light );
-        
-        materials = [
-                     new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true, opacity: 0.5, side: THREE.DoubleSide } )
-                    ];
-        
-        //object = new THREE.AxisHelper( 50 );
-        //object.position.set( 200, 0, -200 );
-        //scene.add( object );
-        
-        //object = new THREE.ArrowHelper( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 0 ), 100 );
-        //object.position.set( -window.innerWidth/2, 0, window.innerHeight/2 );
-        //scene.add( object );
-        
-        renderer = new THREE.WebGLRenderer( { antialias: true } );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        
-        container.appendChild( renderer.domElement );
-        
-        // parse json data and draw triangles
-        addTriangles(mesh);
-        
-        //
-        
-        window.addEventListener( 'resize', onWindowResize, false );
-        
-    }
-    function addTriangles(mesh)
-    {
+		
         var bodies = mesh;
-        //alert( bodies[0].name);
-        
         for(var i = 0; i < bodies.length; ++i)
         {
             var geom = new THREE.Geometry;
@@ -255,40 +244,30 @@ function renderCanvas(mesh)
                 geom.faces.push(new THREE.Face3(tri.vertexIndices[0],tri.vertexIndices[1],tri.vertexIndices[2]))
             }
             
-            scene.add(new THREE.Mesh(geom, materials[1]))
+			var material = new THREE.MeshBasicMaterial({
+				color: 0xff00ff,
+				wireframe: true,
+				opacity: 0.5,
+				side: THREE.DoubleSide 
+			});
+            scene.add(new THREE.Mesh(geom, material));
         }
     }
     
-    function onWindowResize() {
-        
+    function onWindowResize() {        
         camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        
+        camera.updateProjectionMatrix();        
+        renderer.setSize( window.innerWidth, window.innerHeight );       
     }
     
-    //
-    
-    function animate() {
-        
+    function animate() {       
         requestAnimationFrame( animate );
         controls.update();
-        render();
-        
+        render();        
     }
     
     function render() {
-        
-        //var timer = Date.now() * 0.0001;
-        
-        //camera.position.x = Math.cos( timer ) * 800;
-        //camera.position.z = Math.sin( timer ) * 800;
-        
-        //camera.lookAt( scene.position );
-        
         renderer.render( scene, camera );
-        
     }
 }
 
