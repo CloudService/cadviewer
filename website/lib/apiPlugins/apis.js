@@ -1,5 +1,7 @@
 /**
-* This is the tempalte of the route module. Copy this file when add new api route module.
+This is api module.
+
+@module apis
 */
 
 var everyauth = require('everyauth');
@@ -9,13 +11,17 @@ var uuid = require('node-uuid');
 /**********************************************************************/
 // Define and implement the REST api.
 /**********************************************************************/
+
+
 /**
 * Add the routes to the Express application.
-* @options {Object}
-*	expressApp {Object} Express application
-*	serverApp {Object} server application object.
-* @ api public
-* @ return this for chaining
+* @api public
+* @param {Object} options 
+*  	@param {Object} options.expressApp Express application
+*  	@param {Object} options.serverApp server application object.
+* @return this for chaining
+* @class addRoute 
+* @constructor
 */
 var addRoute = function(options){
 	if(!options || !options.expressApp || !options.serverApp)
@@ -40,35 +46,44 @@ var addRoute = function(options){
 	/**
 	* Post a task to the server.
 	* Http request body
-	{
-		"source_file_id": "128420334",
-		"source_file_name": "robot.stl"
-	}
+	
+		{
+			"source_file_id": "128420334",
+			"source_file_name": "robot.stl"
+		}
 	
 	* Http response body
-	{
-		"type": "task",
-		"id": "2342",
-		"model_id": "2342"
-	}
+	
+	   {
+		   "type": "task",
+		   "id": "2342",
+		   "model_id": "2342"
+	   }
 	
 	* A task object is generated and added to the pending list.
-	{
-		"type": "job",
-		"id": "2342",
-		"model_id": "3452",
-		"source_file_name": "robot.stl",
-		"source_file_id": "4451234",
-		"api_key": "243ba09e93248d0cc",
-		"auth_token": "aeb2732bd098ce"
-	}
+	
+		{
+			"type": "job",
+			"id": "2342",
+			"model_id": "3452",
+			"source_file_name": "robot.stl",
+			"source_file_id": "4451234",
+			"api_key": "243ba09e93248d0cc",
+			"auth_token": "aeb2732bd098ce"
+		}
 	
 	* A incomplete model object is generated and added to the session. 'mesh' property isn't included.
-	{
-		"type": "model",
-		"id": "358034830",
-		"statu": "pending"
-	}
+	
+		{
+			"type": "model",
+			"id": "358034830",
+			"statu": "pending"
+		}
+	
+	* @method POST /api/1.0/tasks
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
 	*/
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.debug("==> /api/1.0/tasks");
