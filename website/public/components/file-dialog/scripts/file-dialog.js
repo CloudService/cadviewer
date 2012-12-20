@@ -521,20 +521,10 @@ component.ui.fileDialog.dialog = function () {
 			var arrayLen = nav.length;
 			var arrayNav = new Array(0);							
 			
-			if (id == "0")
-			    arrayNav.push({ name: "|Box", id: "0" });
-			else {
-			
-
-				// currently the root folder is the box
-				//arrayNav.push({ name: "|Box", id: "0" });
-				for (var i = 0; i < arrayLen; i++) {
-					arrayNav.push({ name: nav[i].innerText, id: nav[i].id });
-				}
-				arrayNav.push({name: file["name"], id: folderId});
+			for (var i = 0; i < arrayLen; i++) {
+				arrayNav.push({ name: nav[i].innerText, id: nav[i].id });
 			}
-
-
+			arrayNav.push({name: file["name"], id: folderId});
 
             var args = { "folderPath": arrayNav};
             dlg.updateFileNavigator(args);

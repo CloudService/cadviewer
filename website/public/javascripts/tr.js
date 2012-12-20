@@ -85,7 +85,7 @@ service.trans.translator = function (){
 					var file = dlg._getFile(id);
 					dlg.setSingleSelection(id);
 
-					if (!file["isFolder"]) {
+					if (!file.isFolder) {
 		                var selections = dlg.getSelections();
 		                if(selections.length > 0){
 			                var selection = selections[0];
