@@ -63,12 +63,78 @@ service.trans.translator = function (){
 				files.push(file);
 			}
 			
-			openDialog(files, _onOK);
+			openDialog(files, _onOK, _onDoubleClick);
 		})
 		.error(function() { 
 			// Show the dialog with no folders.
-			openDialog([], _onOK);
+			openDialog([], _onOK, _onDoubleClick);
 		});
+	};
+	
+	_onDoubleClick = function (e){
+		var dlg = e.data.dialog;
+
+		var t = dlg.getTimer();
+		clearTimeout(t);
+		
+		var eventElement = e.srcElement;
+			while (eventElement) {
+				id = eventElement["id"];
+
+				if (id && id != "") {
+					var file = dlg._getFile(id);
+					dlg.setSingleSelection(id);
+
+					if (!file["isFolder"]) {
+		                var selections = dlg.getSelections();
+		                if(selections.length > 0){
+			                var selection = selections[0];
+                         }
+						$("#file-dialog").dialog("close");
+
+                        var dlg = document.getElementById('file-dialog');
+        		        var parent = dlg.parentNode.parentNode;
+        		        parent.removeChild(dlg.parentNode);		
+					
+						var task = service.trans.translator.task;
+						task["source_file_id"] = selection["id"];
+						task["source_file_name"] = selection["name"];
+						
+						// Post it task to server
+						$.post("/api/1.0/tasks", task, function(taskObject) {
+				
+							var model_id = taskObject.model_id;
+							
+							pollingModelObject(model_id);
+							
+							var myProgressBar = null;
+							myProgressBar = new ProgressBar("progressbar",{
+								borderRadius: 5,
+								width: 180,
+								height: 22,
+								maxValue: 100,
+								labelText: 'Loading mesh data...',
+								extraClassName: {
+									horizontalText: 'my_progress_bar_text_horizontal',
+								},
+								orientation: ProgressBar.Orientation.Horizontal,
+								direction: ProgressBar.Direction.LeftToRight,
+								animationStyle: ProgressBar.AnimationStyle.StaticFull,
+								animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
+								animationSpeed: 0.5,
+								backgroundUrl: 'images/ajax-loader.gif',
+								imageUrl: 'images/ajax-loader.gif',
+							});				
+						})
+						.error(function() { 
+							alert("Error.");
+						});
+								
+						}
+						break;
+				}	 
+				eventElement = eventElement.parentElement;
+			}
 	};
 	
 	_onOK = function (event){
@@ -297,5 +363,32 @@ function renderCanvas(mesh)
     }
 }
 
+
+var $j=function(id){return document.getElementById(id);};
+var getMouseP=function (e){
+	e = e || window.event;
+	var m=(e.pageX || e.pageY)?{ x:e.pageX, y:e.pageY } : { x:e.clientX + document.body.scrollLeft - document.body.clientLeft, y:e.clientY + document.body.scrollTop  - document.body.clientTop };
+	return m;
+};
+		
+move=function(o,t){
+		o=$j(o);
+		t=$j(t);
+		o.onmousedown=function(ev){
+			var mxy=getMouseP(ev);
+			var by={x:mxy.x-(t.offsetLeft),y:mxy.y-(t.offsetTop)};
+			o.style.cursor="move";
+			document.onmousemove=function(ev){
+				var mxy=getMouseP(ev);
+				t.style.left=mxy.x-by.x+"px";
+				t.style.top=mxy.y-by.y+"px";
+			};
+			document.onmouseup=function(){
+				window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+				this.onmousemove=null;
+			}
+		}
+	}
+move("PanelFilecommand","PanelFilecommand");
 
 

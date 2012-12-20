@@ -11,40 +11,15 @@
     <link rel="stylesheet" href="stylesheets/HomePage.css" />
 	<link rel="stylesheet" href="stylesheets/ribbon.css" />
 	<link rel="stylesheet" href="stylesheets/progressbar.css" />
-	<!-- The css files below don't exist.
-	<link rel="stylesheet" href="stylesheets/pubinterface.css" />
-	<link rel="stylesheet" href="stylesheets/interface.css" />
-	
-	
-	<link rel="stylesheet" href="stylesheets/panel.css" />
-    -->
 	
 	<link type="text/css" href="components/thirdparty/jquery-ui-1.8.24/css/smoothness/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
     <link type="text/css" href="components/file-dialog/styles/file-dialog.css" rel="stylesheet" />
 
   </head>
 
-  <body >  
-
-	<div id="sticky_footer_wrap">
-		<header id="app_header">
-		    <div class="branding">
-				<h1> CAD Viewer</h1>
-		    </div>
-			<nav class="clearfix obsidian">
-				<ul>
-					<li><span class="feedback_button" data-analytics="Feedback" tabindex="0" role="button">Feedback</span></li>
-					<li class="drop_down" role="menu" tabindex="0">
-						<span id="help_menu" class="menu_title">Help</span>
-					</li>                    
-                </ul>
-				</nav>
-		</header>
-	</div>
- <div id ="appBlockUIblockControl" class="blockUI" style= "display: none;"></div>
- <div id = "tabbar_region_id" class="tabbar_region">
-	<div id ="Panel_Filecommand" class ="qatbar"></div>
-		<div id = "fancybox-new-border" class="fancybox-border">
+  <body >  	
+	<div id ="PanelFilecommand">
+		<div id = "fancybox-new-border" class="fancybox-border1">
 			<a id="fancybox-new" class="img-PUB360-New-24x24 fancybox-button" title="Import Files" ></a>
 		</div>	
 		<div id = "fancybox-open-border" class="fancybox-border">
@@ -53,8 +28,17 @@
 		<div id = "fancybox-open-border" class="fancybox-border">
 			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
 		</div>
-</div>	
+		
+		<div id = "fancybox-open-border" class="fancybox-border">
+			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
+		</div>
+		<div id = "fancybox-open-border" class="fancybox-border">
+			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
+		</div>
+		</div>
 <div id ="progressbar"></div>
+
+
       <script src="components/thirdparty/jquery/jquery-1.8.2.js"></script>
       <script type="text/javascript" src="components/thirdparty/three.js/three.min.js"></script>
       <script type="text/javascript" src="components/thirdparty/three.js/Detector.js"></script>

@@ -1,50 +1,23 @@
-.tabbar_region {
-	cursor:default;
-	position: absolute;
-	top: 40px;
-	width: 100%;
-	height: 36px;
-	line-height: 36px;
-    background-image: -webkit-linear-gradient(top, #C2C2C2, #7D7D7D);
-    background-image: -moz-linear-gradient(top, #C2C2C2, #7D7D7D);
-    background-image: -moz-linear-gradient(to bottom, #C2C2C2, #7D7D7D);
-	text-align: left;
-	-webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, .65);
-	-moz-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, .65);
-	-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, .65);
-	z-index: 105;
-}
 
 
 
-
-.fancybox-border {
-    display: inline-block;
-    width: 38px;
-    height: 36px;
-    border-style: solid;
-	border-width: 0px 1px 0px 1px;
-	border-top-color: #D0D0D0;
-	border-bottom-color: #575757;
-	border-left-color: #B5B5B5;
-	border-right-color: #6C6C6C;
-	color: black;
-	float: left;
-	background-image: -webkit-linear-gradient(top, #C2C2C2, #7D7D7D);
-	background-image: -moz-linear-gradient(top, #C2C2C2, #7D7D7D);
-	background-image: -moz-linear-gradient(to bottom, #C2C2C2, #7D7D7D);
+#PanelFilecommand {
+	position: fixed;
+	left:50%;
+	width: 400px;
+	height: 80px;
+	cursor: move;
 }
 
 .fancybox-button {
-	width: 24px;
-	height: 24px;
+	width: 48px;
+	height: 48px;
 	cursor: pointer;
 	line-height: 15px;
 	opacity: 0.75;
 	margin-left:7px; 
 	margin-right:7px; 
 	margin-top:6px; 
-	margin-bottom:6px;
     float:left;
 }
 
