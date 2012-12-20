@@ -138,32 +138,36 @@ var addRoute = function(options){
 	*
 	* http response body
 	
-	{
-		"type": "file",
-		"id": "233453223",
-		"name": "robot",
-		"is_folder": true,
-		"size": "-",
-		"modified_at": "2012-07-27T09:22:05Z",
-		"children": [
-			{
-				"type": "file",
-				"id": "234235523",
-				"name": "wheel.ipt",
-				"is_folder": false,
-				"size": "45K",
-				"modified_at": "2012-07-27T09:22:05Z"
-			},
-			{
-				"type": "file",
-				"id": "245345",
-				"name": "shaft.iam",
-				"is_folder": false,
-				"size": "10M",
-				"modified_at": "2012-07-27T09:22:05Z"
-			}
-		]
-	}
+		{
+			"type": "file",
+			"id": "233453223",
+			"name": "robot",
+			"is_folder": true,
+			"size": "-",
+			"modified_at": "2012-07-27T09:22:05Z",
+			"children": [
+				{
+					"type": "file",
+					"id": "234235523",
+					"name": "wheel.ipt",
+					"is_folder": false,
+					"size": "45K",
+					"modified_at": "2012-07-27T09:22:05Z"
+				},
+				{
+					"type": "file",
+					"id": "245345",
+					"name": "shaft.iam",
+					"is_folder": false,
+					"size": "10M",
+					"modified_at": "2012-07-27T09:22:05Z"
+				}
+			]
+		}
+	* @method GET /api/1.0/files/:id
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
 	*/
 	expressApp.get('/api/1.0/files/:id', function(req, res, next){
 		logger.debug("==> /api/1.0/files/:id");
