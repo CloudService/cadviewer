@@ -244,7 +244,8 @@ function renderCanvas(mesh)
 	refreshContainer();
     initCamera();
     initControls();
-    initScene(mesh);
+	initLight();
+    createTriangleMesh(mesh, false);
     intiWebGLRenderer();
     window.addEventListener( 'resize', onWindowResize, false );
 	animate();
@@ -262,7 +263,7 @@ function renderCanvas(mesh)
 	}
 	
 	function initCamera() {
-		camera = new THREE.PerspectiveCamera( fieldOfView, window.innerWidth / window.innerHeight, 1, 2000 );
+		camera = new THREE.PerspectiveCamera( fieldOfView, window.innerWidth / window.innerHeight, 1, 10000 );
         //camera.position.y = 200;
 	}
 	
@@ -273,19 +274,24 @@ function renderCanvas(mesh)
 	
 	function intiWebGLRenderer() {
 		renderer = new THREE.WebGLRenderer({
-			antialias: true 
+			antialias: true,
+			alpha: true,
+			maxLights: 1
 		});
         renderer.setSize( window.innerWidth, window.innerHeight );
         container.appendChild( renderer.domElement );
+		renderer.setClearColor(0xc0c0c0, 0.1);
 	}
 	
-    function initScene(mesh)
-    {
+	function initLight() {
 		scene = new THREE.Scene();
-        var light = new THREE.DirectionalLight( 0xffffff );
-        light.position.set( 0, 1, 0 );
+        var light = new THREE.DirectionalLight( 0xffffff, 1.0, 0 );
+        light.position.set( 200, 200, 200 );
         scene.add( light );
-		
+	}
+	
+    function createTriangleMesh(mesh, wireframe_model)
+    {
         var bodies = mesh;
         
         var currentMesh = null;
@@ -293,37 +299,45 @@ function renderCanvas(mesh)
         {
             var geom = new THREE.Geometry;
             var body = bodies[i];
-            geom.id = body.id;
-            geom.name = body.name;
-            for(var j = 0; j < body.vertices.length; ++j)
-            {
+            geom.id = body.id; // id
+            geom.name = body.name; // name
+			
+			// vertices
+            for(var j = 0; j < body.vertices.length; ++j) {
                 geom.vertices.push(new THREE.Vector3(body.vertices[j].x, body.vertices[j].y, body.vertices[j].z));
-            };
-            
-            if (body.colors)
-            {
-                for (var i = 0; i < body.colors.length; i++) {
-                    var tri_color = new THREE.Color;
-                    tri_color.setRGB(body.colors[i].r, body.colors[i].g, body.colors[i].b);
-                    geom.colors.push(tri_color);
-                };
-            };
-            
-            for(var k = 0; k < body.faces.length; ++k)
-            {
-                var tri = body.faces[k];
-                geom.faces.push(new THREE.Face3(tri.vertexIndices[0],tri.vertexIndices[1],tri.vertexIndices[2]))
             }
             
-			var material = new THREE.MeshBasicMaterial({
-				color: 0xff00ff,
-				wireframe: true,
-				opacity: 0.5,
-				side: THREE.DoubleSide 
-			});
+			// materials
+			var materials = new Array();
+			
+			// create default meterial
+			var defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x7ccd7c, wireframe: wireframe_model });
+			materials.push( defaultMaterial );
+			
+            if (body.colors) {
+				// add body materials
+                for (var q = 0; q < body.colors.length; ++q) {
+                    var clr = new THREE.Color;
+                    clr.setRGB(body.colors[q].r, body.colors[q].g, body.colors[q].b);
+                    materials.push( new THREE.MeshBasicMaterial({ color: clr.getHex(), wireframe: wireframe_model }) );
+                }
+            }
+            
+            for(var k = 0; k < body.faces.length; ++k) {
+				var tri = body.faces[k];
+				var face = new THREE.Face3( tri.vertexIndices[0], tri.vertexIndices[1], tri.vertexIndices[2] );
+				if (tri.colorIndex) {
+					face.materialIndex = tri.colorIndex + 1;
+				}
+				else {
+					// use body material or default material
+					face.materialIndex = (materials.length > 1) ? 1 : 0;
+				}
+                geom.faces.push(face);
+            }
 			
 			// Todo - support more meshes here.
-			currentMesh = new THREE.Mesh(geom, material)
+			currentMesh = new THREE.Mesh(geom, new THREE.MeshFaceMaterial(materials));
             scene.add(currentMesh);
         }
         
