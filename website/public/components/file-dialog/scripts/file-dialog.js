@@ -38,7 +38,8 @@ component.ui.fileDialog.dialog = function () {
     /** @type {bool} */
     var _isOKClicked = false;
 
-
+	var timer = null;
+	
     var _btnOK = null;
     /** Constructor
     *@this {component.ui.fileDialog}
@@ -100,7 +101,13 @@ component.ui.fileDialog.dialog = function () {
 		{
 		    buttons:
     		{
-    		    "OK": function () { _isOKClicked = true; $(this).dialog("close"); }
+    		    "OK": function () { 
+				_isOKClicked = true; $(this).dialog("close"); 
+				     //remove dialog from document
+        		    var dlg = document.getElementById('file-dialog');
+        		    var parent = dlg.parentNode.parentNode;
+        		    parent.removeChild(dlg.parentNode);				
+				}
         		, "Cancel": function () {
         		    $(this).dialog("close");
 
@@ -438,31 +445,37 @@ component.ui.fileDialog.dialog = function () {
     *@return 
     */
     _clickHandler = function (e) {
-        var dialog = e.data.dialog;
+        var dlg = e.data.dialog;
         var id = null;
+		
+		clearTimeout(timer); 
+		timer = setTimeout(function() {
+			var eventElement = e.srcElement;
+			while (eventElement) {
+				id = eventElement["id"];
 
-        var eventElement = e.srcElement;
-        while (eventElement) {
-            id = eventElement["id"];
+				if (id && id != "") {
 
-            if (id && id != "") {
-                dialog.setSingleSelection(id);
-                break;
-            }
+							dlg.setSingleSelection(id);
+							break;
+						}
 
-            eventElement = eventElement.parentElement;
-        }
+	 
+				eventElement = eventElement.parentElement;
+			}
 
 
 
-        // x-browser prevent default action and cancel bubbling 
-        if (typeof e.preventDefault === 'function') {
-            e.preventDefault();
-            e.stopPropagation();
-        } else {
-            e.returnValue = false;
-            e.cancelBubble = true;
-        }
+			// x-browser prevent default action and cancel bubbling 
+			if (typeof e.preventDefault === 'function') {
+				e.preventDefault();
+				e.stopPropagation();
+			} else {
+				e.returnValue = false;
+				e.cancelBubble = true;
+			}
+		}, 300);
+
     }
 
 
@@ -481,8 +494,8 @@ component.ui.fileDialog.dialog = function () {
             return this;
         }
         if (file["isFolder"]) {
-			var folderId = file["id"];
-			
+		
+			var folderId = file["id"];		
 			var entryfoldedurl = "/api/1.0/files/" +folderId;
 			$.get(entryfoldedurl, function(data) {			
 			var files = [];
@@ -506,8 +519,8 @@ component.ui.fileDialog.dialog = function () {
             var nav = dlg.getElementsByClassName('file-navigator-item');
 			
 			var arrayLen = nav.length;
-			var arrayNav = new Array(0);
-				
+			var arrayNav = new Array(0);							
+			
 			if (id == "0")
 			    arrayNav.push({ name: "|Box", id: "0" });
 			else {
@@ -558,6 +571,10 @@ component.ui.fileDialog.dialog = function () {
     */
     this.getSelections = function () {
         return _selectedItems;
+    }
+
+    this.getTimer = function () {
+        return timer;
     }
 
     /** Bind the event to dialog
