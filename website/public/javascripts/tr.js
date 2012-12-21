@@ -242,18 +242,20 @@ function renderCanvas(mesh)
 	var meshData = new MeshData();
 	var wireframe_model = false;
 	// Todo - we only need to do the initialization once.
-	refreshContainer();
-    initCamera();
-    initControls();
 	var meshes = meshData.getMeshes(mesh, wireframe_model);
-	createScene(meshes);
-	updateCamera(meshes[0]);
-	//initLight();
-    //createTriangleMesh(mesh, false);
-    intiWebGLRenderer();
-    window.addEventListener( 'resize', onWindowResize, false );
-	window.addEventListener( 'dblclick', onDoubleClick, false );
-	animate();
+	if (meshes.length > 0) {
+		refreshContainer();
+		initCamera();
+		initControls();
+		createScene(meshes);
+		updateCamera(meshes[meshes.length-1]);
+		//initLight();
+		//createTriangleMesh(mesh, false);
+		intiWebGLRenderer();
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'dblclick', onDoubleClick, false );
+		animate();
+	}
 	
 	function createScene(meshes) {
 		initLight();
