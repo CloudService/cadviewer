@@ -60,7 +60,7 @@ var addRoute = function(options){
 		   "model_id": "2342"
 	   }
 	
-	* A task object is generated and added to the pending list.
+	* A task object is generated and added to the pending collection.
 	
 		{
 			"type": "job",
@@ -72,7 +72,7 @@ var addRoute = function(options){
 			"auth_token": "aeb2732bd098ce"
 		}
 	
-	* A incomplete model object is generated and added to the session. 'mesh' property isn't included.
+	* A incomplete model object is generated and added to the model collection. 'mesh' property isn't included.
 	
 		{
 			"type": "model",
