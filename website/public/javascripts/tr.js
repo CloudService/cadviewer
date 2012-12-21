@@ -285,9 +285,9 @@ function renderCanvas(mesh)
 	
 	function initLight() {
 		scene = new THREE.Scene();
-		scene.add( new THREE.AmbientLight( 0xffffff ) );
-        var light = new THREE.DirectionalLight( 0xffffff, 1.0, 0 );
-        light.position.set( 200, 200, 200 );
+		scene.add( new THREE.AmbientLight( 0xf0f0b5 ) );
+        var light = new THREE.DirectionalLight( 0xf0f0b5, 0.8, 0 );
+        light.position.set( 100, 200, 0 );
         scene.add( light );
 	}
 	
