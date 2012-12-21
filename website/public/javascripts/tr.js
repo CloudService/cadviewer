@@ -276,7 +276,7 @@ function renderCanvas(mesh)
 		renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
-			maxLights: 1
+			maxLights: 2
 		});
         renderer.setSize( window.innerWidth, window.innerHeight );
         container.appendChild( renderer.domElement );
@@ -285,6 +285,7 @@ function renderCanvas(mesh)
 	
 	function initLight() {
 		scene = new THREE.Scene();
+		scene.add( new THREE.AmbientLight( 0xffffff ) );
         var light = new THREE.DirectionalLight( 0xffffff, 1.0, 0 );
         light.position.set( 200, 200, 200 );
         scene.add( light );
@@ -311,7 +312,7 @@ function renderCanvas(mesh)
 			var materials = new Array();
 			
 			// create default meterial
-			var defaultMaterial = new THREE.MeshBasicMaterial({ color: 0x7ccd7c, wireframe: wireframe_model });
+			var defaultMaterial = new THREE.MeshPhongMaterial({ ambient: 0x7ccd7c, color: 0x7ccd7c, wireframe: wireframe_model });
 			materials.push( defaultMaterial );
 			
             if (body.colors) {
@@ -319,13 +320,19 @@ function renderCanvas(mesh)
                 for (var q = 0; q < body.colors.length; ++q) {
                     var clr = new THREE.Color;
                     clr.setRGB(body.colors[q].r, body.colors[q].g, body.colors[q].b);
-                    materials.push( new THREE.MeshBasicMaterial({ color: clr.getHex(), wireframe: wireframe_model }) );
+                    materials.push( new THREE.MeshPhongMaterial({ ambient: clr.getHex(), color: clr.getHex(), wireframe: wireframe_model }) );
                 }
             }
             
             for(var k = 0; k < body.faces.length; ++k) {
 				var tri = body.faces[k];
-				var face = new THREE.Face3( tri.vertexIndices[0], tri.vertexIndices[1], tri.vertexIndices[2] );
+				
+				var normal = null;
+				if (tri.normalIndex) {
+					normal = new THREE.Vector3( body.normals[tri.normalIndex].x, body.normals[tri.normalIndex].y, body.normals[tri.normalIndex].z );
+				}
+				
+				var face = new THREE.Face3( tri.vertexIndices[0], tri.vertexIndices[1], tri.vertexIndices[2], normal );
 				if (tri.colorIndex) {
 					face.materialIndex = tri.colorIndex + 1;
 				}
