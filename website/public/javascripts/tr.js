@@ -239,16 +239,51 @@ function renderCanvas(mesh)
 
     var container, camera, controls, scene, renderer;
 	var fieldOfView = 60; // The value is degree.
-	
+	var meshData = new MeshData();
+	var wireframe_model = false;
 	// Todo - we only need to do the initialization once.
 	refreshContainer();
     initCamera();
     initControls();
-	initLight();
-    createTriangleMesh(mesh, false);
+	var meshes = meshData.getMeshes(mesh, wireframe_model);
+	createScene(meshes);
+	updateCamera(meshes[0]);
+	//initLight();
+    //createTriangleMesh(mesh, false);
     intiWebGLRenderer();
     window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'dblclick', onDoubleClick, false );
 	animate();
+	
+	function createScene(meshes) {
+		initLight();
+		for (var i = 0; i < meshes.length; i++){
+			scene.add(meshes[i]);
+		}
+	}
+	
+	function updateCamera(mesh) {
+		var geometry = mesh.geometry;
+	   	geometry.computeBoundingBox();
+	   	geometry.computeBoundingSphere();
+	   
+	   	var bbx = geometry.boundingBox;
+	   	var radius = geometry.boundingSphere.radius;
+	   
+	   	var center = new THREE.Vector3((bbx.max.x + bbx.min.x) / 2,
+	   	 	(bbx.max.y + bbx.min.y) / 2,
+	   	 	(bbx.max.z + bbx.min.z) / 2);
+	   	
+	   	//camera.lookAt( center );
+	   	camera.position.x = center.x;
+	   	camera.position.y = center.y; 
+	   	camera.position.z = center.z + radius * 2;
+	}
+	
+	function onDoubleClick() {
+		wireframe_model = !wireframe_model;
+		createScene( meshData.getMeshes(mesh, wireframe_model) );
+	}
 
 	function refreshContainer() {
 		container = document.getElementById('canvas3d');
@@ -291,7 +326,7 @@ function renderCanvas(mesh)
         scene.add( light );
 	}
 	
-    function createTriangleMesh(mesh, wireframe_model)
+    /*function createTriangleMesh(mesh, wireframe_model)
     {
         var bodies = mesh;
         
@@ -365,7 +400,7 @@ function renderCanvas(mesh)
 	   	camera.position.x = center.x;
 	   	camera.position.y = center.y; 
 	   	camera.position.z = center.z + radius * 2;
-    }
+    }*/
     
     function onWindowResize() {        
         camera.aspect = window.innerWidth / window.innerHeight;
