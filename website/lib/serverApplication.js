@@ -30,6 +30,8 @@ var ServerApplication = function(){
 	this.apiErrorManager = require(path.join(__dirname, './apiErrorManager.js'))();
 	this.taskManager = require(path.join(__dirname, './datamodel/taskManager.js'))();
 	this.modelManager = require(path.join(__dirname, './datamodel/modelManager.js'))();
+	
+	this.samplePath = path.join(__dirname, '../mesh_samples');
 };
 
 
