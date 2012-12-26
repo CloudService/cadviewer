@@ -17,25 +17,28 @@
 
   </head>
 
-  <body >  	
+  <body onload="openDashboardDialog(_onSampleFileSelected);">  	
 	<div id ="PanelFilecommand">
-		<div id = "fancybox-new-border" class="fancybox-border1">
-			<a id="fancybox-new" class="img-PUB360-New-24x24 fancybox-button" title="Import Files" ></a>
+		<div id = "fancybox-new-border" class="fancybox-border">
+			<ul id ="toolbar">
+				<li id = "mainbtn">
+					<a id="fancybox-new" class="img-PUB360-New-24x24 fancybox-button" title="Import Files" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-open" class="img-PUB360-Open-24x24 fancybox-button" title="Export Files"></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-share" class="img-PUB360-Share-24x24 fancybox-button" title="Share" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-translate" class="img-PUB360-Translate-24x24 fancybox-button" title="Translate" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-sample" class="img-PUB360-Sample-24x24 fancybox-button" title="Samples" ></a>
+				</li>				
+			</ul>
 		</div>	
-		<div id = "fancybox-open-border" class="fancybox-border">
-			<a id="fancybox-open" class="img-PUB360-Open-24x24 fancybox-button" title="Export Files"></a>
-		</div>
-		<div id = "fancybox-open-border" class="fancybox-border">
-			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
-		</div>
 		
-		<div id = "fancybox-open-border" class="fancybox-border">
-			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
-		</div>
-		<div id = "fancybox-open-border" class="fancybox-border">
-			<a id="fancybox-open" class="img-PUB360-Share-24x24 fancybox-button" title="Share"></a>
-		</div>
-		</div>
 <div id ="progressbar"></div>
 
 

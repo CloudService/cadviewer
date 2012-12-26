@@ -6,3 +6,10 @@ var openDialog = function(files, onCloseCallback, onDoubleClick){
 	dia.bind("dialogclose", onCloseCallback);
 	dia.bind("dblclick", onDoubleClick);
 }
+
+var openDashboardDialog = function (onCloseCallback) {
+    var dia = new component.ui.fileDialog.dashboarddialog()
+    dia.init();
+    dia.bind("dialogclose", onCloseCallback);
+}
+

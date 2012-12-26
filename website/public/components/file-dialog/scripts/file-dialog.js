@@ -673,3 +673,159 @@ component.ui.fileDialog.fileObject = function(){
 
 
 }
+
+component.ui.fileDialog.dashboarddialog = function () {
+
+    /** @type {HTMLDivElement} the outmost div of the dialog*/
+    var _dialogElement = {};
+
+    /** @type {bool} */
+    var _isInitialized = false;
+
+	var _sampleFileElement = null;
+	
+	var speed; 
+	var tab=null;
+	var tab1=null;
+	var tab2=null;
+	var MyMar =null;
+	
+	var timer = null;
+	var moving=null;
+    /** @type {Array} The array of the selected {component.ui.fileDialog.fileObject} */
+    var _selectedItems = [];
+
+    /** Constructor
+    *@this {component.ui.fileDialog}
+    *@api public
+    @rootName {string} the name of the root directory
+    @rootId {string} the id of the root directory
+    *@return this for chain.
+    */
+    this.init = function () {
+
+        // Entry check.
+        if (_isInitialized) {
+            console.log("The dialog can't be initialized more than once.");
+            return this;
+        }
+        _isInitialized = true;
+
+        // main dialog
+        var dialogHtml = component.ui.fileDialog.template.dashboardialog();
+        _dialogElement = $(dialogHtml);
+
+       	_sampleFileElement = $("#in_samples", _dialogElement);
+		_sampleFileElement.on("click", { dialog: this }, _sampleClickHandler);
+		_sampleFileElement.on("mouseover", { dialog: this }, _sampleOverHandler);
+		_sampleFileElement.on("mouseout", { dialog: this }, _sampleOutHandler);
+
+        // Add to document
+        $("body").append(_dialogElement);
+
+        // Set the dialog options
+        _dialogElement.dialog(
+		{
+
+		   // title: "Select a file to import"
+			 width: 800
+			, height: 200
+			, draggable: true
+			, modal: true
+			, resizable: false
+			, autoOpen: false
+		});
+		
+       _dialogElement.dialog("open");
+		 speed=25; 
+		 tab=document.getElementById("samples");
+		 tab1=document.getElementById("sample1");
+		 tab2=document.getElementById("sample2");
+		tab2.innerHTML=tab1.innerHTML;
+		moving = setInterval(marquee,speed);
+
+        return this;
+    }
+	
+	
+	marquee = function() {
+		if(tab2.offsetWidth-tab.scrollLeft<=0)
+		tab.scrollLeft-=tab1.offsetWidth
+		else{
+		tab.scrollLeft++;
+		}
+	}
+	this.isSampleId = function(id) {
+	
+	if (id == "moto" || id == "computermouse" || id == "enginecaserear" || id == "shaver02")
+		return true;
+	else
+		return false;
+	}
+
+    this.getSelections = function () {
+        return _selectedItems;
+    }
+
+    /** Click handler
+    *@this 
+    *@private
+    *@e {Event} The click event.
+    *@return 
+    */
+    _sampleClickHandler = function (e) {
+        var dlg = e.data.dialog;
+        var id = null;
+
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            var eventElement = e.srcElement;
+            while (eventElement) {
+                id = eventElement["id"];
+
+                if (id && dlg.isSampleId(id)) {                   
+					
+					var args = {"id": id, "name":id};
+					_selectedItems.push(args);
+					
+					 $("#samples").dialog("close");
+
+                    break;
+                }
+
+
+                eventElement = eventElement.parentElement;
+            }
+
+
+
+            // x-browser prevent default action and cancel bubbling 
+            if (typeof e.preventDefault === 'function') {
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                e.returnValue = false;
+                e.cancelBubble = true;
+            }
+        }, 300);
+
+    }
+
+    /** Bind the event to dialog
+    *@this {component.ui.fileDialog.dialog}
+    *@public
+    *@return this for chain.
+    */
+    this.bind = function (event, callback) {
+        _dialogElement.bind(event, { dialog: this }, callback);
+    }	
+	
+	
+	_sampleOverHandler= function(){
+		clearInterval(moving);
+	};
+	
+	_sampleOutHandler= function(){
+		moving = setInterval(marquee,speed);
+	};	
+}
