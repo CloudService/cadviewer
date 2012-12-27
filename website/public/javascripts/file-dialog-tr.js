@@ -5,9 +5,7 @@ var openDialog = function(files, onCloseCallback, onDoubleClick){
 	dia.appendFiles("entry", files);
 	dia.bind("dialogclose", onCloseCallback);
 	dia.bind("dblclick", onDoubleClick);
-<<<<<<< HEAD
-}
-=======
+
 }
 
 var openDashboardDialog = function (onCloseCallback) {
@@ -15,5 +13,3 @@ var openDashboardDialog = function (onCloseCallback) {
     dia.init();
     dia.bind("dialogclose", onCloseCallback);
 }
-
->>>>>>> origin/test

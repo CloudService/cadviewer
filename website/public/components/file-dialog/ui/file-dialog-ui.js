@@ -24,19 +24,11 @@ component.ui.fileDialog.template.filedialog = function(opt_data, opt_sb) {
 component.ui.fileDialog.template.navigator = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('\t');
-<<<<<<< HEAD
-  var folderList6 = opt_data.folderPath;
-  var folderListLen6 = folderList6.length;
-  for (var folderIndex6 = 0; folderIndex6 < folderListLen6; folderIndex6++) {
-    var folderData6 = folderList6[folderIndex6];
-    output.append('<div id="', soy.$$escapeHtml(folderData6.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData6.name), '</div>', (! (folderIndex6 == folderListLen6 - 1)) ? '<span class="file-navigator-separator">></span></span>' : '');
-=======
   var folderList8 = opt_data.folderPath;
   var folderListLen8 = folderList8.length;
   for (var folderIndex8 = 0; folderIndex8 < folderListLen8; folderIndex8++) {
     var folderData8 = folderList8[folderIndex8];
     output.append('<div id="', soy.$$escapeHtml(folderData8.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData8.name), '</div>', (! (folderIndex8 == folderListLen8 - 1)) ? '<span class="file-navigator-separator">></span></span>' : '');
->>>>>>> origin/test
   }
   return opt_sb ? '' : output.toString();
 };

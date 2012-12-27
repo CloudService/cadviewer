@@ -1,24 +1,10 @@
 
-<<<<<<< HEAD
-
-
-#PanelFilecommand {
-	position: fixed;
-	left:50%;
-	width: 400px;
-	height: 80px;
-	cursor: move;
-=======
-
-
 #PanelFilecommand {
 
 width: 280px;
 height: 62px;
 background:rgba(179, 189, 171, 0.3);
 margin-left:45%;
-
->>>>>>> origin/test
 }
 
 .fancybox-button {
@@ -26,17 +12,6 @@ margin-left:45%;
 	height: 48px;
 	cursor: pointer;
 	line-height: 15px;
-<<<<<<< HEAD
-	opacity: 0.75;
-	margin-left:7px; 
-	margin-right:7px; 
-	margin-top:6px; 
-    float:left;
-}
-
-
- 
-=======
 	opacity: 0.1;
 	margin-left:1px; 
 	margin-right:1px; 
@@ -55,6 +30,3 @@ float:left;
 
 .fancybox-button:visited
 {opacity: 0.8;}
-
- 
->>>>>>> origin/test
