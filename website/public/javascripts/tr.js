@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-	
 	// Execute the action message from server
 	var messageSolver = actionMessage.getMessageSolver(); 
 	
@@ -11,8 +10,11 @@ $(document).ready(function(){
 	// Check the action message from the parent.
 	
 	var astring = parent.getAction();
+	
 	if(astring && astring != "")
 		messageSolver.evaluate(astring);
+	else
+		openDashboardDialog(_onSampleFileSelected);		
 	
 	// Click the import command 
 	$("#fancybox-new").click(function(event){	
@@ -34,13 +36,7 @@ $(document).ready(function(){
 		}
 		openDashboardDialog(_onSampleFileSelected);
    });  
-  
-  	// Click the box drive icon.
-   $("#box").click(function(event){
-	
-     parent.location.href='/auth/box';
-   });
-
+ 
  });
  
 var service = service || {};
@@ -82,52 +78,7 @@ service.trans.translator = function (){
 		});
 	};
 	
-	_onSampleFileSelected = function (event){
-		var dialog = event.data.dialog;
-			
-		var selections = dialog.getSelections();
-		if(selections.length > 0){
-			var selection = selections[0];
-				
-			// Get the task info from selected file.
-			var task = service.trans.translator.task;
-			task["source_file_id"] = selection["id"];
-			task["source_file_name"] = selection["name"];
-			
-			// Post it task to server
-			//$.post("/api/1.0/tasks", task, function(taskObject) {
-				
-				//alert("Your request is accepted.");
-				// alert(JSON.stringify(taskObject));
-				
-				//var model_id = taskObject.model_id;
-				
-				pollingModelObject(true, selection["id"]);
-				
-				var myProgressBar = null;
-				myProgressBar = new ProgressBar("progressbar",{
-					borderRadius: 5,
-					width: 180,
-					height: 22,
-					maxValue: 100,
-					labelText: 'Loading mesh data...',
-					extraClassName: {
-						horizontalText: 'my_progress_bar_text_horizontal',
-					},
-					orientation: ProgressBar.Orientation.Horizontal,
-					direction: ProgressBar.Direction.LeftToRight,
-					animationStyle: ProgressBar.AnimationStyle.StaticFull,
-					animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
-					animationSpeed: 0.5,
-					backgroundUrl: 'images/ajax-loader.gif',
-					imageUrl: 'images/ajax-loader.gif',
-				});				
-			//})
-			//.error(function() { 
-			//	alert("Error.");
-			//});
-		}
-	};
+	
 
 	_onDoubleClick = function (e){
 		var dlg = e.data.dialog;
@@ -143,7 +94,7 @@ service.trans.translator = function (){
 					var file = dlg._getFile(id);
 					dlg.setSingleSelection(id);
 
-					if (!file.isFolder) {
+					if (!file["isFolder"]) {
 		                var selections = dlg.getSelections();
 		                if(selections.length > 0){
 			                var selection = selections[0];
@@ -163,7 +114,7 @@ service.trans.translator = function (){
 				
 							var model_id = taskObject.model_id;
 
-							pollingModelObject(false, model_id);
+							pollingModelObject(model_id);
 							
 							var myProgressBar = null;
 							myProgressBar = new ProgressBar("progressbar",{
@@ -220,7 +171,7 @@ service.trans.translator = function (){
 				
 				var model_id = taskObject.model_id;
 				
-				pollingModelObject(false, model_id);
+				pollingModelObject( model_id);
 				
 				var myProgressBar = null;
 				myProgressBar = new ProgressBar("progressbar",{
@@ -251,17 +202,87 @@ service.trans.translator = function (){
 service.trans.translator.task={};
 
 
-var pollingModelObject = function (sample, model_id){
+var _onSampleFileSelected = function (event){
+		var dialog = event.data.dialog;
+			
+		var selections = dialog.getSelections();
+		if(selections.length > 0){
+			var selection = selections[0];
+				
+			// Get the task info from selected file.
+			var task = service.trans.translator.task;
+			task["source_file_id"] = selection["id"];
+			task["source_file_name"] = selection["name"];
+			
+			// Post it task to server
+			//$.post("/api/1.0/tasks", task, function(taskObject) {
+				
+				//alert("Your request is accepted.");
+				// alert(JSON.stringify(taskObject));
+				
+				//var model_id = taskObject.model_id;
+				
+				pollingSampleObject(selection["id"]);
+				
+				var myProgressBar = null;
+				myProgressBar = new ProgressBar("progressbar",{
+					borderRadius: 5,
+					width: 180,
+					height: 22,
+					maxValue: 100,
+					labelText: 'Loading mesh data...',
+					extraClassName: {
+						horizontalText: 'my_progress_bar_text_horizontal',
+					},
+					orientation: ProgressBar.Orientation.Horizontal,
+					direction: ProgressBar.Direction.LeftToRight,
+					animationStyle: ProgressBar.AnimationStyle.StaticFull,
+					animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
+					animationSpeed: 0.5,
+					backgroundUrl: 'images/ajax-loader.gif',
+					imageUrl: 'images/ajax-loader.gif',
+				});				
+			//})
+			//.error(function() { 
+			//	alert("Error.");
+			//});
+		}
+	};
+	
+	
+var pollingSampleObject = function ( model_id){
 	var url = null;
-	if (sample)
-		url = "/api/1.0/samples/" + model_id;
-	else
-		url = "/api/1.0/models/" + model_id;
+
+	url = "/api/1.0/samples/" + model_id;
+	$.get(url, function(modelObject) {
+		// Todo - hide working in progress dialog.
+		var progressBar = document.getElementById('progressbar');
+		if (progressbar) {
+			for (var i = progressBar.childNodes.length - 1; i >= 0; i--)
+				progressBar.removeChild(progressBar.childNodes[i]);
+		}
+		
+		// Todo - render the mesh with webGL.
+		var mesh = modelObject.mesh;
+		renderCanvas(mesh);
+
+	})
+	.error(function() { 
+		//alert("No model.");
+		
+		setTimeout(function(){pollingModelObject(model_id);}, 2000);
+	});
+}
+
+var pollingModelObject = function ( model_id){
+	var url = null;
+
+	url = "/api/1.0/models/" + model_id;
 	$.get(url, function(modelObject) {
 		
 		//alert("Model is returned.");
 		//alert(JSON.stringify(modelObject));
-		if(!sample && modelObject.status != "good"){
+		if(modelObject.status != "good"){
 			alert("Failed to generate the mesh, a sample mesh is shown.");
 			var progressBar = document.getElementById('progressbar');
 			if (progressbar) {
