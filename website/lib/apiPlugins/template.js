@@ -1,17 +1,20 @@
 /**
-* This is the tempalte of the route module. Copy this file when add new api route module.
+ This is the tempalte of the route module. Copy this file when add new api route module.
+
+@module template
 */
 
-/**********************************************************************/
-// Define and implement the REST api.
-/**********************************************************************/
+/*
+ Define and implement the REST api.
+*/
+
 /**
 * Add the routes to the Express application.
-* @options {Object}
-*	expressApp {Object} Express application
-*	serverApp {Object} server application object.
-* @ api public
-* @ return this for chaining
+* @param {Object} options 
+*  	@param {Object} options.expressApp Express application
+*  	@param {Object} options.serverApp server application object.
+* @return this for chaining
+* @class template 
 */
 var addRoute = function(options){
 	if(!options || !options.expressApp || !options.serverApp)
@@ -23,9 +26,13 @@ var addRoute = function(options){
 	var apiErrorManager = serverApp.apiErrorManager;
 	var logger = serverApp.logger;	
 		
-	/**********************************************************************/
-	// Add the route implementation here
-	/**********************************************************************/
+	/**
+	* This is a sample method to demonstrate how to add an API.
+	* @method GET /api/1.0/users/:id
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
+	*/
 	expressApp.get('/api/1.0/users/:id', function(req, res, next){
 		logger.debug("==> /api/1.0/users/:id");
 		apiErrorManager.responseForbidden(res);
@@ -34,8 +41,8 @@ var addRoute = function(options){
 	return this;
 };
 
-/**********************************************************************/
-// Exports
-/**********************************************************************/
+/*
+* Exports
+*/
 
 module.exports = addRoute;

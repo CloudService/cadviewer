@@ -7,17 +7,19 @@ Implement the APIs for the sample object.
 var path = require("path");
 var fs = require('fs');
 
-/**********************************************************************/
-// Define and implement the REST api.
-/**********************************************************************/
+/*
+ Define and implement the REST api.
+*/
+
 /**
 * Add the routes to the Express application.
-* @param {Object} 
-*	expressApp {Object} Express application
-*	serverApp {Object} server application object.
-* @ api public
-* @ return this for chaining
+* @param {Object} options 
+*  	@param {Object} options.expressApp Express application
+*  	@param {Object} options.serverApp server application object.
+* @return this for chaining
+* @class samples
 */
+
 var addRoute = function(options){
 	if(!options || !options.expressApp || !options.serverApp)
 		return this;
@@ -27,10 +29,6 @@ var addRoute = function(options){
 	var config = serverApp.config;
 	var apiErrorManager = serverApp.apiErrorManager;
 	var logger = serverApp.logger;	
-		
-	/**********************************************************************/
-	// Add the route implementation here
-	/**********************************************************************/
 	
 	/**
 	* Get the sample object. The id is mapped as the file name under folder /mesh_samples/.
@@ -110,8 +108,8 @@ var addRoute = function(options){
 	return this;
 };
 
-/**********************************************************************/
-// Exports
-/**********************************************************************/
+/*
+* Exports
+*/
 
 module.exports = addRoute;

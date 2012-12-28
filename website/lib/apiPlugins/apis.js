@@ -8,20 +8,14 @@ var everyauth = require('everyauth');
 var request = require('request');
 var uuid = require('node-uuid');
 
-/**********************************************************************/
-// Define and implement the REST api.
-/**********************************************************************/
-
 
 /**
 * Add the routes to the Express application.
-* @api public
 * @param {Object} options 
 *  	@param {Object} options.expressApp Express application
 *  	@param {Object} options.serverApp server application object.
 * @return this for chaining
-* @class addRoute 
-* @constructor
+* @class apis 
 */
 var addRoute = function(options){
 	if(!options || !options.expressApp || !options.serverApp)
@@ -35,9 +29,9 @@ var addRoute = function(options){
 	var taskManager = serverApp.taskManager;
 	var modelManager = serverApp.modelManager;
 		
-	/**********************************************************************/
-	// Add the route implementation here
-	/**********************************************************************/
+	/*
+	* Add the route implementation here
+	*/
 
 	var build = config.get('build');
 	var server = config.get(build);
@@ -164,6 +158,7 @@ var addRoute = function(options){
 				}
 			]
 		}
+		
 	* @method GET /api/1.0/files/:id
 	* @param {Object} req
 	* @param {Object} res
@@ -224,17 +219,23 @@ var addRoute = function(options){
 	* Client get a pending task from the server. The returned task will be deleted.
 	*
 	* http response body
-	[
-		{
-			"type": "job",
-			"id": "2342",
-			"model_id": "3452",
-			"source_file_name": "robot.stl",
-			"source_file_id": "4451234",
-			"api_key": "243ba09e93248d0cc",
-			"auth_token": "aeb2732bd098ce"
-		}
-	]
+	
+		[
+			{
+				"type": "job",
+				"id": "2342",
+				"model_id": "3452",
+				"source_file_name": "robot.stl",
+				"source_file_id": "4451234",
+				"api_key": "243ba09e93248d0cc",
+				"auth_token": "aeb2732bd098ce"
+			}
+		]
+	
+	* @method GET /api/1.0/tasks
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
 	*/
 	expressApp.get('/api/1.0/tasks', function(req, res, next){
 		
@@ -252,13 +253,18 @@ var addRoute = function(options){
 	* 'bad' - the worker tries to generate the mesh, but the it fails. 
 	*
 	* http response body
-	{
-		"type": "model",
-		"id": "358034830",
-		"status": "good",
-		"mesh": {}
-	}
+	
+		{
+			"type": "model",
+			"id": "358034830",
+			"status": "good",
+			"mesh": {}
+		}
 
+	* @method GET /api/1.0/models/:id
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
 	*/
 	expressApp.get('/api/1.0/models/:id', function(req, res, next){
 		logger.debug("==> get /api/1.0/models/:id");
@@ -287,23 +293,30 @@ var addRoute = function(options){
 	* The client uploads the mesh for a model.
 	
 	* http request body.
-	{
-     	"mesh":{...},
-     	"status":"good"
-	}
+	
+	   {
+		   "mesh":{...},
+		   "status":"good"
+	   }
 	
 	* http response body. (A mini model object)
-	{
-		"type": "model",
-		"id": "358034830"
-	}
+	
+		{
+			"type": "model",
+			"id": "358034830"
+		}
 
 	* The model object is updated.
-	{
-		"type": "model",
-		"id": "358034830",
-		"mesh": {}
-	}
+	
+		{
+			"type": "model",
+			"id": "358034830",
+			"mesh": {}
+		}
+	* @method PUT /api/1.0/models/:id
+	* @param {Object} req
+	* @param {Object} res
+	* @param {Object} next
 	*/
 	expressApp.put('/api/1.0/models/:id', function(req, res, next){
 		logger.debug("==> put /api/1.0/models/:id");
@@ -343,11 +356,11 @@ var addRoute = function(options){
 };
 
 
-/**********************************************************************/
-// Helper function. Todo - move it to /lib/clouddrive/box.js
-/**********************************************************************/
+/*
+ Helper function. Todo - move it to /lib/clouddrive/box.js
+*/
 
-/**
+/*
  * Get the file/folder information.
  * @param {string} api_key - The api key of the box.
  * @param {string} auth_token - The auth token.
@@ -468,7 +481,7 @@ var getFilesFromBox = function(api_key, auth_token, id, importFormats, cb){
 		});  
 };
 
-/**
+/*
  * Check if the session includes the box login information
  * @param {object} session - The session.
  * @return - true if the session includes the box information.
@@ -499,8 +512,8 @@ var isBoxLogin = function(session){
 };
 
 
-/**********************************************************************/
-// Exports
-/**********************************************************************/
+/*
+* Exports
+*/
 
 module.exports = addRoute;
