@@ -1,0 +1,14 @@
+{
+    "name":"The CAD viewer API",
+    "description":"The CAD viewer API. The API for all the cad operation",
+    "version":"0.0.1",
+    "url":"https://github.com/CloudService/cadviewer",
+    "options":{
+		"paths":[
+		  "../lib/apiPlugins"
+		],
+		"exclude":"template.js",
+        "outdir":"../public/dev/docs"
+    },
+    "comments":"Change to the directory of the json file and run 'yuidoc -c yuidoc.json'"
+}

@@ -1,0 +1,294 @@
+{
+    "project": {
+        "name": "The CAD viewer API",
+        "description": "The CAD viewer API. The API for all the cad operation",
+        "version": "0.0.1",
+        "url": "https://github.com/CloudService/cadviewer",
+        "comments": "Change to the directory of the json file and run 'yuidoc -c yuidoc.json'"
+    },
+    "files": {
+        "../lib/apiPlugins/apis.js": {
+            "name": "../lib/apiPlugins/apis.js",
+            "modules": {
+                "apis": 1
+            },
+            "classes": {
+                "apis": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "../lib/apiPlugins/samples.js": {
+            "name": "../lib/apiPlugins/samples.js",
+            "modules": {
+                "samples": 1
+            },
+            "classes": {
+                "samples": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "apis": {
+            "name": "apis",
+            "submodules": {},
+            "classes": {
+                "apis": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 12,
+            "description": "This is api module."
+        },
+        "samples": {
+            "name": "samples",
+            "submodules": {},
+            "classes": {
+                "samples": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "../lib/apiPlugins/samples.js",
+            "line": 14,
+            "description": "Implement the APIs for the sample object."
+        }
+    },
+    "classes": {
+        "apis": {
+            "name": "apis",
+            "shortname": "apis",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "apis",
+            "namespace": "",
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 12,
+            "description": "Add the routes to the Express application.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "expressApp",
+                            "description": "Express application",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "serverApp",
+                            "description": "server application object.",
+                            "type": "Object"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "this for chaining"
+            }
+        },
+        "samples": {
+            "name": "samples",
+            "shortname": "samples",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "samples",
+            "namespace": "",
+            "file": "../lib/apiPlugins/samples.js",
+            "line": 14,
+            "description": "Add the routes to the Express application.",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "expressApp",
+                            "description": "Express application",
+                            "type": "Object"
+                        },
+                        {
+                            "name": "serverApp",
+                            "description": "server application object.",
+                            "type": "Object"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "this for chaining"
+            }
+        }
+    },
+    "classitems": [
+        {
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 40,
+            "description": "Post a task to the server.\nHttp request body\n\t\n\t\t{\n\t\t\t\"source_file_id\": \"128420334\",\n\t\t\t\"source_file_name\": \"robot.stl\"\n\t\t}\n\t\nHttp response body\n\t\n\t   {\n\t\t   \"type\": \"task\",\n\t\t   \"id\": \"2342\",\n\t\t   \"model_id\": \"2342\"\n\t   }\n\t\nA task object is generated and added to the pending collection.\n\t\n\t\t{\n\t\t\t\"type\": \"job\",\n\t\t\t\"id\": \"2342\",\n\t\t\t\"model_id\": \"3452\",\n\t\t\t\"source_file_name\": \"robot.stl\",\n\t\t\t\"source_file_id\": \"4451234\",\n\t\t\t\"api_key\": \"243ba09e93248d0cc\",\n\t\t\t\"auth_token\": \"aeb2732bd098ce\"\n\t\t}\n\t\nA incomplete model object is generated and added to the model collection. 'mesh' property isn't included.\n\t\n\t\t{\n\t\t\t\"type\": \"model\",\n\t\t\t\"id\": \"358034830\",\n\t\t\t\"statu\": \"pending\"\n\t\t}",
+            "itemtype": "method",
+            "name": "POST /api/1.0/tasks",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "apis",
+            "module": "apis"
+        },
+        {
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 129,
+            "description": "Get the file object with the specific file id.\nThe id 'entry' is the alias for the root folder.\n\nhttp response body\n\t\n\t\t{\n\t\t\t\"type\": \"file\",\n\t\t\t\"id\": \"233453223\",\n\t\t\t\"name\": \"robot\",\n\t\t\t\"is_folder\": true,\n\t\t\t\"size\": \"-\",\n\t\t\t\"modified_at\": \"2012-07-27T09:22:05Z\",\n\t\t\t\"children\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"file\",\n\t\t\t\t\t\"id\": \"234235523\",\n\t\t\t\t\t\"name\": \"wheel.ipt\",\n\t\t\t\t\t\"is_folder\": false,\n\t\t\t\t\t\"size\": \"45K\",\n\t\t\t\t\t\"modified_at\": \"2012-07-27T09:22:05Z\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"file\",\n\t\t\t\t\t\"id\": \"245345\",\n\t\t\t\t\t\"name\": \"shaft.iam\",\n\t\t\t\t\t\"is_folder\": false,\n\t\t\t\t\t\"size\": \"10M\",\n\t\t\t\t\t\"modified_at\": \"2012-07-27T09:22:05Z\"\n\t\t\t\t}\n\t\t\t]\n\t\t}",
+            "itemtype": "method",
+            "name": "GET /api/1.0/files/:id",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "apis",
+            "module": "apis"
+        },
+        {
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 218,
+            "description": "Client get a pending task from the server. The returned task will be deleted.\n\nhttp response body\n\t\n\t\t[\n\t\t\t{\n\t\t\t\t\"type\": \"job\",\n\t\t\t\t\"id\": \"2342\",\n\t\t\t\t\"model_id\": \"3452\",\n\t\t\t\t\"source_file_name\": \"robot.stl\",\n\t\t\t\t\"source_file_id\": \"4451234\",\n\t\t\t\t\"api_key\": \"243ba09e93248d0cc\",\n\t\t\t\t\"auth_token\": \"aeb2732bd098ce\"\n\t\t\t}\n\t\t]",
+            "itemtype": "method",
+            "name": "GET /api/1.0/tasks",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "apis",
+            "module": "apis"
+        },
+        {
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 248,
+            "description": "Client gets the model from the server. The model will be deleted.\nThe value of the 'status' can be 'pending', 'good', 'bad'.\n'pending' - The object is new created. The worker hasn't update the mesh.\n'good' - the mesh is updated and it is valid.\n'bad' - the worker tries to generate the mesh, but the it fails. \n\nhttp response body\n\t\n\t\t{\n\t\t\t\"type\": \"model\",\n\t\t\t\"id\": \"358034830\",\n\t\t\t\"status\": \"good\",\n\t\t\t\"mesh\": {}\n\t\t}",
+            "itemtype": "method",
+            "name": "GET /api/1.0/models/:id",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "apis",
+            "module": "apis"
+        },
+        {
+            "file": "../lib/apiPlugins/apis.js",
+            "line": 292,
+            "description": "The client uploads the mesh for a model.\n\t\nhttp request body.\n\t\n\t   {\n\t\t   \"mesh\":{...},\n\t\t   \"status\":\"good\"\n\t   }\n\t\nhttp response body. (A mini model object)\n\t\n\t\t{\n\t\t\t\"type\": \"model\",\n\t\t\t\"id\": \"358034830\"\n\t\t}\n\nThe model object is updated.\n\t\n\t\t{\n\t\t\t\"type\": \"model\",\n\t\t\t\"id\": \"358034830\",\n\t\t\t\"mesh\": {}\n\t\t}",
+            "itemtype": "method",
+            "name": "PUT /api/1.0/models/:id",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "apis",
+            "module": "apis"
+        },
+        {
+            "file": "../lib/apiPlugins/samples.js",
+            "line": 33,
+            "description": "Get the sample object. The id is mapped as the file name under folder /mesh_samples/.\ni.e. if the id is shaver02, the file shaver02.json will be loaded.\n\t\nHttp response body\n\t\n\t\t{\n\t\t\t\"type\": \"sample\",\n\t\t\t\"id\": \"shaver02\",\n\t\t\t\"mesh\": {}\n\t\t}",
+            "itemtype": "method",
+            "name": "GET /api/1.0/samples/:id",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "next",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "samples",
+            "module": "samples"
+        }
+    ],
+    "warnings": []
+}
