@@ -321,3 +321,13 @@ float: left;
 float: left;
 margin-left:7px;
 }
+
+#iframecode {
+	width:700px; 
+height:70px;
+ 
+overflow:hidden;
+background:#e5e5e5;
+resize:none;
+
+}

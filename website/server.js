@@ -88,7 +88,7 @@ expressApp.get('/', function(req, res, next){
 	var boxAuth = auth ? auth.box : null;
 	var showDefault = req.query.d ? true : false; // http://server.com/?d=1
 	
-	var locals = { "amessage": ""};				  
+	var locals = { "amessage": "", "model_id":""};				  
 	
 	if(showDefault || !boxAuth)
 		renderDefaultPage(req, res, next, locals);
@@ -113,6 +113,20 @@ expressApp.get('/', function(req, res, next){
 				
 		res.render('index', {'locals': locals});
    	}  
+});
+
+expressApp.get('/:model_id', function(req,res, next){
+
+	var id = req.params.model_id;
+	logger.info(id);
+	
+	var locals = {
+		"amessage": "rendermodel",
+		"model_id": id,
+	};		  
+
+	res.render('index', {'locals': locals});
+
 });
 
 expressApp.get('/error', function (req, res)

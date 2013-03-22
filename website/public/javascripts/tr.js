@@ -11,6 +11,12 @@ $(document).ready(function(){
 	
 	var astring = parent.getAction();
 	
+	if (astring && astring =="rendermodel") {
+		var id = parent.getModelId();
+	
+		pollingSampleObject(id);
+	}
+	
 	if(astring && astring != "")
 		messageSolver.evaluate(astring);
 	else
@@ -35,8 +41,8 @@ $(document).ready(function(){
 			parent.removeChild(dlg.parentNode);
 		}
 		openDashboardDialog(_onSampleFileSelected);
-   });  
- 
+   });     
+
  });
  
 var service = service || {};
@@ -220,9 +226,11 @@ var _onSampleFileSelected = function (event){
 				//alert("Your request is accepted.");
 				// alert(JSON.stringify(taskObject));
 				
-				//var model_id = taskObject.model_id;
-				
-				pollingSampleObject(selection["id"]);
+				var model_id = selection["id"];
+				url = '/' + model_id;
+				top.location.href= url;
+			
+				/*pollingSampleObject(selection["id"]);*/	
 				
 				var myProgressBar = null;
 				myProgressBar = new ProgressBar("progressbar",{
@@ -241,11 +249,8 @@ var _onSampleFileSelected = function (event){
 					animationSpeed: 0.5,
 					backgroundUrl: 'images/ajax-loader.gif',
 					imageUrl: 'images/ajax-loader.gif',
-				});				
-			//})
-			//.error(function() { 
-			//	alert("Error.");
-			//});
+				});			
+
 		}
 	};
 	
@@ -265,6 +270,9 @@ var pollingSampleObject = function ( model_id){
 		// Todo - render the mesh with webGL.
 		var mesh = modelObject.mesh;
 		renderCanvas(mesh);
+		
+		// iFrame Code 
+		AddShareBtns();
 
 	})
 	.error(function() { 
@@ -272,6 +280,66 @@ var pollingSampleObject = function ( model_id){
 		
 		setTimeout(function(){pollingModelObject(model_id);}, 2000);
 	});
+}
+
+var AddShareBtns = function(){
+	
+	var i = document.createElement("a"); 
+	i.id="sina";
+	i.className ="sharetosina";
+	i.title="Share to sina";	
+	document.getElementById("share").appendChild(i);
+	
+	$("#sina").click(function(event){	
+		
+	  var param = {
+		url:top.window.location.href,
+		type:'4',
+		count:'',
+		appkey:'CoolViewer',
+		title:'CoolViewer', 
+		pic:'images/share.png', 
+		ralateUid:'', 
+		language:'zh_cn', 
+		rnd:new Date().valueOf()
+	  };
+	  var temp = [];
+	  for( var p in param ){
+		temp.push(p + '=' + encodeURIComponent( param[p] || '' ) );
+	  }	  
+	  
+	 var url ="http://service.weibo.com/share/share.php?"+temp.join('&');
+	 window.open(url,null,'height=500,width=800,top='+(screen.height-500)/2+',left='+(screen.width-800)/2+',toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no');
+	
+   });  
+	
+	var j = document.createElement("a"); 
+	j.className ="sharetoqq";
+	j.title="Share to QQ";	
+	document.getElementById("share").appendChild(j);	
+
+	var j = document.createElement("a"); 
+	j.className ="sharetotwitter";
+	j.title="Share to twitter";	
+	document.getElementById("share").appendChild(j);
+	
+	
+	var j = document.createElement("a"); 
+	j.className ="sharetofb";
+	j.title="Share to facebook";	
+	document.getElementById("share").appendChild(j);
+	
+	var j = document.createElement("a"); 
+	j.id ="iframebtn";
+	j.className ="iframeimage";
+	j.title="iFrame Code";	
+	document.getElementById("share").appendChild(j);
+	
+		// Click the sample command 
+	$("#iframebtn").click(function(event){
+		var id = parent.getModelId();	
+		openiFrameGenDialog(id);
+   });     
 }
 
 var pollingModelObject = function ( model_id){
@@ -319,7 +387,7 @@ var pollingModelObject = function ( model_id){
 function renderCanvas(mesh)
 {
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
+	
     var container, camera, controls, scene, renderer;
 	var fieldOfView = 60; // The value is degree.
 	var meshData = new MeshData();

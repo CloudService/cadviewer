@@ -829,3 +829,98 @@ component.ui.fileDialog.dashboarddialog = function () {
 		moving = setInterval(marquee,speed);
 	};	
 }
+
+component.ui.fileDialog.iframedialog = function () {
+
+    /** @type {HTMLDivElement} the outmost div of the dialog*/
+    var _dialogElement = {};
+
+    /** @type {bool} */
+    var _isInitialized = false;
+
+	var _iFrameCodeElement = null;
+	
+
+    /** Constructor
+    *@this {component.ui.fileDialog}
+    *@api public
+    @rootName {string} the name of the root directory
+    @rootId {string} the id of the root directory
+    *@return this for chain.
+    */
+    this.init = function (id) {
+
+        // Entry check.
+        if (_isInitialized) {
+            console.log("The dialog can't be initialized more than once.");
+            return this;
+        }
+        _isInitialized = true;
+
+        // main dialog
+        var dialogHtml = component.ui.fileDialog.template.iframedialog();
+        _dialogElement = $(dialogHtml);
+
+       	_iFrameCodeElement = $("#iframecode", _dialogElement);
+		
+		var iframecode ='<iframe id="frame-viewer" '
+					+ 'src='
+					+ top.location.href
+					+ ' width="700"'
+					+ ' height="550"'
+					+ ' frameborder="no"'
+					+ ' border="0px"></iframe>';
+		_iFrameCodeElement[0].innerText= iframecode;
+		
+		
+		_iFrameCodeElement.on("mousedown", { dialog: this }, _onMouseDownHandler);
+		_iFrameCodeElement.on("contextmenu", { dialog: this }, _onContextHandler);
+
+        // Add to document
+        $("body").append(_dialogElement);
+
+        // Set the dialog options
+        _dialogElement.dialog(
+		{
+		    buttons:
+    		{
+    		    "Cancel": function () {
+        		    $(this).dialog("close");
+
+        		    //remove dialog from document
+        		    var dlg = document.getElementById('iframecodedlg');
+        		    var parent = dlg.parentNode.parentNode;
+        		    parent.removeChild(dlg.parentNode);
+        		}
+    		}
+		   // title: "Select a file to import"
+			, width: 800
+			, height: 200
+			, draggable: true
+			, modal: true
+			, resizable: false
+			, autoOpen: false
+		});
+		
+		_dialogElement.dialog("open");
+		   
+		 
+		function _onMouseDownHandler(e){
+			e.stopPropagation();
+		}	
+		
+		function _onContextHandler(e){
+			e.stopPropagation();
+		}
+
+        return this;
+    }
+	
+    this.bind = function (event, callback) {
+        _dialogElement.bind(event, { dialog: this }, callback);
+    }	
+
+	this.getiFrameCode = function() {
+		return _iFrameCodeElement[0].innerText;
+	}
+}

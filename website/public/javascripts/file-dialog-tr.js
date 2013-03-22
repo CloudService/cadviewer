@@ -13,3 +13,8 @@ var openDashboardDialog = function (onCloseCallback) {
     dia.init();
     dia.bind("dialogclose", onCloseCallback);
 }
+
+var openiFrameGenDialog = function(id){
+	 var dia = new component.ui.fileDialog.iframedialog()
+    dia.init(id);
+}

@@ -7,6 +7,13 @@ if (typeof component.ui.fileDialog == 'undefined') { component.ui.fileDialog = {
 if (typeof component.ui.fileDialog.template == 'undefined') { component.ui.fileDialog.template = {}; }
 
 
+component.ui.fileDialog.template.iframedialog = function(opt_data, opt_sb) {
+  var output = opt_sb || new soy.StringBuilder();
+  output.append('<div id="iframecodedlg"><textarea id="iframecode" readonly="readonly"> </textarea><p id ="indication">You can copy the above iframe code into your own webpage.<p/></div>');
+  return opt_sb ? '' : output.toString();
+};
+
+
 component.ui.fileDialog.template.dashboardialog = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('<div id="samples"><div id="in_samples"><div id="sample1"><a ><img id ="computermouse" src="images/sample_mouse.png" border="0" class = "sample" /></a><a ><img id ="enginecaserear" src="images/sample_engine.png" border="0" class = "sample" /></a><a ><img id ="moto" src="images/sample_moto.png" border="0" class = "sample" /></a><a ><img id ="shaver02" src="images/sample_shaver.png" border="0" class = "sample" /></a></div><div id="sample2"></div></div></div>');
@@ -24,11 +31,11 @@ component.ui.fileDialog.template.filedialog = function(opt_data, opt_sb) {
 component.ui.fileDialog.template.navigator = function(opt_data, opt_sb) {
   var output = opt_sb || new soy.StringBuilder();
   output.append('\t');
-  var folderList8 = opt_data.folderPath;
-  var folderListLen8 = folderList8.length;
-  for (var folderIndex8 = 0; folderIndex8 < folderListLen8; folderIndex8++) {
-    var folderData8 = folderList8[folderIndex8];
-    output.append('<div id="', soy.$$escapeHtml(folderData8.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData8.name), '</div>', (! (folderIndex8 == folderListLen8 - 1)) ? '<span class="file-navigator-separator">></span></span>' : '');
+  var folderList10 = opt_data.folderPath;
+  var folderListLen10 = folderList10.length;
+  for (var folderIndex10 = 0; folderIndex10 < folderListLen10; folderIndex10++) {
+    var folderData10 = folderList10[folderIndex10];
+    output.append('<div id="', soy.$$escapeHtml(folderData10.id), '" class="file-navigator-item"> ', soy.$$escapeHtml(folderData10.name), '</div>', (! (folderIndex10 == folderListLen10 - 1)) ? '<span class="file-navigator-separator">></span></span>' : '');
   }
   return opt_sb ? '' : output.toString();
 };
