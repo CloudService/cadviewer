@@ -13,8 +13,31 @@ $(document).ready(function(){
 	
 	if (astring && astring =="rendermodel") {
 		var id = parent.getModelId();
-	
-		pollingSampleObject(id);
+		var type = parent.getModelType();
+		if (type == 'sample') {
+			pollingSampleObject(id);		
+		} else if (type == 'box') {
+			pollingModelObject(id);		
+		}
+		
+		var myProgressBar = null;
+		myProgressBar = new ProgressBar("progressbar",{
+			borderRadius: 5,
+			width: 180,
+			height: 22,
+			maxValue: 100,
+			labelText: 'Loading mesh data...',
+			extraClassName: {
+				horizontalText: 'my_progress_bar_text_horizontal',
+			},
+			orientation: ProgressBar.Orientation.Horizontal,
+			direction: ProgressBar.Direction.LeftToRight,
+			animationStyle: ProgressBar.AnimationStyle.StaticFull,
+			animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
+			animationSpeed: 0.5,
+			backgroundUrl: 'images/ajax-loader.gif',
+			imageUrl: 'images/ajax-loader.gif',
+		});			
 	}
 	
 	if(astring && astring != "")
@@ -23,7 +46,8 @@ $(document).ready(function(){
 		openDashboardDialog(_onSampleFileSelected);		
 	
 	// Click the import command 
-	$("#fancybox-new").click(function(event){	
+	var importBtn = parent.document.getElementById("fancybox-new");
+	importBtn.addEventListener('click',function(event){	
 		var dlg = document.getElementById('file-dialog');
 		if (dlg) {
 			var parent = dlg.parentNode.parentNode;
@@ -34,7 +58,8 @@ $(document).ready(function(){
 
    	
 	// Click the sample command 
-	$("#fancybox-sample").click(function(event){	
+	var sampleBtn=parent.document.getElementById("fancybox-sample");
+	sampleBtn.addEventListener('click', function(event){	
 		var dlg = document.getElementById('samples');
 		if (dlg) {
 			var parent = dlg.parentNode.parentNode;
@@ -119,27 +144,10 @@ service.trans.translator = function (){
 						$.post("/api/1.0/tasks", task, function(taskObject) {
 				
 							var model_id = taskObject.model_id;
-
-							pollingModelObject(model_id);
-							
-							var myProgressBar = null;
-							myProgressBar = new ProgressBar("progressbar",{
-								borderRadius: 5,
-								width: 180,
-								height: 22,
-								maxValue: 100,
-								labelText: 'Loading mesh data...',
-								extraClassName: {
-									horizontalText: 'my_progress_bar_text_horizontal',
-								},
-								orientation: ProgressBar.Orientation.Horizontal,
-								direction: ProgressBar.Direction.LeftToRight,
-								animationStyle: ProgressBar.AnimationStyle.StaticFull,
-								animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
-								animationSpeed: 0.5,
-								backgroundUrl: 'images/ajax-loader.gif',
-								imageUrl: 'images/ajax-loader.gif',
-							});				
+							url = '/model?' +"type=box&" +"id="+ model_id;
+							top.location.href= url;
+			
+							//pollingModelObject(model_id);	
 						})
 						.error(function() { 
 							alert("Error.");
@@ -176,27 +184,10 @@ service.trans.translator = function (){
 				// alert(JSON.stringify(taskObject));
 				
 				var model_id = taskObject.model_id;
-				
-				pollingModelObject( model_id);
-				
-				var myProgressBar = null;
-				myProgressBar = new ProgressBar("progressbar",{
-					borderRadius: 5,
-					width: 180,
-					height: 22,
-					maxValue: 100,
-					labelText: 'Loading mesh data...',
-					extraClassName: {
-						horizontalText: 'my_progress_bar_text_horizontal',
-					},
-					orientation: ProgressBar.Orientation.Horizontal,
-					direction: ProgressBar.Direction.LeftToRight,
-					animationStyle: ProgressBar.AnimationStyle.StaticFull,
-					animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
-					animationSpeed: 0.5,
-					backgroundUrl: 'images/ajax-loader.gif',
-					imageUrl: 'images/ajax-loader.gif',
-				});				
+				url = '/model?' +"type=type&" +"id="+ model_id;
+				top.location.href= url;
+			
+				//pollingModelObject( model_id);			
 			})
 			.error(function() { 
 				alert("Error.");
@@ -227,29 +218,10 @@ var _onSampleFileSelected = function (event){
 				// alert(JSON.stringify(taskObject));
 				
 				var model_id = selection["id"];
-				url = '/' + model_id;
+				url = '/model?' +"type=sample&" +"id="+ model_id;
 				top.location.href= url;
 			
-				/*pollingSampleObject(selection["id"]);*/	
-				
-				var myProgressBar = null;
-				myProgressBar = new ProgressBar("progressbar",{
-					borderRadius: 5,
-					width: 180,
-					height: 22,
-					maxValue: 100,
-					labelText: 'Loading mesh data...',
-					extraClassName: {
-						horizontalText: 'my_progress_bar_text_horizontal',
-					},
-					orientation: ProgressBar.Orientation.Horizontal,
-					direction: ProgressBar.Direction.LeftToRight,
-					animationStyle: ProgressBar.AnimationStyle.StaticFull,
-					animationSmoothness: ProgressBar.AnimationSmoothness.Smooth4,
-					animationSpeed: 0.5,
-					backgroundUrl: 'images/ajax-loader.gif',
-					imageUrl: 'images/ajax-loader.gif',
-				});			
+				/*pollingSampleObject(selection["id"]);*/					
 
 		}
 	};
@@ -373,6 +345,8 @@ var pollingModelObject = function ( model_id){
 			// Todo - render the mesh with webGL.
 			var mesh = modelObject.mesh;
 			renderCanvas(mesh);
+			AddShareBtns();
+
 		}
 	})
 	.error(function() { 

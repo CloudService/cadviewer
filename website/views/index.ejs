@@ -6,9 +6,37 @@
     <title>Data translation for 3D CAD files</title>
     
     <link rel="stylesheet" href="stylesheets/main.css">
-
+    <link rel="stylesheet" href="stylesheets/tr.css">
+	<link rel="stylesheet" href="stylesheets/sprites.css" />
+    <link rel="stylesheet" href="stylesheets/HomePage.css" />
+	<link rel="stylesheet" href="stylesheets/ribbon.css" />
+	<link rel="stylesheet" href="stylesheets/progressbar.css" />
   </head>
   <body style="overflow:hidden; height:100%;">
+  
+  <%if (!model_id) { %>
+  	<div id ="PanelFilecommand">
+		<div id = "fancybox-new-border" class="fancybox-border">
+			<ul id ="toolbar">
+				<li id = "mainbtn">
+					<a id="fancybox-new" class="img-PUB360-New-24x24 fancybox-button" title="Import Files" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-open" class="img-PUB360-Open-24x24 fancybox-button" title="Export Files"></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-share" class="img-PUB360-Share-24x24 fancybox-button" title="Share" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-translate" class="img-PUB360-Translate-24x24 fancybox-button" title="Translate" ></a>
+				</li>
+				<li id = "mainbtn">
+					<a id="fancybox-sample" class="img-PUB360-Sample-24x24 fancybox-button" title="Samples" ></a>
+				</li>				
+			</ul>
+		</div>
+	</div>
+  <% } %>
   <iframe src="tr.html" frameborder="0px" width="100%" height ="100%" > </iframe>
 	<script type="text/javascript" >
 		
@@ -23,6 +51,10 @@
 		
 		function getModelId() {
 			var id = "<%=model_id%>";
+			return id;		
+		}
+		function getModelType() {
+			var id = "<%=model_type%>";
 			return id;		
 		}
 	</script>
