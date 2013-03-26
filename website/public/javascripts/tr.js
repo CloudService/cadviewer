@@ -47,27 +47,30 @@ $(document).ready(function(){
 	
 	// Click the import command 
 	var importBtn = parent.document.getElementById("fancybox-new");
-	importBtn.addEventListener('click',function(event){	
-		var dlg = document.getElementById('file-dialog');
-		if (dlg) {
-			var parent = dlg.parentNode.parentNode;
-			parent.removeChild(dlg.parentNode);
-		}
-		translator.openFileDialog();
-   });  
+		if (importBtn){
+			importBtn.addEventListener('click',function(event){	
+			var dlg = document.getElementById('file-dialog');
+			if (dlg) {
+				var parent = dlg.parentNode.parentNode;
+				parent.removeChild(dlg.parentNode);
+			}
+			translator.openFileDialog();
+	   });  	
+	}
 
    	
 	// Click the sample command 
 	var sampleBtn=parent.document.getElementById("fancybox-sample");
-	sampleBtn.addEventListener('click', function(event){	
-		var dlg = document.getElementById('samples');
-		if (dlg) {
-			var parent = dlg.parentNode.parentNode;
-			parent.removeChild(dlg.parentNode);
-		}
-		openDashboardDialog(_onSampleFileSelected);
-   });     
-
+	if (sampleBtn){	
+		sampleBtn.addEventListener('click', function(event){	
+			var dlg = document.getElementById('samples');
+			if (dlg) {
+				var parent = dlg.parentNode.parentNode;
+				parent.removeChild(dlg.parentNode);
+			}
+			openDashboardDialog(_onSampleFileSelected);
+		});  	
+	}
  });
  
 var service = service || {};
@@ -262,27 +265,34 @@ var AddShareBtns = function(){
 	i.title="Share to sina";	
 	document.getElementById("share").appendChild(i);
 	
-	$("#sina").click(function(event){	
+	$("#sina").click(function(event){
+
+		var canvas = document.getElementsByTagName("canvas")[0];
+		//var img = Canvas2Image.saveAsPNG(canvas, true, 400,300);
 		
-	  var param = {
-		url:top.window.location.href,
-		type:'4',
-		count:'',
-		appkey:'CoolViewer',
-		title:'CoolViewer', 
-		pic:'images/share.png', 
-		ralateUid:'', 
-		language:'zh_cn', 
-		rnd:new Date().valueOf()
-	  };
-	  var temp = [];
-	  for( var p in param ){
-		temp.push(p + '=' + encodeURIComponent( param[p] || '' ) );
-	  }	  
-	  
-	 var url ="http://service.weibo.com/share/share.php?"+temp.join('&');
-	 window.open(url,null,'height=500,width=800,top='+(screen.height-500)/2+',left='+(screen.width-800)/2+',toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no');
-	
+		var img = canvas.toDataURL();
+		
+		$.post("/api/1.0/img", img, function(obj){		
+			var param = {
+			url:top.window.location.href,
+			type:'4',
+			count:'',
+			appkey:'CoolViewer',
+			title:'A very cool 3D model viewer', 
+			pic:'http://localhost:3000/temp/out.png', //need the absolute URL
+			ralateUid:'', 
+			language:'zh_cn', 
+			rnd:new Date().valueOf()
+		  };
+		  var temp = [];
+		  for( var p in param ){
+			temp.push(p + '=' + encodeURIComponent( param[p] || '' ) );
+		  }	  
+		  
+		 var url ="http://service.weibo.com/share/share.php?"+temp.join('&');
+		 window.open(url,null,'height=500,width=800,top='+(screen.height-500)/2+',left='+(screen.width-800)/2+',toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no');
+		
+		})
    });  
 	
 	var j = document.createElement("a"); 
@@ -460,7 +470,8 @@ function renderCanvas(mesh)
 		renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			alpha: true,
-			maxLights: 2
+			maxLights: 2,
+			preserveDrawingBuffer: true
 		});
         renderer.setSize( window.innerWidth, window.innerHeight );
         container.appendChild( renderer.domElement );
