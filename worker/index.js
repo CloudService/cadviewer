@@ -83,7 +83,7 @@ var getTaskFromServer = function(){
 	   
 	   }catch(e){
 		   logger.debug("Invalid tasks body.");
-		   logger.debug(body);
+		   //logger.debug(body);
 		   return;
 	   }
 	   
@@ -91,13 +91,14 @@ var getTaskFromServer = function(){
 	   if(length> 0){
 		   
 		   logger.debug("New Tasks");
-		   logger.debug(JSON.stringify(body));
+		   //logger.debug(JSON.stringify(body));
 		   
 		   if(length > 1){
 			   logger.error("More than one tasks are returned. Only the first one is executed.");
 		   }
 		   var t = tasks[0];
-		   executeTask(t);
+
+			executeTask(t);
 	   }	
 	   });
    
@@ -112,7 +113,31 @@ var getTaskFromServer = function(){
 var executeTask = function(t){
 
 	isTaskExecuting = true;
-	
+	if (t.type == "img") {
+		Step (
+			function _createImgFolder() {
+			
+				logger.debug("===Save snapshot begin===")
+				
+				t.x_data = t.x_data || {}; // add all the external data to this object.
+			
+				createImgTaskFolder(t, this);			
+			},
+			function _saveImgFile(err) {
+			
+				if (err) {
+					logger.debug("Skip downloadFile");
+					throw err;
+				}
+				saveImgFile(t, this);
+			},
+			function _completeTask(err) {			
+				isTaskExecuting = false;
+				
+				logger.debug("=======Task Complete==========");
+			}			
+		);	
+	} else {
 	Step(
 		function _createTaskFolder(){
 			logger.debug("=======Task Begin==========");
@@ -170,6 +195,7 @@ var executeTask = function(t){
 			logger.debug("=======Task Complete==========");
 		}
 	);
+	}
 };
 
 var createTaskFolder = function(t, cb){
@@ -189,6 +215,47 @@ var createTaskFolder = function(t, cb){
 		  	cb(null, t);
 		}
 	});
+};
+
+var createImgTaskFolder = function (t,cb){
+	var dirname = __dirname;
+	dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
+	dirname = dirname +'\\website\\public';
+	logger.debug(dirname);
+	var imgFolder = path.join(dirname, nconf.get("temp_folder"));
+	
+	logger.debug("Creating task folder: " + imgFolder);
+	t.x_data.img_folder = imgFolder;
+	// Create the folder recursively.
+	fse.mkdirs(imgFolder, function(err){
+		if (err) {
+			logger.debug("[Fail]");
+			cb(err);						
+		}
+		else {
+			logger.debug("[Success]");
+			cb(null,t);
+		}
+	});
+};
+
+var saveImgFile = function (t,cb){
+		logger.debug("Saving snapshot file...");
+		var imgData= t.data;
+		var base64Data = imgData.substring(24);  
+		base64Data = base64Data.replace(/\s/g, "+"); 
+		var filename = t.x_data.img_folder +"\\out.png";
+		var dataBuffer = new Buffer(base64Data, 'base64');
+		logger.debug(filename);
+		fs.writeFile(filename, dataBuffer, function(err) {
+			if(err){
+				logger.debug("fail to save snapshot");
+				cb(err);
+		}else{
+				logger.debug("snapshot saved successfully");	
+				cb(null,t);
+			}				
+		});				
 };
 
 var downloadFile = function(t, cb){

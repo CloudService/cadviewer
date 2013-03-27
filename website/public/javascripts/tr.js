@@ -268,12 +268,13 @@ var AddShareBtns = function(){
 	$("#sina").click(function(event){
 
 		var canvas = document.getElementsByTagName("canvas")[0];
-		//var img = Canvas2Image.saveAsPNG(canvas, true, 400,300);
-		
-		var img = canvas.toDataURL();
-		
+	
+		var img = canvas.toDataURL();		
 		$.post("/api/1.0/img", img, function(obj){		
-			var param = {
+		
+		});
+		
+		var param = {
 			url:top.window.location.href,
 			type:'4',
 			count:'',
@@ -291,8 +292,7 @@ var AddShareBtns = function(){
 		  
 		 var url ="http://service.weibo.com/share/share.php?"+temp.join('&');
 		 window.open(url,null,'height=500,width=800,top='+(screen.height-500)/2+',left='+(screen.width-800)/2+',toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no');
-		
-		})
+
    });  
 	
 	var j = document.createElement("a"); 

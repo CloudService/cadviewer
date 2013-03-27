@@ -9,7 +9,6 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fs = require("fs");
 
-
 /**
 * Add the routes to the Express application.
 * @param {Object} options 
@@ -81,24 +80,23 @@ var addRoute = function(options){
 	* @param {Object} next
 	*/
 	
-		expressApp.post("/api/1.0/img", function(req, res, next){		
-		logger.debug(req.body);	
-		var imgData = JSON.stringify(req.body);
-
-		var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
-		//var base64Data = imgData.substring(22);  
-		var base64Data1 = base64Data.replace(/\s/g, "+");                         
-		var dataBuffer = new Buffer(base64Data1, 'base64');
-		fs.writeFile("./public/temp/out.png", dataBuffer, function(err) {
-			if(err){
-				logger.debug("fail to save snapshot");
-				res.send(err);
-		}else{
-				logger.debug("snapshot saved successfully");	
-				res.send("success");
-				}				
-		});	
-	
+	expressApp.post("/api/1.0/img", function(req, res, next){		
+		var imgData = JSON.stringify(req.body);			
+		var task_id = uuid.v1();
+		
+		var model_id = task_id; // Use the task id as the model id directly.
+		
+		// Generate the job object.
+		var task = {
+			"type": "img",
+			"id": task_id,
+			"model_id": model_id,
+			"data":imgData
+			};
+		
+		//logger.debug(task);
+		
+		taskManager.pendingTranslationTasks.push(task);	
 	});
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.debug("==> /api/1.0/tasks");
