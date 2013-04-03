@@ -80,12 +80,13 @@ var addRoute = function(options){
 	* @param {Object} next
 	*/
 	
-	expressApp.post("/api/1.0/img", function(req, res, next){		
-		var imgData = JSON.stringify(req.body);			
-		var task_id = uuid.v1();
+	expressApp.post("/api/1.0/img/:id", function(req, res, next){		
+		var imgData = JSON.stringify(req.body);		
+		var id = req.params.id;
+		var task_id = id ;
 		
 		var model_id = task_id; // Use the task id as the model id directly.
-		
+		logger.debug(id);
 		// Generate the job object.
 		var task = {
 			"type": "img",
@@ -97,6 +98,22 @@ var addRoute = function(options){
 		//logger.debug(task);
 		
 		taskManager.pendingTranslationTasks.push(task);	
+		
+		// Generate the model object
+		var model ={
+			"type": "img",
+			"id": model_id,
+		};
+
+		modelManager.models[model_id] = model;
+
+		// Generate the response object
+		var taskObject = {
+			"type": "task",
+			"id": task_id,
+		};
+		
+		res.send(200, taskObject); // success
 	});
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.debug("==> /api/1.0/tasks");

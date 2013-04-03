@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -36,9 +36,53 @@
 				</li>				
 			</ul>
 		</div>
+	</div>	
+	<% } else { %>
+		<div class ="bsharecustom"">
+		   <span style="font-weight:bold;vertical-align:middle;cursor:pointer;" onclick="javascript:bShare.more(event);return false;">Share to：</span>
+
+		   <a title="iFrame Code" id="iframebtn" style="cursor:pointer;color:#2e3192;">
+		   <img src="images/iframe.png" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
+
+		   <a title="分享到新浪微博" onclick="javascript:bShare.share(event,'sinaminiblog',0);return false;" style="cursor:pointer;color:#2e3192;">
+		   <img src="http://static.bshare.cn/frame/images/logos/s4/sinaminiblog.gif" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
+		   
+		   	<a title="分享到腾讯微博" onclick="javascript:bShare.share(event,'qqmb',0);return false;" style="cursor:pointer;color:#2e3192;">
+		   <img src="http://static.bshare.cn/frame/images/logos/s4/qqmb.gif" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
+		   
+		   <a title="Share to Twitter" onclick="javascript:bShare.share(event,'twitter',0);return false;" style="cursor:pointer;color:#2e3192;">
+		   <img src="http://static.bshare.cn/frame/images/logos/s4/twitter.gif" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
+		   
+		   <a title="Share to Facebook" onclick="javascript:bShare.share(event,'facebook',0);return false;" style="cursor:pointer;color:#2e3192;">
+		   <img src="http://static.bshare.cn/frame/images/logos/s4/facebook.gif" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
+
+		   <a title="More..." onclick="javascript:bShare.more(event);return false;" style="cursor:pointer;color:#000;"/>
+		   <img src="http://static.bshare.cn/frame/images/logos/s4/more.gif" style="height:32px; width:32px; vertical-align:middle;"/>
+		   <span style="padding-left:2px; vertical-align:middle;"></span></a>
 	</div>
+
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=1&amp;lang=en"></script>
+		<script type="text/javascript" charset="utf-8" 	src="http://static.bshare.cn/b/bshareC0.js">
+		</script>
+	<script>
+	
+		var picURL = top.window.location.origin+"/temp/" +"<%=model_id%>.png";
+		bShare.addEntry({
+			title: "",
+			url: "",
+			summary: "A very cool viewer for any 3D models.",
+			pic: picURL,
+			});
+	</script>
   <% } %>
+  
   <iframe src="tr.html" frameborder="0px" width="100%" height ="100%" > </iframe>
+
 	<script type="text/javascript" >
 		
 		function getAction(){ 
@@ -59,6 +103,7 @@
 			return id;		
 		}
 	</script>
+	
   </body>
 <html>
   

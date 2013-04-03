@@ -88,3 +88,10 @@ right:10px;
 position:fixed;
 }
 
+.bsharecustom {
+font-size: 13px;
+line-height: 16px !important;
+bottom: 10px;
+right: 10px;
+position: fixed;
+}

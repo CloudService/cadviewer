@@ -58,7 +58,6 @@ $(document).ready(function(){
 	   });  	
 	}
 
-   	
 	// Click the sample command 
 	var sampleBtn=parent.document.getElementById("fancybox-sample");
 	if (sampleBtn){	
@@ -246,8 +245,15 @@ var pollingSampleObject = function ( model_id){
 		var mesh = modelObject.mesh;
 		renderCanvas(mesh);
 		
-		// iFrame Code 
-		AddShareBtns();
+		SaveImage(model_id);
+		
+		var iframebtn = parent.document.getElementById("iframebtn");		
+		if (iframebtn){	
+				iframebtn.addEventListener('click', function(event){	
+				var id = parent.getModelId();	
+				openiFrameGenDialog(id);
+			});
+		}
 
 	})
 	.error(function() { 
@@ -257,71 +263,16 @@ var pollingSampleObject = function ( model_id){
 	});
 }
 
-var AddShareBtns = function(){
+var SaveImage = function(id){
 	
-	var i = document.createElement("a"); 
-	i.id="sina";
-	i.className ="sharetosina";
-	i.title="Share to sina";	
-	document.getElementById("share").appendChild(i);
+	var canvas = document.getElementsByTagName("canvas")[0];
 	
-	$("#sina").click(function(event){
-
-		var canvas = document.getElementsByTagName("canvas")[0];
+	var img = canvas.toDataURL();	
+	var url ="/api/1.0/img/" +id;
 	
-		var img = canvas.toDataURL();		
-		$.post("/api/1.0/img", img, function(obj){		
+	$.post(url, img, function(obj){		
 		
-		});
-		
-		var param = {
-			url:top.window.location.href,
-			type:'4',
-			count:'',
-			appkey:'CoolViewer',
-			title:'A very cool 3D model viewer', 
-			pic:'http://localhost:3000/temp/out.png', //need the absolute URL
-			ralateUid:'', 
-			language:'zh_cn', 
-			rnd:new Date().valueOf()
-		  };
-		  var temp = [];
-		  for( var p in param ){
-			temp.push(p + '=' + encodeURIComponent( param[p] || '' ) );
-		  }	  
-		  
-		 var url ="http://service.weibo.com/share/share.php?"+temp.join('&');
-		 window.open(url,null,'height=500,width=800,top='+(screen.height-500)/2+',left='+(screen.width-800)/2+',toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,status=no');
-
-   });  
-	
-	var j = document.createElement("a"); 
-	j.className ="sharetoqq";
-	j.title="Share to QQ";	
-	document.getElementById("share").appendChild(j);	
-
-	var j = document.createElement("a"); 
-	j.className ="sharetotwitter";
-	j.title="Share to twitter";	
-	document.getElementById("share").appendChild(j);
-	
-	
-	var j = document.createElement("a"); 
-	j.className ="sharetofb";
-	j.title="Share to facebook";	
-	document.getElementById("share").appendChild(j);
-	
-	var j = document.createElement("a"); 
-	j.id ="iframebtn";
-	j.className ="iframeimage";
-	j.title="iFrame Code";	
-	document.getElementById("share").appendChild(j);
-	
-		// Click the sample command 
-	$("#iframebtn").click(function(event){
-		var id = parent.getModelId();	
-		openiFrameGenDialog(id);
-   });     
+	});    
 }
 
 var pollingModelObject = function ( model_id){

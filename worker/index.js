@@ -244,7 +244,7 @@ var saveImgFile = function (t,cb){
 		var imgData= t.data;
 		var base64Data = imgData.substring(24);  
 		base64Data = base64Data.replace(/\s/g, "+"); 
-		var filename = t.x_data.img_folder +"\\out.png";
+		var filename = t.x_data.img_folder +"\\"+t.id +".png";
 		var dataBuffer = new Buffer(base64Data, 'base64');
 		logger.debug(filename);
 		fs.writeFile(filename, dataBuffer, function(err) {
