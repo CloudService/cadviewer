@@ -146,7 +146,6 @@ require("./lib/apiLoader.js")({'expressApp': expressApp, 'serverApp': serverApp}
 /**********************************************************************/
 var listeningPort = config.get('port');
 var secure = config.get("secure");
-
 if(secure){
 	var keyPath = path.join(__dirname, config.get('key'));
 	var certPath = path.join(__dirname, config.get('cert'));
