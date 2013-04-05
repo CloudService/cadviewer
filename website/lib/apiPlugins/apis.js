@@ -8,6 +8,7 @@ var everyauth = require('everyauth');
 var request = require('request');
 var uuid = require('node-uuid');
 var fs = require("fs");
+var fse = require("fs-extra");
 
 /**
 * Add the routes to the Express application.
@@ -80,41 +81,52 @@ var addRoute = function(options){
 	* @param {Object} next
 	*/
 	
-	expressApp.post("/api/1.0/img/:id", function(req, res, next){		
+	expressApp.post("/api/1.0/img", function(req, res, next){		
 		var imgData = JSON.stringify(req.body);		
-		var id = req.params.id;
-		var task_id = id ;
+		var img_id = uuid.v1();
+
+		var dirname = __dirname;
+		dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
+		dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
+		logger.debug(dirname);
+
+		dirname = dirname +'\\public\\snapshot';
+		logger.debug("Creating snapshot folder: " + dirname);
 		
-		var model_id = task_id; // Use the task id as the model id directly.
-		logger.debug(id);
-		// Generate the job object.
-		var task = {
+		// Create the folder recursively.
+		fse.mkdirs(dirname, function(err){
+			if (err) {
+				logger.debug("fail to create snapshot folder.");				
+				return;
+			}
+			else {
+				logger.debug("Saving snapshot file...");
+
+				var base64Data = imgData.substring(24); 
+				base64Data = base64Data.replace(/\s/g, "+"); 
+				var filename = dirname +"\\"+img_id +".png";
+				var dataBuffer = new Buffer(base64Data, 'base64');
+				logger.debug(filename);
+				fs.writeFile(filename, dataBuffer, function(err) {
+					if(err){
+						logger.debug("fail to save snapshot");
+						return;
+				}else{
+						logger.debug("snapshot saved successfully");
+					}				
+				});	
+			}
+		});	
+		
+		// Generate the response object.
+		var model = {
 			"type": "img",
-			"id": task_id,
-			"model_id": model_id,
-			"data":imgData
+			"id": img_id,
 			};
 		
-		//logger.debug(task);
-		
-		taskManager.pendingTranslationTasks.push(task);	
-		
-		// Generate the model object
-		var model ={
-			"type": "img",
-			"id": model_id,
-		};
-
-		modelManager.models[model_id] = model;
-
-		// Generate the response object
-		var taskObject = {
-			"type": "task",
-			"id": task_id,
-		};
-		
-		res.send(200, taskObject); // success
+		res.send(200, model); // success
 	});
+	
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
 		logger.debug("==> /api/1.0/tasks");
 		// req.body saves posted JSON object.

@@ -10,7 +10,8 @@
     "ejs":"*",
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
     "request":"",
-    "node-uuid":"" 
+    "node-uuid":"" ,
+	"fs-extra":"0.3.x"
   }, 
 	"devDependencies": {
     "jade": ">=0.12.1"

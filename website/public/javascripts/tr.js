@@ -226,8 +226,7 @@ var _onSampleFileSelected = function (event){
 				/*pollingSampleObject(selection["id"]);*/					
 
 		}
-	};
-	
+	};	
 	
 var pollingSampleObject = function ( model_id){
 	var url = null;
@@ -244,18 +243,9 @@ var pollingSampleObject = function ( model_id){
 		// Todo - render the mesh with webGL.
 		var mesh = modelObject.mesh;
 		renderCanvas(mesh);
-		
-		SaveImage(model_id);
-		
-		var iframebtn = parent.document.getElementById("iframebtn");		
-		if (iframebtn){	
-				iframebtn.addEventListener('click', function(event){	
-				var id = parent.getModelId();	
-				openiFrameGenDialog(id);
-			});
-		}
-
+		addShareEventsHandler();
 	})
+
 	.error(function() { 
 		//alert("No model.");
 		
@@ -263,16 +253,95 @@ var pollingSampleObject = function ( model_id){
 	});
 }
 
-var SaveImage = function(id){
+var addShareEventsHandler = function(){
+	var shareBtns = parent.document.getElementsByTagName('*');
+	if (shareBtns.length != 0){
+		for (var i = 0; i < shareBtns.length; i++) {
+			if (shareBtns[i].className == "share") {
+				switch(shareBtns[i].id){
+					case 'iframe':
+						{
+							shareBtns[i].addEventListener('click', function(event){	
+								var id = parent.getModelId();	
+								openiFrameGenDialog(id);
+							});
+							break;
+						}
+					case 'sina':
+						{						
+							shareBtns[i].addEventListener('click', function(event){	
+								imageShareForSina(event);	
+							});
+							
+							break;
+						}						
+					case 'qq':
+						{
+							shareBtns[i].addEventListener('click', function(event){	
+								bShare.share(event,'qqmb',0);
+							});
+							break;
+						}
+					case 'twitter':
+						{
+							shareBtns[i].addEventListener('click', function(event){	
+								bShare.share(event,'twitter',0);
+							});							
+							break;
+						}
+					case 'fb':
+						{
+							shareBtns[i].addEventListener('click', function(event){	
+								bShare.share(event,'facebook',0);
+							});	
+							break;
+						}
+					case 'more':
+						{
+							shareBtns[i].addEventListener('click', function(event){
+								bShare.more(event);
+								var canvas = document.getElementsByTagName("canvas")[0];
+								
+								var img = canvas.toDataURL();	
+								var url ="/api/1.0/img";
+
+								$.post(url, img, function(obj){	
+									var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
+										bShare.addEntry({
+											title: "Autodesk:",
+											url: "",
+											summary: "A very cool viewer for any 3D models.",
+											pic: picURL,
+										});		
+								}); 
+							});	
+							break;
+						}
+					default: break;				
+				}
+			}
+		}			
+	}
+}
+
+var imageShareForSina = function(event){
 	
 	var canvas = document.getElementsByTagName("canvas")[0];
 	
 	var img = canvas.toDataURL();	
-	var url ="/api/1.0/img/" +id;
-	
-	$.post(url, img, function(obj){		
-		
-	});    
+	var url ="/api/1.0/img";
+
+	$.post(url, img, function(obj){	
+		var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
+			bShare.addEntry({
+				title: "Autodesk:",
+				url: "",
+				summary: "A very cool viewer for any 3D models.",
+				pic: picURL,
+			});	
+			
+			bShare.share(event,'sinaminiblog',0)			
+	}); 
 }
 
 var pollingModelObject = function ( model_id){
@@ -306,8 +375,6 @@ var pollingModelObject = function ( model_id){
 			// Todo - render the mesh with webGL.
 			var mesh = modelObject.mesh;
 			renderCanvas(mesh);
-			AddShareBtns();
-
 		}
 	})
 	.error(function() { 
