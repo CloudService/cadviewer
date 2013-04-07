@@ -10,7 +10,26 @@ var uuid = require('node-uuid');
 var fs = require("fs");
 var fse = require("fs-extra");
 var path = require('path');
+var log4js = require('log4js');
 
+log4js.configure({
+    appenders: [
+        { type: "console" }
+    ],
+    replaceConsole: true
+});
+
+var logger = log4js.getLogger();
+
+
+log4js.loadAppender('file');
+log4js.addAppender(log4js.appenders.file('cheese.log'), 'cheese');
+
+var logger = log4js.getLogger('cheese');
+logger.setLevel('ERROR');
+
+
+logger.error('Cheese is too ripe!');
 /**
 * Add the routes to the Express application.
 * @param {Object} options 
@@ -59,7 +78,8 @@ var addRoute = function(options){
 		// Create the folder recursively.
 		fse.mkdirs(dirname, function(err){
 			if (err) {
-				logger.debug("fail to create snapshot folder.");				
+				logger.debug("fail to create snapshot folder.");
+				logger.error('fail to create snapshot folder.');				
 				apiErrorManager.responseInternalError(res);
 			}
 			else {
@@ -76,6 +96,7 @@ var addRoute = function(options){
 				fs.writeFile(filename, dataBuffer, function(err) {
 					if(err){
 						logger.debug("fail to save snapshot");
+						logger.error('fail to save snapshot');
 						apiErrorManager.responseInternalError(res);
 					}else{
 						logger.debug("snapshot saved successfully");
