@@ -48,18 +48,12 @@ var addRoute = function(options){
 	*/
 	
 	expressApp.post("/api/1.0/snapshot", function(req, res, next){		
-		var imgData = JSON.stringify(req.body);	
+		//var imgData = JSON.stringify(req.body);	
 
-		//var imgData = req.body.image;
-		
+		var imgData = req.body.image;
 		var img_id = uuid.v1();
 
 		var dirname = path.join(__dirname, "..\\..\\public\\snapshot");
-		//dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
-		//dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
-		logger.debug(dirname);
-
-		//dirname = dirname +'\\public\\snapshot';
 		logger.debug("Creating snapshot folder: " + dirname);
 		
 		// Create the folder recursively.
@@ -71,7 +65,7 @@ var addRoute = function(options){
 			else {
 				logger.debug("Saving snapshot file...");
 
-				var base64Data = imgData.substring(24); 
+				var base64Data = imgData.substring(22); 
 				base64Data = base64Data.replace(/\s/g, "+"); 
 				
 				var filename = path.join(dirname, "\\"+img_id +".png");
