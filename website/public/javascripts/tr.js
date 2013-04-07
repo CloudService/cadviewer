@@ -303,12 +303,20 @@ var addShareEventsHandler = function(){
 								var canvas = document.getElementsByTagName("canvas")[0];
 								
 								var img = canvas.toDataURL();	
-								var url ="/api/1.0/img";
+								var url ="/api/1.0/snapshot";
 
-								$.post(url, img, function(obj){	
+								/*
+								Post the JSON object below to the server.
+								{
+									"image": "image data based on base64 encode."
+								}
+								*/
+								var imageObject= {"image":img};
+								
+								$.post(url, imageObject, function(obj){	
 									var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
 										bShare.addEntry({
-											title: "Autodesk:",
+											title: "Cool Viewer:",
 											url: "",
 											summary: "A very cool viewer for any 3D models.",
 											pic: picURL,
@@ -329,12 +337,20 @@ var imageShareForSina = function(event){
 	var canvas = document.getElementsByTagName("canvas")[0];
 	
 	var img = canvas.toDataURL();	
-	var url ="/api/1.0/img";
+	var url ="/api/1.0/snapshot";
 
-	$.post(url, img, function(obj){	
+	/*
+	Post the JSON object below to the server.
+	{
+		"image": "image data based on base64 encode."
+	}
+	*/
+	var imageObject= {"image":img};
+	
+	$.post(url, imageObject, function(obj){		
 		var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
 			bShare.addEntry({
-				title: "Autodesk:",
+				title: "Cool Viewer:",
 				url: "",
 				summary: "A very cool viewer for any 3D models.",
 				pic: picURL,

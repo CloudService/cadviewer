@@ -9,6 +9,7 @@ var request = require('request');
 var uuid = require('node-uuid');
 var fs = require("fs");
 var fse = require("fs-extra");
+var path = require('path');
 
 /**
 * Add the routes to the Express application.
@@ -39,92 +40,63 @@ var addRoute = function(options){
 	var importFormats = config.get('formats')['import'];
 	
 	/**
-	* Post a task to the server.
-	* Http request body
-	
-		{
-			"source_file_id": "128420334",
-			"source_file_name": "robot.stl"
-		}
-	
-	* Http response body
-	
-	   {
-		   "type": "task",
-		   "id": "2342",
-		   "model_id": "2342"
-	   }
-	
-	* A task object is generated and added to the pending collection.
-	
-		{
-			"type": "job",
-			"id": "2342",
-			"model_id": "3452",
-			"source_file_name": "robot.stl",
-			"source_file_id": "4451234",
-			"api_key": "243ba09e93248d0cc",
-			"auth_token": "aeb2732bd098ce"
-		}
-	
-	* A incomplete model object is generated and added to the model collection. 'mesh' property isn't included.
-	
-		{
-			"type": "model",
-			"id": "358034830",
-			"statu": "pending"
-		}
-	
-	* @method POST /api/1.0/tasks
+	* Post a image snapshot to the server.	
+	* @method POST /api/1.0/snapshot
 	* @param {Object} req
 	* @param {Object} res
 	* @param {Object} next
 	*/
 	
-	expressApp.post("/api/1.0/img", function(req, res, next){		
-		var imgData = JSON.stringify(req.body);		
+	expressApp.post("/api/1.0/snapshot", function(req, res, next){		
+		var imgData = JSON.stringify(req.body);	
+
+		//var imgData = req.body.image;
+		
 		var img_id = uuid.v1();
 
-		var dirname = __dirname;
-		dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
-		dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
+		var dirname = path.join(__dirname, "..\\..\\public\\snapshot");
+		//dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
+		//dirname = dirname.substring(0, dirname.lastIndexOf('\\'));
 		logger.debug(dirname);
 
-		dirname = dirname +'\\public\\snapshot';
+		//dirname = dirname +'\\public\\snapshot';
 		logger.debug("Creating snapshot folder: " + dirname);
 		
 		// Create the folder recursively.
 		fse.mkdirs(dirname, function(err){
 			if (err) {
 				logger.debug("fail to create snapshot folder.");				
-				return;
+				apiErrorManager.responseInternalError(res);
 			}
 			else {
 				logger.debug("Saving snapshot file...");
 
 				var base64Data = imgData.substring(24); 
 				base64Data = base64Data.replace(/\s/g, "+"); 
-				var filename = dirname +"\\"+img_id +".png";
+				
+				var filename = path.join(dirname, "\\"+img_id +".png");
 				var dataBuffer = new Buffer(base64Data, 'base64');
 				logger.debug(filename);
+				
+				// Save the image fle
 				fs.writeFile(filename, dataBuffer, function(err) {
 					if(err){
 						logger.debug("fail to save snapshot");
-						return;
-				}else{
+						apiErrorManager.responseInternalError(res);
+					}else{
 						logger.debug("snapshot saved successfully");
+						
+						// Generate the response object.
+						var model = {
+							"type": "snapshot",
+							"id": img_id,
+							};
+						
+						res.send(200, model); // success
 					}				
 				});	
 			}
 		});	
-		
-		// Generate the response object.
-		var model = {
-			"type": "img",
-			"id": img_id,
-			};
-		
-		res.send(200, model); // success
 	});
 	
 	expressApp.post('/api/1.0/tasks', function(req, res, next){
