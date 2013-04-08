@@ -23,9 +23,11 @@ var logger = log4js.getLogger();
 
 
 log4js.loadAppender('file');
-log4js.addAppender(log4js.appenders.file('cheese.log'), 'cheese');
+var dirname = path.join(__dirname, "..\\..\\public");
+var log = path.join(dirname, "\\logger.log")
+log4js.addAppender(log4js.appenders.file(log), 'logger');
 
-var logger = log4js.getLogger('cheese');
+var logger = log4js.getLogger('logger');
 //logger.setLevel('ERROR');
 
 /**
