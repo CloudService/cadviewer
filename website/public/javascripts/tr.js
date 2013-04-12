@@ -392,6 +392,7 @@ var pollingModelObject = function ( model_id){
 			var mesh = modelObject.mesh;
 			renderCanvas(mesh);
 		}
+		addShareEventsHandler();
 	})
 	.error(function() { 
 		//alert("No model.");
