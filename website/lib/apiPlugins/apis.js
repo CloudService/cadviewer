@@ -328,6 +328,7 @@ var addRoute = function(options){
 			  }			
 			  try{
 				var userModel = {
+				  "status": "good",
 				  "type": "model",
 				  "id": id,
 				  "mesh": JSON.parse(data)
