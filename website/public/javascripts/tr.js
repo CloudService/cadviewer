@@ -262,8 +262,9 @@ var addShareEventsHandler = function(){
 					case 'iframe':
 						{
 							shareBtns[i].addEventListener('click', function(event){	
-								var id = parent.getModelId();	
-								openiFrameGenDialog(id);
+							    //var id = parent.getModelId();	
+								//openiFrameGenDialog(id);
+							    resizeFrameForiFrameCopy();
 							});
 							break;
 						}
@@ -331,6 +332,30 @@ var addShareEventsHandler = function(){
 		}			
 	}
 }
+
+var resizeFrameForiFrameCopy = function(){
+  var framediv = parent.document.getElementById("frame");
+  var framebtn = parent.document.getElementById("btn_closeframe");
+  var framecode = parent.document.getElementById("frame_code");
+  var framelabel =parent.document.getElementById("frame_label");
+  if (framediv) {
+  framediv.id="frame_table";
+    if (framebtn) {
+      framebtn.style.display="inline";
+	}
+	
+	if (framecode) {
+	  framecode.style.display="inline";
+	  var srccode= top.location.href;
+	  var text = '<iframe id="frame-viewer" src='+srccode+' width="700" height="550" frameborder="no" border="0px"></iframe>';
+	  framecode.innerText= text;
+	}
+	
+	if (framelabel) {
+	  framelabel.style.display="inline";
+	}
+  }
+};
 
 var imageShareForSina = function(event){
 	

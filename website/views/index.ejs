@@ -12,6 +12,36 @@
     <link rel="stylesheet" href="stylesheets/HomePage.css" />
 	<link rel="stylesheet" href="stylesheets/ribbon.css" />
 	<link rel="stylesheet" href="stylesheets/progressbar.css" />
+	<style>
+	  #frame_table{ 
+		position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+        height:80%;
+        width:70%;
+	  }
+	  #btn_closeframe{
+	    position:absolute;
+	    top:0;
+		right:0;
+		display:none;
+	  }
+	  #frame_code {
+	    position:absolute;
+		left:0;
+		bottom:0;
+		height:10%;
+		width:99.5%;
+		display:none;
+		font-size:10px;
+	  }
+	  #frame_label{
+		display:none;
+	  }
+	</style>
   </head>
   <body style="overflow:hidden; height:100%;">
   
@@ -67,8 +97,13 @@
 		</div>
   <% } %>
   
-  <iframe src="tr.html" frameborder="0px" width="100%" height ="100%"> </iframe>
-
+    <div id="frame">
+      <iframe src="tr.html" frameborder="0px" width="100%" height ="100%"> </iframe>
+      <button id="btn_closeframe" onclick="onCloseFrame()">X</button>
+	  <label id="frame_label">You can copy the above iframe code into your own page.</label>
+	  <textarea id="frame_code" readonly="readonly" scrolling="no"></textarea>
+	</div>
+	
 	<script type="text/javascript" >
 		
 		function getAction(){ 
@@ -87,6 +122,25 @@
 		function getModelType() {
 			var id = "<%=model_type%>";
 			return id;		
+		}
+		
+		function onCloseFrame() {
+		  var frametable = document.getElementById("frame_table");
+		  var framebtn = document.getElementById("btn_closeframe");
+		  var framecode = document.getElementById("frame_code");
+		  var framelabel = document.getElementById("frame_label");
+		  if (frametable) {
+		    if (framebtn) {
+			  framebtn.style.display="none";
+			}
+			if (framecode) {
+			  framecode.style.display="none";
+			}
+			if (framelabel) {
+			  framelabel.style.display="none";
+			}
+		    frametable.id="frame";
+		  }
 		}
 	</script>
 	
