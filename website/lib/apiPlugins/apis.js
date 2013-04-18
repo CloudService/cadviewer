@@ -306,6 +306,17 @@ var addRoute = function(options){
 		
 		// find mesh file on server
 		var userModelPath = serverApp.userModelPath;
+		fs.exists(userModelPath, function(exists){
+		  if (!exists) {
+		    fse.mkdirs(userModelPath, function(err){
+			  if (err){
+			    logger.debug("[Fail] fail to create user models folder.");
+				apiErrorManager.responseInternalError(res);
+			  }
+			});
+		  }
+		});
+		
 	    var meshFile = path.join(userModelPath, id+'.json');
 		fs.exists(meshFile, function(exists){
 		  if (exists) {
