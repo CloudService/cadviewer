@@ -32,6 +32,7 @@ var ServerApplication = function(){
 	this.modelManager = require(path.join(__dirname, './datamodel/modelManager.js'))();
 	
 	this.samplePath = path.join(__dirname, '../mesh_samples');
+	this.userModelPath =path.join(__dirname, '../user_models');
 };
 
 

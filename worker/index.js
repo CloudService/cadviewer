@@ -404,7 +404,8 @@ var updateModel = function(t, cb){
 	
 	var requestObject = {
 		status: t.x_data.has_mesh ? "good" : "bad",
-		mesh: t.x_data.mesh || {}
+		mesh: t.x_data.mesh || {},
+		meshfile: t.x_data.local_mesh_file_name,
 		};
 		
 	//logger.debug(JSON.stringify(requestObject));

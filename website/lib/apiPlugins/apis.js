@@ -301,25 +301,52 @@ var addRoute = function(options){
 	*/
 	expressApp.get('/api/1.0/models/:id', function(req, res, next){
 		logger.debug("==> get /api/1.0/models/:id");
-		
 		var id = req.params.id;
 		logger.debug(id);
 		
-		var models = modelManager.models;
-		
-		if(!models || !models[id] || !models[id].status){
-			apiErrorManager.responseNotFound(res);
-		}
-		else{
-			if(models[id].status === 'pending')
+		// find mesh file on server
+		var userModelPath = serverApp.userModelPath;
+	    var meshFile = path.join(userModelPath, id+'.json');
+		fs.exists(meshFile, function(exists){
+		  if (exists) {
+		    fs.readFile(meshFile, function (err, data) {
+			  if (err) {
+				logger.debug("[Fail] Can't read the mesh file");
+				apiErrorManager.responseInternalError(res);
+				return;
+			  }			
+			  try{
+				var userModel = {
+				  "type": "model",
+				  "id": id,
+				  "mesh": JSON.parse(data)
+				};	
+			    res.send(200, userModel);
+			  }
+			  catch(err){
+				logger.debug("[Fail] Failed to parse the file.");
+				apiErrorManager.responseInternalError(res);
+				return;
+			  }
+		    });
+		  } else {
+		    var models = modelManager.models;
+		    if(!models || !models[id] || !models[id].status ||!models[id].meshfile){
+			  apiErrorManager.responseNotFound(res);
+			} else {
+			  if(models[id].status === 'pending')
 				apiErrorManager.responseNotFound(res);
-			else{
+			  else {
+			    // copy mesh from worker to server.
+				copyMeshFile(models[id].meshfile, meshFile);
+				
 				var modelObject = models[id];
 				res.send(200, modelObject);
-				
 				delete models[id];
+			  }
 			}
-		}	
+		  }
+		});
 	});
 	
 	/**
@@ -356,7 +383,7 @@ var addRoute = function(options){
 		
 		// Check if the passed JSON data is valid.
 		var modelInfo = req.body;
-		if(!modelInfo || !modelInfo.status){
+		if(!modelInfo || !modelInfo.status || !modelInfo.meshfile){
 			apiErrorManager.responseBadRequest(res);
 			return;
 		}
@@ -374,7 +401,8 @@ var addRoute = function(options){
 		// Update the model object. Add the mesh.
 		models[id].status = modelInfo.status;
 		models[id].mesh = modelInfo.mesh;
-		
+		models[id].meshfile = modelInfo.meshfile;
+
 		// Response the mini object.
 		var miniModelObject = {
 				"type": "model",
@@ -544,7 +572,15 @@ var isBoxLogin = function(session){
 	return true;	
 };
 
-
+// copy mesh file 
+var copyMeshFile = function(srcpath, targetpath){
+  if(fs.statSync(srcpath).isFile()){
+    fs.writeFileSync(targetpath,fs.readFileSync(srcpath, ''),'');
+	logger.debug("copy file from "+srcpath+" to "+targetpath);
+  } else {
+	logger.debug("[Fail] fail to copy file from worker to server.");
+  }
+}
 /*
 * Exports
 */
