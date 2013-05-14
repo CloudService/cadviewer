@@ -377,7 +377,7 @@ var imageShareForSina = function(event){
 			bShare.addEntry({
 				title: "Cool Viewer:",
 				url: "",
-				summary: "A very cool viewer for any 3D models.",
+				summary: "Push the 3D model to the social share network.",
 				pic: picURL,
 			});	
 			
