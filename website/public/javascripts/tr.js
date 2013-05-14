@@ -271,7 +271,7 @@ var addShareEventsHandler = function(){
 					case 'sina':
 						{						
 							shareBtns[i].addEventListener('click', function(event){	
-								imageShareForSina(event);	
+								imageShare(event, "sinaminiblog");	
 							});
 							
 							break;
@@ -279,7 +279,7 @@ var addShareEventsHandler = function(){
 					case 'qq':
 						{
 							shareBtns[i].addEventListener('click', function(event){	
-								bShare.share(event,'qqmb',0);
+								imageShare(event,"qqmb");
 							});
 							break;
 						}
@@ -358,7 +358,7 @@ var resizeFrameForiFrameCopy = function(){
   }
 };
 
-var imageShareForSina = function(event){
+var imageShare = function(event, where){
 	
 	var canvas = document.getElementsByTagName("canvas")[0];
 	
@@ -384,7 +384,7 @@ var imageShareForSina = function(event){
 				pic: picURL,
 			});	
 			
-			bShare.share(event,'sinaminiblog',0)			
+			bShare.share(event,where,0)			
 	}); 
 }
 
