@@ -316,9 +316,10 @@ var addShareEventsHandler = function(){
 								
 								$.post(url, imageObject, function(obj){	
 									var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
+									var shareURL = parent.location.href;
 										bShare.addEntry({
 											title: "Cool Viewer:",
-											url: "",
+											url: shareURL,
 											summary: "Push the 3D model to the social share network.",
 											pic: picURL,
 										});		
@@ -374,9 +375,11 @@ var imageShareForSina = function(event){
 	
 	$.post(url, imageObject, function(obj){		
 		var picURL = parent.location.origin+"/snapshot/"+obj.id+".png";
+		var shareURL = parent.location.href;
+		
 			bShare.addEntry({
 				title: "Cool Viewer:",
-				url: "",
+				url: shareURL,
 				summary: "Push the 3D model to the social share network.",
 				pic: picURL,
 			});	
