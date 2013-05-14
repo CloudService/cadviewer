@@ -306,6 +306,7 @@ var addRoute = function(options){
 		
 		// find mesh file on server
 		var userModelPath = serverApp.userModelPath;
+		/*
 		fs.exists(userModelPath, function(exists){
 		  if (!exists) {
 		    fse.mkdirs(userModelPath, function(err){
@@ -316,6 +317,7 @@ var addRoute = function(options){
 			});
 		  }
 		});
+		*/
 		
 	    var meshFile = path.join(userModelPath, id+'.json');
 		fs.exists(meshFile, function(exists){
@@ -350,7 +352,7 @@ var addRoute = function(options){
 				apiErrorManager.responseNotFound(res);
 			  else {
 			    // copy mesh from worker to server.
-				copyMeshFile(models[id].meshfile, meshFile);
+				// copyMeshFile(models[id].meshfile, meshFile);
 				
 				var modelObject = models[id];
 				res.send(200, modelObject);
