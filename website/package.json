@@ -11,7 +11,8 @@
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
     "request":"",
     "node-uuid":"" ,
-	"fs-extra":"0.3.x"
+	"fs-extra":"0.3.x",
+	"mongostream":"0.1.x"
   }, 
 	"devDependencies": {
     "jade": ">=0.12.1"

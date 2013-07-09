@@ -8,13 +8,23 @@
         "box": {
             "apiKey": "ujdb2e8pe3geqmkgm2fg66pg552dwl2f",
             "callback":"http://localhost:3000/auth/box/callback"
-        }
+        },
+		"mongodb":{
+			"host" : "127.0.0.1",
+			"port" : 27017,
+			"name": "coolviewer"		
+		}
     },
     "production": {
         "box": {
             "apiKey": "ye6trxsaaxji5u4647te9700sjlu6z4a",
             "callback":"http://tr.ap01.aws.af.cm/auth/box/callback"
-        }
+        },
+		"mongodb":{
+			"host" : "127.0.0.1",
+			"port" : 27017,
+			"name": "coolviewer"
+		}
     },
     "formats": {
         "import": [
