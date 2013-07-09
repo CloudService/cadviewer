@@ -10,25 +10,7 @@ var uuid = require('node-uuid');
 var fs = require("fs");
 var fse = require("fs-extra");
 var path = require('path');
-var log4js = require('log4js');
 
-log4js.configure({
-    appenders: [
-        { type: "console" }
-    ],
-    replaceConsole: true
-});
-
-var logger = log4js.getLogger();
-
-
-log4js.loadAppender('file');
-var dirname = path.join(__dirname, "..\\..\\public");
-var log = path.join(dirname, "\\logger.log")
-log4js.addAppender(log4js.appenders.file(log), 'logger');
-
-var logger = log4js.getLogger('logger');
-//logger.setLevel('ERROR');
 
 /**
 * Add the routes to the Express application.
@@ -46,7 +28,7 @@ var addRoute = function(options){
 	var serverApp = options.serverApp;
 	var config = serverApp.config;
 	var apiErrorManager = serverApp.apiErrorManager;
-	//var logger = serverApp.logger;	
+	var logger = serverApp.logger;	
 	var taskManager = serverApp.taskManager;
 	var modelManager = serverApp.modelManager;
 	var mongostream = serverApp.mongostream;
