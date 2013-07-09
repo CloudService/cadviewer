@@ -56,18 +56,23 @@ var ServerApplication = function(){
 	// Configure the mongostream
 	/**********************************************************************/
 	var mongostream = require("mongostream")();	
-	mongostream.addSupportedCollections(["user", "storage"]);
+	mongostream.addSupportedCollections(["meshfs"]);
 	
 	var self = this;
+	self.isDbAvailable = false; 
 	mongostream.open(serviceConf.mongodb, function(err){
 		if(err){
 			self.logger.error("DB: OPEN ERROR - " + err.message + " " + JSON.stringify(serviceConf.mongodb));
 		}
 		else{
-			self.logger.info("DB: OPEN SUCCESSFULLY." + " " + JSON.stringify(serviceConf.mongodb))
+			self.logger.info("DB: OPEN SUCCESSFULLY." + " " + JSON.stringify(serviceConf.mongodb));
+			// Add the property only when the databse connection is created.
+			// This property can be used to check if the database is available.
+			self.isDbAvailable = true; 
 		}
 	});
 	
+	self.mongostream = mongostream; 
 	/**********************************************************************/
 	this.apiErrorManager = require(path.join(__dirname, './apiErrorManager.js'))();
 	this.taskManager = require(path.join(__dirname, './datamodel/taskManager.js'))();

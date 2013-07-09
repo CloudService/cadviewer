@@ -186,7 +186,7 @@ service.trans.translator = function (){
 				// alert(JSON.stringify(taskObject));
 				
 				var model_id = taskObject.model_id;
-				url = '/model?' +"type=type&" +"id="+ model_id;
+				url = '/model?' +"type=box&" +"id="+ model_id;
 				top.location.href= url;
 			
 				//pollingModelObject( model_id);			

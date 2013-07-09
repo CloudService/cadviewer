@@ -49,6 +49,7 @@ var addRoute = function(options){
 	//var logger = serverApp.logger;	
 	var taskManager = serverApp.taskManager;
 	var modelManager = serverApp.modelManager;
+	var mongostream = serverApp.mongostream;
 		
 	/*
 	* Add the route implementation here
@@ -304,63 +305,43 @@ var addRoute = function(options){
 		var id = req.params.id;
 		logger.debug(id);
 		
-		// find mesh file on server
-		var userModelPath = serverApp.userModelPath;
-		/*
-		fs.exists(userModelPath, function(exists){
-		  if (!exists) {
-		    fse.mkdirs(userModelPath, function(err){
-			  if (err){
-			    logger.debug("[Fail] fail to create user models folder.");
-				apiErrorManager.responseInternalError(res);
-			  }
-			});
-		  }
-		});
-		*/
-		
-	    var meshFile = path.join(userModelPath, id+'.json');
-		fs.exists(meshFile, function(exists){
-		  if (exists) {
-		    fs.readFile(meshFile, function (err, data) {
-			  if (err) {
-				logger.debug("[Fail] Can't read the mesh file");
-				apiErrorManager.responseInternalError(res);
-				return;
-			  }			
-			  try{
-				var userModel = {
-				  "status": "good",
-				  "type": "model",
-				  "id": id,
-				  "mesh": JSON.parse(data)
-				};	
-			    res.send(200, userModel);
-			  }
-			  catch(err){
-				logger.debug("[Fail] Failed to parse the file.");
-				apiErrorManager.responseInternalError(res);
-				return;
-			  }
-		    });
-		  } else {
-		    var models = modelManager.models;
-		    if(!models || !models[id] || !models[id].status ||!models[id].meshfile){
-			  apiErrorManager.responseNotFound(res);
-			} else {
-			  if(models[id].status === 'pending')
-				apiErrorManager.responseNotFound(res);
-			  else {
-			    // copy mesh from worker to server.
-				// copyMeshFile(models[id].meshfile, meshFile);
+		if(serverApp.isDbAvailable){
+			logger.debug('load mesh from database.');
+			// Load mesh from db.
+			
+			mongostream.queryFileByID('meshfs', id, function(err, data_buffer){
+				if(err){
+					apiErrorManager.responseNotFound(res);
+					return;
+				}
 				
-				var modelObject = models[id];
+				// Load mesh from db.
+				var modelObject = {				  
+					"type": "model",
+					"id": id,
+					"status": "good",
+					"mesh": JSON.parse(data_buffer.toString())
+				};	
 				res.send(200, modelObject);
-				delete models[id];
-			  }
+			});
+		}
+		else{			
+			// ToDo - this section should be removed when the GridFS is fully supported.
+			logger.debug('load mesh from memory.');
+			var models = modelManager.models;
+		    if(!models || !models[id] || !models[id].status){
+				apiErrorManager.responseNotFound(res);
+			} else {
+				if(models[id].status === 'pending'){
+					apiErrorManager.responseNotFound(res);
+				}
+				else {				
+					var modelObject = models[id];
+					res.send(200, modelObject);
+					delete models[id];
+				}
 			}
-		  }
-		});
+		}		
 	});
 	
 	/**
@@ -397,14 +378,14 @@ var addRoute = function(options){
 		
 		// Check if the passed JSON data is valid.
 		var modelInfo = req.body;
-		if(!modelInfo || !modelInfo.status || !modelInfo.meshfile){
+		if(!modelInfo || !modelInfo.status){
 			apiErrorManager.responseBadRequest(res);
 			return;
 		}
 		
 		var models = modelManager.models;
 		var id = req.params.id;
-		logger.debug(id);
+		logger.debug('id = ' + id);
 		
 		//logger.debug(models);
 		if(!models || !models[id]){
@@ -412,19 +393,46 @@ var addRoute = function(options){
 			return;
 		}
 		
-		// Update the model object. Add the mesh.
-		models[id].status = modelInfo.status;
-		models[id].mesh = modelInfo.mesh;
-		models[id].meshfile = modelInfo.meshfile;
-
-		// Response the mini object.
-		var miniModelObject = {
-				"type": "model",
-				"id":id,
-				"status":modelInfo.status
+		// save the mesh to db
+		if(serverApp.isDbAvailable){
+			logger.debug("save to database");
+			var fileObject = {
+				id : id,
+				data_buffer : new Buffer(JSON.stringify(modelInfo.mesh)) // utf8 encoding. 
 			};
+			mongostream.insertFile('meshfs', fileObject, function(err, obj){
+				if(err){
+					logger.debug("[Fail] Failed to save the file. " + err.message);
+					apiErrorManager.responseInternalError(res); 
+					return;
+				}
+				
+				// Response the mini object.
+				var miniModelObject = {
+						"type": "model",
+						"id":id,
+						"status":modelInfo.status
+					};
+					
+				res.send(200, miniModelObject);
+			});
+		}
+		else{
+			// ToDo - the code in this section should be removed when the gridFS is full supported.
+			logger.debug("save to memory");
+			// Update the model object. Add the mesh.
+			models[id].status = modelInfo.status;
+			models[id].mesh = modelInfo.mesh;
 			
-		res.send(200, miniModelObject);
+			// Response the mini object.
+			var miniModelObject = {
+					"type": "model",
+					"id":id,
+					"status":modelInfo.status
+				};
+				
+			res.send(200, miniModelObject);		
+		}		
 	});
 	
 	return this;
@@ -586,15 +594,6 @@ var isBoxLogin = function(session){
 	return true;	
 };
 
-// copy mesh file 
-var copyMeshFile = function(srcpath, targetpath){
-  if(fs.statSync(srcpath).isFile()){
-    fs.writeFileSync(targetpath,fs.readFileSync(srcpath, ''),'');
-	logger.debug("copy file from "+srcpath+" to "+targetpath);
-  } else {
-	logger.debug("[Fail] fail to copy file from worker to server.");
-  }
-}
 /*
 * Exports
 */
